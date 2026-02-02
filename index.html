@@ -332,6 +332,28 @@
                 opacity: 0;
             }
         }
+        
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        details summary::marker {
+            display: none;
+        }
+        
+        details summary::before {
+            content: '▶ ';
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+        
+        details summary:hover {
+            background: #e8ebff !important;
+        }
     </style>
 </head>
 <body>
@@ -342,29 +364,44 @@
         </header>
         
         <div class="upload-section">
-            <h2 style="margin-bottom: 10px; color: #333;">Upload Your Data</h2>
-            <p style="color: #666; margin-bottom: 20px;">Drag & drop or click to upload JSON files from your bookmarklet scrapers</p>
+            <h2 style="margin-bottom: 10px; color: #333;">📊 Dashboard Updates Automatically!</h2>
+            <p style="color: #666; margin-bottom: 15px;">
+                Using bookmarklets? Your data syncs automatically. Just refresh this page to see updates!
+            </p>
             
-            <div class="upload-zones">
-                <div class="drop-zone" id="soldDropZone">
-                    <input type="file" id="soldFile" accept=".json">
-                    <div class="drop-zone-icon">📦</div>
-                    <div class="drop-zone-text">Sold Items</div>
-                    <div class="drop-zone-hint">Drop JSON file or click to browse</div>
-                </div>
-                
-                <div class="drop-zone" id="availableDropZone">
-                    <input type="file" id="availableFile" accept=".json">
-                    <div class="drop-zone-icon">🏷️</div>
-                    <div class="drop-zone-text">Available Items</div>
-                    <div class="drop-zone-hint">Drop JSON file or click to browse</div>
-                </div>
+            <div style="margin-bottom: 15px;">
+                <button class="export-btn" onclick="location.reload()" style="background: #667eea;">
+                    🔄 Refresh Dashboard
+                </button>
+                <button class="export-btn" onclick="exportData()">💾 Export Data</button>
+                <button class="export-btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Clear All</button>
             </div>
             
-            <div style="margin-top: 20px;">
-                <button class="export-btn" onclick="exportData()">💾 Export Combined Data</button>
-                <button class="export-btn" onclick="clearAllData()" style="background: #dc3545; margin-left: 10px;">🗑️ Clear All Data</button>
-            </div>
+            <details style="margin-top: 20px;">
+                <summary style="cursor: pointer; color: #667eea; font-weight: 500; padding: 10px; background: #f8f9ff; border-radius: 6px; user-select: none;">
+                    📤 Manual Upload (Optional)
+                </summary>
+                <div style="margin-top: 15px;">
+                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">
+                        Need to manually upload JSON files? Use these options as a fallback.
+                    </p>
+                    <div class="upload-zones">
+                        <div class="drop-zone" id="soldDropZone">
+                            <input type="file" id="soldFile" accept=".json">
+                            <div class="drop-zone-icon">📦</div>
+                            <div class="drop-zone-text">Sold Items</div>
+                            <div class="drop-zone-hint">Drop JSON file or click to browse</div>
+                        </div>
+                        
+                        <div class="drop-zone" id="availableDropZone">
+                            <input type="file" id="availableFile" accept=".json">
+                            <div class="drop-zone-icon">🏷️</div>
+                            <div class="drop-zone-text">Available Items</div>
+                            <div class="drop-zone-hint">Drop JSON file or click to browse</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
         </div>
         
         <div class="filter-section" id="filterSection" style="display: none;">
@@ -664,11 +701,6 @@
                 <div class="stat-card">
                     <div class="stat-label">Avg Sold Price</div>
                     <div class="stat-value">$${avgPrice.toFixed(2)}</div>
-                    <div class="stat-subvalue">per item</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Avg Available Price</div>
-                    <div class="stat-value">$${avgAvailablePrice.toFixed(2)}</div>
                     <div class="stat-subvalue">per item</div>
                 </div>
             `;
