@@ -74,12 +74,6 @@
             transform: translateY(-2px);
         }
         
-        .drop-zone.dragover {
-            border-color: #28a745;
-            background: #f0fff4;
-            border-style: solid;
-        }
-        
         .drop-zone input[type="file"] {
             position: absolute;
             opacity: 0;
@@ -110,7 +104,46 @@
         .file-loaded {
             background: #d4edda;
             border-color: #28a745;
-            color: #155724;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         .summary-banner {
@@ -186,9 +219,15 @@
         
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         .chart-card {
@@ -255,33 +294,12 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            margin-left: 10px;
+            margin: 5px;
+            font-size: 14px;
         }
         
         .export-btn:hover {
             background: #218838;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(400px);
-                opacity: 0;
-            }
         }
         
         details summary::-webkit-details-marker {
@@ -321,11 +339,10 @@
             </p>
             
             <div style="margin-bottom: 15px;">
-                <button class="export-btn" onclick="location.reload()" style="background: #667eea;">
-                    🔄 Refresh Dashboard
-                </button>
-                <button class="export-btn" onclick="exportData()">💾 Export Data</button>
-                <button class="export-btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Clear All</button>
+                <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
+                <button class="export-btn" onclick="exportData()">💾 Export</button>
+                <button class="export-btn" onclick="shareData()" style="background: #17a2b8;">📤 Share</button>
+                <button class="export-btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Clear</button>
             </div>
             
             <details open style="margin-top: 20px;">
@@ -352,16 +369,36 @@
             </details>
         </div>
         
-        <div class="summary-banner" id="summaryBanner" style="display: none;"></div>
+        <div class="tabs" id="tabs" style="display: none;">
+            <button class="tab active" onclick="switchTab('overview')">📊 Overview</button>
+            <button class="tab" onclick="switchTab('sold')">📦 Sold Items</button>
+            <button class="tab" onclick="switchTab('available')">🏷️ Available Items</button>
+        </div>
         
-        <div class="stats-grid" id="statsGrid"></div>
+        <!-- Overview Tab -->
+        <div id="overview-content" class="tab-content active">
+            <div class="summary-banner" id="summaryBanner" style="display: none;"></div>
+            <div class="stats-grid" id="statsGrid"></div>
+            <div class="charts-grid" id="chartsGrid"></div>
+        </div>
         
-        <div class="charts-grid" id="chartsGrid"></div>
+        <!-- Sold Items Tab -->
+        <div id="sold-content" class="tab-content">
+            <div class="items-table" id="soldTable">
+                <div class="no-data">
+                    <h3>No sold items yet</h3>
+                    <p>Upload your sold items JSON file</p>
+                </div>
+            </div>
+        </div>
         
-        <div class="items-table" id="itemsTable">
-            <div class="no-data">
-                <h3>No data loaded yet</h3>
-                <p>Upload your JSON files to see visualizations</p>
+        <!-- Available Items Tab -->
+        <div id="available-content" class="tab-content">
+            <div class="items-table" id="availableTable">
+                <div class="no-data">
+                    <h3>No available items yet</h3>
+                    <p>Upload your available items JSON file</p>
+                </div>
             </div>
         </div>
     </div>
@@ -371,27 +408,50 @@
         let availableItems = [];
         let charts = {};
         
+        // Load data on page load (from localStorage or URL)
         window.addEventListener('load', () => {
-            const savedSold = localStorage.getItem('threadup_sold');
-            const savedAvailable = localStorage.getItem('threadup_available');
-            
-            if (savedSold) {
-                soldItems = JSON.parse(savedSold);
-                const dropZone = document.getElementById('soldDropZone');
-                dropZone.classList.add('file-loaded');
-                dropZone.querySelector('.drop-zone-hint').textContent = `✅ Loaded ${soldItems.length} items`;
-            }
-            if (savedAvailable) {
-                availableItems = JSON.parse(savedAvailable);
-                const dropZone = document.getElementById('availableDropZone');
-                dropZone.classList.add('file-loaded');
-                dropZone.querySelector('.drop-zone-hint').textContent = `✅ Loaded ${availableItems.length} items`;
+            // Check if data is in URL (shared link)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('data')) {
+                try {
+                    const compressed = urlParams.get('data');
+                    const decompressed = atob(compressed);
+                    const data = JSON.parse(decompressed);
+                    soldItems = data.sold || [];
+                    availableItems = data.available || [];
+                    
+                    // Don't save shared data to localStorage automatically
+                    alert('📊 Viewing shared dashboard!\n\nThis data is not saved to your device.\nTo save it, click Export and re-upload the files.');
+                } catch (e) {
+                    console.error('Error loading shared data:', e);
+                }
+            } else {
+                // Load from localStorage
+                const savedSold = localStorage.getItem('threadup_sold');
+                const savedAvailable = localStorage.getItem('threadup_available');
+                
+                if (savedSold) soldItems = JSON.parse(savedSold);
+                if (savedAvailable) availableItems = JSON.parse(savedAvailable);
             }
             
             if (soldItems.length > 0 || availableItems.length > 0) {
+                updateDropZones();
                 updateDashboard();
             }
         });
+        
+        function updateDropZones() {
+            if (soldItems.length > 0) {
+                const dropZone = document.getElementById('soldDropZone');
+                dropZone.classList.add('file-loaded');
+                dropZone.querySelector('.drop-zone-hint').textContent = `✅ ${soldItems.length} items`;
+            }
+            if (availableItems.length > 0) {
+                const dropZone = document.getElementById('availableDropZone');
+                dropZone.classList.add('file-loaded');
+                dropZone.querySelector('.drop-zone-hint').textContent = `✅ ${availableItems.length} items`;
+            }
+        }
         
         document.getElementById('soldFile').addEventListener('change', handleSoldFile);
         document.getElementById('availableFile').addEventListener('change', handleAvailableFile);
@@ -409,18 +469,6 @@
                 }, false);
             });
             
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropZone.addEventListener(eventName, () => {
-                    dropZone.classList.add('dragover');
-                }, false);
-            });
-            
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropZone.addEventListener(eventName, () => {
-                    dropZone.classList.remove('dragover');
-                }, false);
-            });
-            
             dropZone.addEventListener('drop', (e) => {
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
@@ -433,30 +481,6 @@
         setupDropZone('soldDropZone', 'soldFile', handleSoldFile);
         setupDropZone('availableDropZone', 'availableFile', handleAvailableFile);
         
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 25px;
-                background: ${type === 'success' ? '#28a745' : '#17a2b8'};
-                color: white;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 10000;
-                animation: slideIn 0.3s ease-out;
-                font-weight: 500;
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-out';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-        
         function handleSoldFile(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -464,23 +488,17 @@
             const reader = new FileReader();
             reader.onload = (event) => {
                 try {
-                    const newItems = JSON.parse(event.target.result);
-                    
-                    console.log('Loading sold items:', newItems.length);
-                    
-                    // For sold items: REPLACE all data (no merging)
-                    // This ensures all 61 items from the file are loaded
-                    soldItems = newItems;
+                    soldItems = JSON.parse(event.target.result);
                     localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
                     
                     const dropZone = document.getElementById('soldDropZone');
                     dropZone.classList.add('file-loaded');
-                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ Loaded ${soldItems.length} items`;
+                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ ${soldItems.length} items`;
                     
                     updateDashboard();
-                    showNotification(`Loaded ${soldItems.length} sold items!`, 'success');
+                    alert(`✅ Loaded ${soldItems.length} sold items!`);
                 } catch (error) {
-                    alert('Error reading sold items file: ' + error.message);
+                    alert('Error: ' + error.message);
                 }
             };
             reader.readAsText(file);
@@ -493,29 +511,37 @@
             const reader = new FileReader();
             reader.onload = (event) => {
                 try {
-                    const newItems = JSON.parse(event.target.result);
-                    
-                    // For available items: also replace (simpler)
-                    availableItems = newItems;
+                    availableItems = JSON.parse(event.target.result);
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems));
                     
                     const dropZone = document.getElementById('availableDropZone');
                     dropZone.classList.add('file-loaded');
-                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ Loaded ${availableItems.length} items`;
+                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ ${availableItems.length} items`;
                     
                     updateDashboard();
-                    showNotification(`Loaded ${availableItems.length} available items!`, 'success');
+                    alert(`✅ Loaded ${availableItems.length} available items!`);
                 } catch (error) {
-                    alert('Error reading available items file: ' + error.message);
+                    alert('Error: ' + error.message);
                 }
             };
             reader.readAsText(file);
         }
         
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tab + '-content').classList.add('active');
+        }
+        
         function updateDashboard() {
+            document.getElementById('tabs').style.display = 'flex';
             updateStats();
             updateCharts();
-            updateTable();
+            updateTables();
         }
         
         function updateStats() {
@@ -547,7 +573,7 @@
                 ${justListedCount > 0 ? `
                 <div class="summary-item">
                     <div class="summary-label">Just Listed</div>
-                    <div class="summary-value" style="color: #17a2b8;">🆕 ${justListedCount}</div>
+                    <div class="summary-value">🆕 ${justListedCount}</div>
                     <div class="summary-subtext">newly available</div>
                 </div>
                 ` : ''}
@@ -656,15 +682,11 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    plugins: { legend: { display: false } },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: {
-                                callback: value => '$' + value.toFixed(0)
-                            }
+                            ticks: { callback: value => '$' + value.toFixed(0) }
                         }
                     }
                 }
@@ -680,9 +702,7 @@
                 brandRevenue[brand] = (brandRevenue[brand] || 0) + price;
             });
             
-            const sortedBrands = Object.entries(brandRevenue)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 10);
+            const sortedBrands = Object.entries(brandRevenue).sort((a, b) => b[1] - a[1]).slice(0, 10);
             
             const ctx = document.getElementById('brandsChart');
             charts.brands = new Chart(ctx, {
@@ -699,15 +719,11 @@
                     responsive: true,
                     maintainAspectRatio: true,
                     indexAxis: 'y',
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    plugins: { legend: { display: false } },
                     scales: {
                         x: {
                             beginAtZero: true,
-                            ticks: {
-                                callback: value => '$' + value.toFixed(0)
-                            }
+                            ticks: { callback: value => '$' + value.toFixed(0) }
                         }
                     }
                 }
@@ -715,14 +731,7 @@
         }
         
         function createPriceChart() {
-            const priceRanges = {
-                '$0-10': 0,
-                '$10-20': 0,
-                '$20-30': 0,
-                '$30-50': 0,
-                '$50-100': 0,
-                '$100+': 0
-            };
+            const priceRanges = { '$0-10': 0, '$10-20': 0, '$20-30': 0, '$30-50': 0, '$50-100': 0, '$100+': 0 };
             
             soldItems.forEach(item => {
                 const price = parseFloat(item['Sold Price']) || 0;
@@ -741,22 +750,13 @@
                     labels: Object.keys(priceRanges),
                     datasets: [{
                         data: Object.values(priceRanges),
-                        backgroundColor: [
-                            '#667eea',
-                            '#764ba2',
-                            '#f093fb',
-                            '#4facfe',
-                            '#00f2fe',
-                            '#43e97b'
-                        ]
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b']
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
-                    plugins: {
-                        legend: { position: 'bottom' }
-                    }
+                    plugins: { legend: { position: 'bottom' } }
                 }
             });
         }
@@ -773,22 +773,14 @@
                     type: 'bar',
                     data: {
                         labels: ['No Data'],
-                        datasets: [{
-                            label: 'Likes',
-                            data: [0],
-                            backgroundColor: '#e74c3c'
-                        }]
+                        datasets: [{ label: 'Likes', data: [0], backgroundColor: '#e74c3c' }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: true,
                         plugins: {
                             legend: { display: false },
-                            title: {
-                                display: true,
-                                text: 'Upload available items with likes to see data',
-                                font: { size: 12 }
-                            }
+                            title: { display: true, text: 'Upload available items with likes', font: { size: 12 } }
                         }
                     }
                 });
@@ -812,96 +804,117 @@
                 type: 'bar',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: 'Likes',
-                        data: data,
-                        backgroundColor: colors
-                    }]
+                    datasets: [{ label: 'Likes', data: data, backgroundColor: colors }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
                     indexAxis: 'y',
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    plugins: { legend: { display: false } },
                     scales: {
                         x: {
                             beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Number of Likes'
-                            }
+                            title: { display: true, text: 'Number of Likes' }
                         }
                     }
                 }
             });
         }
         
-        function updateTable() {
-            const combined = [
-                ...soldItems.map(item => ({ ...item, status: 'Sold' })),
-                ...availableItems.map(item => ({ ...item, status: 'Available', 'Sold Price': item.Price || '' }))
-            ];
-            
-            if (combined.length === 0) {
-                document.getElementById('itemsTable').innerHTML = `
-                    <div class="no-data">
-                        <h3>No data loaded yet</h3>
-                        <p>Upload your JSON files to see your items</p>
-                    </div>
+        function updateTables() {
+            // Sold Items Table
+            if (soldItems.length === 0) {
+                document.getElementById('soldTable').innerHTML = `
+                    <div class="no-data"><h3>No sold items yet</h3><p>Upload your sold items JSON file</p></div>
                 `;
+            } else {
+                let tableHTML = `
+                    <h2 style="margin-bottom: 20px;">Sold Items (${soldItems.length} total)</h2>
+                    <table>
+                        <thead>
+                            <tr><th>Brand</th><th>Description</th><th>Price</th><th>Date Sold</th></tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                soldItems.forEach(item => {
+                    tableHTML += `
+                        <tr>
+                            <td>${item.Brand || 'N/A'}</td>
+                            <td>${item.Description || 'N/A'}</td>
+                            <td class="price">$${parseFloat(item['Sold Price'] || 0).toFixed(2)}</td>
+                            <td>${item['Date Sold'] || 'N/A'}</td>
+                        </tr>
+                    `;
+                });
+                
+                tableHTML += '</tbody></table>';
+                document.getElementById('soldTable').innerHTML = tableHTML;
+            }
+            
+            // Available Items Table
+            if (availableItems.length === 0) {
+                document.getElementById('availableTable').innerHTML = `
+                    <div class="no-data"><h3>No available items yet</h3><p>Upload your available items JSON file</p></div>
+                `;
+            } else {
+                let tableHTML = `
+                    <h2 style="margin-bottom: 20px;">Available Items (${availableItems.length} total)</h2>
+                    <table>
+                        <thead>
+                            <tr><th>Status</th><th>Brand</th><th>Description</th><th>Price</th><th>Likes</th></tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                availableItems.forEach(item => {
+                    const likes = item.Likes || 0;
+                    const likesColor = likes > 50 ? '#28a745' : likes > 20 ? '#ffc107' : '#6c757d';
+                    const statusBadge = item.Availability === 'Just Listed' 
+                        ? '<span style="background: #17a2b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;">🆕 JUST LISTED</span>'
+                        : '';
+                    
+                    tableHTML += `
+                        <tr>
+                            <td>${statusBadge}</td>
+                            <td>${item.Brand || 'N/A'}</td>
+                            <td>${item.Description || 'N/A'}</td>
+                            <td>$${parseFloat(item.Price || 0).toFixed(2)}</td>
+                            <td><span style="color: ${likesColor}; font-weight: 600;">❤️ ${likes}</span></td>
+                        </tr>
+                    `;
+                });
+                
+                tableHTML += '</tbody></table>';
+                document.getElementById('availableTable').innerHTML = tableHTML;
+            }
+        }
+        
+        function shareData() {
+            if (soldItems.length === 0 && availableItems.length === 0) {
+                alert('No data to share! Upload some files first.');
                 return;
             }
             
-            let tableHTML = `
-                <h2 style="margin-bottom: 20px;">All Items (${combined.length} total)</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Brand</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Likes / Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            const data = {
+                sold: soldItems,
+                available: availableItems
+            };
             
-            combined.forEach(item => {
-                const statusClass = item.status === 'Sold' ? 'price' : '';
-                const statusColor = item.status === 'Sold' ? '#28a745' : '#ffc107';
-                
-                let statusDisplay = '';
-                if (item.status === 'Available' && item.Availability === 'Just Listed') {
-                    statusDisplay = `<span style="color: ${statusColor}; font-weight: bold;">${item.status}</span> <span style="background: #17a2b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;">🆕 JUST LISTED</span>`;
-                } else {
-                    statusDisplay = `<span style="color: ${statusColor}; font-weight: bold;">${item.status}</span>`;
-                }
-                
-                let lastColumn = '';
-                if (item.status === 'Sold') {
-                    lastColumn = item['Date Sold'] || 'N/A';
-                } else {
-                    const likes = item.Likes || 0;
-                    const likesColor = likes > 50 ? '#28a745' : likes > 20 ? '#ffc107' : '#6c757d';
-                    lastColumn = `<span style="color: ${likesColor}; font-weight: 600;">❤️ ${likes}</span>`;
-                }
-                
-                tableHTML += `
-                    <tr>
-                        <td>${statusDisplay}</td>
-                        <td>${item.Brand || 'N/A'}</td>
-                        <td>${item.Description || 'N/A'}</td>
-                        <td class="${statusClass}">$${parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2)}</td>
-                        <td>${lastColumn}</td>
-                    </tr>
-                `;
+            // Compress data
+            const json = JSON.stringify(data);
+            const compressed = btoa(json);
+            
+            // Create shareable URL
+            const shareUrl = window.location.origin + window.location.pathname + '?data=' + compressed;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('📤 Share link copied to clipboard!\n\nShare this link to view the dashboard on any device:\n\n' + shareUrl.substring(0, 80) + '...');
+            }).catch(() => {
+                // Fallback for mobile
+                prompt('📤 Copy this link to share:', shareUrl);
             });
-            
-            tableHTML += '</tbody></table>';
-            document.getElementById('itemsTable').innerHTML = tableHTML;
         }
         
         function exportData() {
@@ -920,32 +933,10 @@
         }
         
         function clearAllData() {
-            if (confirm('Are you sure you want to clear all data? This cannot be undone!')) {
+            if (confirm('Are you sure you want to clear all data?')) {
                 localStorage.removeItem('threadup_sold');
                 localStorage.removeItem('threadup_available');
-                soldItems = [];
-                availableItems = [];
-                
-                ['soldDropZone', 'availableDropZone'].forEach(id => {
-                    const dropZone = document.getElementById(id);
-                    dropZone.classList.remove('file-loaded');
-                    dropZone.querySelector('.drop-zone-hint').textContent = 'Drop JSON file or click to browse';
-                });
-                
-                document.getElementById('soldFile').value = '';
-                document.getElementById('availableFile').value = '';
-                
-                document.getElementById('summaryBanner').style.display = 'none';
-                document.getElementById('statsGrid').innerHTML = '';
-                document.getElementById('chartsGrid').innerHTML = '';
-                document.getElementById('itemsTable').innerHTML = `
-                    <div class="no-data">
-                        <h3>No data loaded yet</h3>
-                        <p>Upload your JSON files to see visualizations</p>
-                    </div>
-                `;
-                
-                alert('All data cleared successfully!');
+                location.reload();
             }
         }
     </script>
