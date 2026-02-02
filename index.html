@@ -656,6 +656,8 @@
             const totalItems = totalSold + totalAvailable;
             
             // Update summary banner
+            const justListedCount = availableItems.filter(item => item.Availability === 'Just Listed').length;
+            
             const summaryHTML = `
                 <div class="summary-item">
                     <div class="summary-label">Total Business Value</div>
@@ -672,6 +674,13 @@
                     <div class="summary-value">${totalItems > 0 ? ((totalSold / totalItems) * 100).toFixed(1) : 0}%</div>
                     <div class="summary-subtext">of inventory sold</div>
                 </div>
+                ${justListedCount > 0 ? `
+                <div class="summary-item">
+                    <div class="summary-label">Just Listed</div>
+                    <div class="summary-value" style="color: #17a2b8;">🆕 ${justListedCount}</div>
+                    <div class="summary-subtext">newly available</div>
+                </div>
+                ` : ''}
             `;
             
             document.getElementById('summaryBanner').innerHTML = summaryHTML;
@@ -1018,6 +1027,14 @@
                 const statusClass = item.status === 'Sold' ? 'price' : '';
                 const statusColor = item.status === 'Sold' ? '#28a745' : '#ffc107';
                 
+                // Status with "Just Listed" badge
+                let statusDisplay = '';
+                if (item.status === 'Available' && item.Availability === 'Just Listed') {
+                    statusDisplay = `<span style="color: ${statusColor}; font-weight: bold;">${item.status}</span> <span style="background: #17a2b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;">🆕 JUST LISTED</span>`;
+                } else {
+                    statusDisplay = `<span style="color: ${statusColor}; font-weight: bold;">${item.status}</span>`;
+                }
+                
                 // For sold items show date, for available items show likes
                 let lastColumn = '';
                 if (item.status === 'Sold') {
@@ -1030,7 +1047,7 @@
                 
                 tableHTML += `
                     <tr>
-                        <td><span style="color: ${statusColor}; font-weight: bold;">${item.status}</span></td>
+                        <td>${statusDisplay}</td>
                         <td>${item.Brand || 'N/A'}</td>
                         <td>${item.Description || 'N/A'}</td>
                         <td class="${statusClass}">$${parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2)}</td>
