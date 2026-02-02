@@ -723,8 +723,8 @@
                     <canvas id="priceChart"></canvas>
                 </div>
                 <div class="chart-card">
-                    <div class="chart-title">Inventory Status</div>
-                    <canvas id="inventoryChart"></canvas>
+                    <div class="chart-title">Items by Likes</div>
+                    <canvas id="likesChart"></canvas>
                 </div>
             `;
             
@@ -737,7 +737,7 @@
             createSalesChart();
             createBrandsChart();
             createPriceChart();
-            createInventoryChart();
+            createLikesChart();
         }
         
         function createSalesChart() {
@@ -889,23 +889,94 @@
             });
         }
         
-        function createInventoryChart() {
-            const ctx = document.getElementById('inventoryChart');
-            charts.inventory = new Chart(ctx, {
-                type: 'pie',
+        function createLikesChart() {
+            // Sort available items by likes
+            const sortedByLikes = [...availableItems]
+                .filter(item => (item.Likes || 0) > 0)
+                .sort((a, b) => (b.Likes || 0) - (a.Likes || 0))
+                .slice(0, 10);
+            
+            if (sortedByLikes.length === 0) {
+                // Show message if no likes data
+                const ctx = document.getElementById('likesChart');
+                charts.likes = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['No Data'],
+                        datasets: [{
+                            label: 'Likes',
+                            data: [0],
+                            backgroundColor: '#e74c3c'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: 'Run the "Available with Likes" bookmarklet to see data',
+                                font: { size: 12 }
+                            }
+                        }
+                    }
+                });
+                return;
+            }
+            
+            const ctx = document.getElementById('likesChart');
+            const labels = sortedByLikes.map(item => {
+                const brand = item.Brand || 'Unknown';
+                return brand.length > 15 ? brand.substring(0, 15) + '...' : brand;
+            });
+            
+            const data = sortedByLikes.map(item => item.Likes || 0);
+            const colors = data.map(likes => {
+                if (likes > 50) return '#28a745'; // Green - hot item!
+                if (likes > 20) return '#ffc107'; // Yellow - warm
+                return '#17a2b8'; // Blue - cool
+            });
+            
+            charts.likes = new Chart(ctx, {
+                type: 'bar',
                 data: {
-                    labels: ['Sold', 'Available'],
+                    labels: labels,
                     datasets: [{
-                        data: [soldItems.length, availableItems.length],
-                        backgroundColor: ['#28a745', '#ffc107']
+                        label: 'Likes',
+                        data: data,
+                        backgroundColor: colors
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
+                    indexAxis: 'y',
                     plugins: {
-                        legend: {
-                            position: 'bottom'
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: (context) => {
+                                    const item = sortedByLikes[context[0].dataIndex];
+                                    return item.Brand || 'Unknown';
+                                },
+                                label: (context) => {
+                                    const item = sortedByLikes[context.dataIndex];
+                                    return [
+                                        `Likes: ${item.Likes || 0}`,
+                                        `Price: $${(item.Price || 0).toFixed(2)}`
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Likes'
+                            }
                         }
                     }
                 }
@@ -937,7 +1008,7 @@
                             <th>Brand</th>
                             <th>Description</th>
                             <th>Price</th>
-                            <th>Date</th>
+                            <th>Likes / Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -945,13 +1016,25 @@
             
             combined.forEach(item => {
                 const statusClass = item.status === 'Sold' ? 'price' : '';
+                const statusColor = item.status === 'Sold' ? '#28a745' : '#ffc107';
+                
+                // For sold items show date, for available items show likes
+                let lastColumn = '';
+                if (item.status === 'Sold') {
+                    lastColumn = item['Date Sold'] || 'N/A';
+                } else {
+                    const likes = item.Likes || 0;
+                    const likesColor = likes > 50 ? '#28a745' : likes > 20 ? '#ffc107' : '#6c757d';
+                    lastColumn = `<span style="color: ${likesColor}; font-weight: 600;">❤️ ${likes}</span>`;
+                }
+                
                 tableHTML += `
                     <tr>
-                        <td><span style="color: ${item.status === 'Sold' ? '#28a745' : '#ffc107'}; font-weight: bold;">${item.status}</span></td>
+                        <td><span style="color: ${statusColor}; font-weight: bold;">${item.status}</span></td>
                         <td>${item.Brand || 'N/A'}</td>
                         <td>${item.Description || 'N/A'}</td>
                         <td class="${statusClass}">$${parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2)}</td>
-                        <td>${item['Date Sold'] || item['Date Listed'] || 'N/A'}</td>
+                        <td>${lastColumn}</td>
                     </tr>
                 `;
             });
