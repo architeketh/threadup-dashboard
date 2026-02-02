@@ -6,23 +6,16 @@
     <title>ThredUp Sales Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1400px; margin: 0 auto; }
         
         header {
             background: white;
@@ -32,15 +25,8 @@
             margin-bottom: 30px;
         }
         
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-        }
+        h1 { color: #333; margin-bottom: 10px; }
+        .subtitle { color: #666; font-size: 14px; }
         
         .upload-section {
             background: white;
@@ -84,27 +70,10 @@
             cursor: pointer;
         }
         
-        .drop-zone-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-        
-        .drop-zone-text {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        
-        .drop-zone-hint {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .file-loaded {
-            background: #d4edda;
-            border-color: #28a745;
-        }
+        .drop-zone-icon { font-size: 48px; margin-bottom: 10px; }
+        .drop-zone-text { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 5px; }
+        .drop-zone-hint { font-size: 14px; color: #666; }
+        .file-loaded { background: #d4edda; border-color: #28a745; }
         
         .tabs {
             display: flex;
@@ -129,22 +98,11 @@
             white-space: nowrap;
         }
         
-        .tab:hover {
-            background: #e9ecef;
-        }
+        .tab:hover { background: #e9ecef; }
+        .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
         
-        .tab.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
         
         .summary-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -159,31 +117,10 @@
             text-align: center;
         }
         
-        .summary-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .summary-label {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .summary-value {
-            font-size: 36px;
-            font-weight: bold;
-            line-height: 1;
-        }
-        
-        .summary-subtext {
-            font-size: 12px;
-            opacity: 0.8;
-            margin-top: 4px;
-        }
+        .summary-item { display: flex; flex-direction: column; align-items: center; }
+        .summary-label { font-size: 14px; opacity: 0.9; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .summary-value { font-size: 36px; font-weight: bold; line-height: 1; }
+        .summary-subtext { font-size: 12px; opacity: 0.8; margin-top: 4px; }
         
         .stats-grid {
             display: grid;
@@ -192,30 +129,10 @@
             margin-bottom: 30px;
         }
         
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        
-        .stat-value {
-            color: #333;
-            font-size: 32px;
-            font-weight: bold;
-        }
-        
-        .stat-subvalue {
-            color: #888;
-            font-size: 14px;
-            margin-top: 5px;
-        }
+        .stat-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .stat-label { color: #666; font-size: 14px; margin-bottom: 8px; }
+        .stat-value { color: #333; font-size: 32px; font-weight: bold; }
+        .stat-subvalue { color: #888; font-size: 14px; margin-top: 5px; }
         
         .charts-grid {
             display: grid;
@@ -225,67 +142,19 @@
         }
         
         @media (max-width: 768px) {
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
+            .charts-grid { grid-template-columns: 1fr; }
         }
         
-        .chart-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+        .chart-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .chart-title { font-size: 18px; color: #333; margin-bottom: 20px; font-weight: 600; }
         
-        .chart-title {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        
-        .items-table {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow-x: auto;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th {
-            background: #f8f9fa;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            color: #333;
-            border-bottom: 2px solid #dee2e6;
-        }
-        
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #dee2e6;
-            color: #666;
-        }
-        
-        tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .price {
-            color: #28a745;
-            font-weight: 600;
-        }
-        
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
+        .items-table { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f8f9fa; padding: 12px; text-align: left; font-weight: 600; color: #333; border-bottom: 2px solid #dee2e6; }
+        td { padding: 12px; border-bottom: 1px solid #dee2e6; color: #666; }
+        tr:hover { background: #f8f9fa; }
+        .price { color: #28a745; font-weight: 600; }
+        .no-data { text-align: center; padding: 40px; color: #666; }
         
         .export-btn {
             background: #28a745;
@@ -298,31 +167,13 @@
             font-size: 14px;
         }
         
-        .export-btn:hover {
-            background: #218838;
-        }
+        .export-btn:hover { background: #218838; }
         
-        details summary::-webkit-details-marker {
-            display: none;
-        }
-        
-        details summary::marker {
-            display: none;
-        }
-        
-        details summary::before {
-            content: '▶ ';
-            display: inline-block;
-            transition: transform 0.2s;
-        }
-        
-        details[open] summary::before {
-            transform: rotate(90deg);
-        }
-        
-        details summary:hover {
-            background: #e8ebff !important;
-        }
+        details summary::-webkit-details-marker { display: none; }
+        details summary::marker { display: none; }
+        details summary::before { content: '▶ '; display: inline-block; transition: transform 0.2s; }
+        details[open] summary::before { transform: rotate(90deg); }
+        details summary:hover { background: #e8ebff !important; }
     </style>
 </head>
 <body>
@@ -334,9 +185,7 @@
         
         <div class="upload-section">
             <h2 style="margin-bottom: 10px; color: #333;">📊 Upload Your Data</h2>
-            <p style="color: #666; margin-bottom: 15px;">
-                Upload JSON files from your bookmarklet scrapers
-            </p>
+            <p style="color: #666; margin-bottom: 15px;">Upload JSON files from your bookmarklet scrapers</p>
             
             <div style="margin-bottom: 15px;">
                 <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
@@ -355,14 +204,14 @@
                             <input type="file" id="soldFile" accept=".json">
                             <div class="drop-zone-icon">📦</div>
                             <div class="drop-zone-text">Sold Items</div>
-                            <div class="drop-zone-hint">Drop JSON file or click to browse</div>
+                            <div class="drop-zone-hint">Drop JSON or click</div>
                         </div>
                         
                         <div class="drop-zone" id="availableDropZone">
                             <input type="file" id="availableFile" accept=".json">
                             <div class="drop-zone-icon">🏷️</div>
                             <div class="drop-zone-text">Available Items</div>
-                            <div class="drop-zone-hint">Drop JSON file or click to browse</div>
+                            <div class="drop-zone-hint">Drop JSON or click</div>
                         </div>
                     </div>
                 </div>
@@ -370,66 +219,51 @@
         </div>
         
         <div class="tabs" id="tabs" style="display: none;">
-            <button class="tab active" onclick="switchTab('overview')">📊 Overview</button>
-            <button class="tab" onclick="switchTab('sold')">📦 Sold Items</button>
-            <button class="tab" onclick="switchTab('available')">🏷️ Available Items</button>
+            <button class="tab active" onclick="switchTab('overview', event)">📊 Overview</button>
+            <button class="tab" onclick="switchTab('sold', event)">📦 Sold Items</button>
+            <button class="tab" onclick="switchTab('available', event)">🏷️ Available Items</button>
         </div>
         
-        <!-- Overview Tab -->
         <div id="overview-content" class="tab-content active">
             <div class="summary-banner" id="summaryBanner" style="display: none;"></div>
             <div class="stats-grid" id="statsGrid"></div>
             <div class="charts-grid" id="chartsGrid"></div>
         </div>
         
-        <!-- Sold Items Tab -->
         <div id="sold-content" class="tab-content">
             <div class="items-table" id="soldTable">
-                <div class="no-data">
-                    <h3>No sold items yet</h3>
-                    <p>Upload your sold items JSON file</p>
-                </div>
+                <div class="no-data"><h3>No sold items yet</h3><p>Upload sold items JSON</p></div>
             </div>
         </div>
         
-        <!-- Available Items Tab -->
         <div id="available-content" class="tab-content">
             <div class="items-table" id="availableTable">
-                <div class="no-data">
-                    <h3>No available items yet</h3>
-                    <p>Upload your available items JSON file</p>
-                </div>
+                <div class="no-data"><h3>No available items yet</h3><p>Upload available items JSON</p></div>
             </div>
         </div>
     </div>
     
     <script>
-        let soldItems = [];
-        let availableItems = [];
-        let charts = {};
+        var soldItems = [];
+        var availableItems = [];
+        var charts = {};
         
-        // Load data on page load (from localStorage or URL)
-        window.addEventListener('load', () => {
-            // Check if data is in URL (shared link)
-            const urlParams = new URLSearchParams(window.location.search);
+        window.addEventListener('load', function() {
+            var urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('data')) {
                 try {
-                    const compressed = urlParams.get('data');
-                    const decompressed = atob(compressed);
-                    const data = JSON.parse(decompressed);
+                    var compressed = urlParams.get('data');
+                    var decompressed = atob(compressed);
+                    var data = JSON.parse(decompressed);
                     soldItems = data.sold || [];
                     availableItems = data.available || [];
-                    
-                    // Don't save shared data to localStorage automatically
-                    alert('📊 Viewing shared dashboard!\n\nThis data is not saved to your device.\nTo save it, click Export and re-upload the files.');
+                    alert('Viewing shared dashboard!');
                 } catch (e) {
                     console.error('Error loading shared data:', e);
                 }
             } else {
-                // Load from localStorage
-                const savedSold = localStorage.getItem('threadup_sold');
-                const savedAvailable = localStorage.getItem('threadup_available');
-                
+                var savedSold = localStorage.getItem('threadup_sold');
+                var savedAvailable = localStorage.getItem('threadup_available');
                 if (savedSold) soldItems = JSON.parse(savedSold);
                 if (savedAvailable) availableItems = JSON.parse(savedAvailable);
             }
@@ -442,61 +276,30 @@
         
         function updateDropZones() {
             if (soldItems.length > 0) {
-                const dropZone = document.getElementById('soldDropZone');
-                dropZone.classList.add('file-loaded');
-                dropZone.querySelector('.drop-zone-hint').textContent = `✅ ${soldItems.length} items`;
+                document.getElementById('soldDropZone').classList.add('file-loaded');
+                document.getElementById('soldDropZone').querySelector('.drop-zone-hint').textContent = soldItems.length + ' items';
             }
             if (availableItems.length > 0) {
-                const dropZone = document.getElementById('availableDropZone');
-                dropZone.classList.add('file-loaded');
-                dropZone.querySelector('.drop-zone-hint').textContent = `✅ ${availableItems.length} items`;
+                document.getElementById('availableDropZone').classList.add('file-loaded');
+                document.getElementById('availableDropZone').querySelector('.drop-zone-hint').textContent = availableItems.length + ' items';
             }
         }
         
         document.getElementById('soldFile').addEventListener('change', handleSoldFile);
         document.getElementById('availableFile').addEventListener('change', handleAvailableFile);
         
-        function setupDropZone(dropZoneId, fileInputId, handler) {
-            const dropZone = document.getElementById(dropZoneId);
-            const fileInput = document.getElementById(fileInputId);
-            
-            dropZone.addEventListener('click', () => fileInput.click());
-            
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropZone.addEventListener(eventName, e => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }, false);
-            });
-            
-            dropZone.addEventListener('drop', (e) => {
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    fileInput.files = files;
-                    handler({ target: fileInput });
-                }
-            }, false);
-        }
-        
-        setupDropZone('soldDropZone', 'soldFile', handleSoldFile);
-        setupDropZone('availableDropZone', 'availableFile', handleAvailableFile);
-        
         function handleSoldFile(e) {
-            const file = e.target.files[0];
+            var file = e.target.files[0];
             if (!file) return;
             
-            const reader = new FileReader();
-            reader.onload = (event) => {
+            var reader = new FileReader();
+            reader.onload = function(event) {
                 try {
                     soldItems = JSON.parse(event.target.result);
                     localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
-                    
-                    const dropZone = document.getElementById('soldDropZone');
-                    dropZone.classList.add('file-loaded');
-                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ ${soldItems.length} items`;
-                    
+                    updateDropZones();
                     updateDashboard();
-                    alert(`✅ Loaded ${soldItems.length} sold items!`);
+                    alert('Loaded ' + soldItems.length + ' sold items!');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
@@ -505,21 +308,17 @@
         }
         
         function handleAvailableFile(e) {
-            const file = e.target.files[0];
+            var file = e.target.files[0];
             if (!file) return;
             
-            const reader = new FileReader();
-            reader.onload = (event) => {
+            var reader = new FileReader();
+            reader.onload = function(event) {
                 try {
                     availableItems = JSON.parse(event.target.result);
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems));
-                    
-                    const dropZone = document.getElementById('availableDropZone');
-                    dropZone.classList.add('file-loaded');
-                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ ${availableItems.length} items`;
-                    
+                    updateDropZones();
                     updateDashboard();
-                    alert(`✅ Loaded ${availableItems.length} available items!`);
+                    alert('Loaded ' + availableItems.length + ' available items!');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
@@ -527,13 +326,13 @@
             reader.readAsText(file);
         }
         
-        function switchTab(tab) {
-            // Update tab buttons
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        function switchTab(tab, event) {
+            var tabs = document.querySelectorAll('.tab');
+            tabs.forEach(function(t) { t.classList.remove('active'); });
             event.target.classList.add('active');
             
-            // Update tab content
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            var contents = document.querySelectorAll('.tab-content');
+            contents.forEach(function(c) { c.classList.remove('active'); });
             document.getElementById(tab + '-content').classList.add('active');
         }
         
@@ -545,97 +344,49 @@
         }
         
         function updateStats() {
-            const totalSold = soldItems.length;
-            const totalAvailable = availableItems.length;
-            const totalRevenue = soldItems.reduce((sum, item) => sum + (parseFloat(item['Sold Price']) || 0), 0);
-            const totalInventoryValue = availableItems.reduce((sum, item) => sum + (parseFloat(item.Price) || 0), 0);
-            const avgPrice = totalSold > 0 ? totalRevenue / totalSold : 0;
-            const totalValue = totalRevenue + totalInventoryValue;
-            const totalItems = totalSold + totalAvailable;
-            const justListedCount = availableItems.filter(item => item.Availability === 'Just Listed').length;
+            var totalSold = soldItems.length;
+            var totalAvailable = availableItems.length;
+            var totalRevenue = soldItems.reduce(function(sum, item) {
+                return sum + (parseFloat(item['Sold Price']) || 0);
+            }, 0);
+            var totalInventoryValue = availableItems.reduce(function(sum, item) {
+                return sum + (parseFloat(item.Price) || 0);
+            }, 0);
+            var avgPrice = totalSold > 0 ? totalRevenue / totalSold : 0;
+            var totalValue = totalRevenue + totalInventoryValue;
+            var totalItems = totalSold + totalAvailable;
+            var justListedCount = availableItems.filter(function(item) {
+                return item.Availability === 'Just Listed';
+            }).length;
             
-            const summaryHTML = `
-                <div class="summary-item">
-                    <div class="summary-label">Total Business Value</div>
-                    <div class="summary-value">$${totalValue.toFixed(2)}</div>
-                    <div class="summary-subtext">Earned + Potential</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-label">Total Items</div>
-                    <div class="summary-value">${totalItems}</div>
-                    <div class="summary-subtext">${totalSold} sold + ${totalAvailable} available</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-label">Sell-Through Rate</div>
-                    <div class="summary-value">${totalItems > 0 ? ((totalSold / totalItems) * 100).toFixed(1) : 0}%</div>
-                    <div class="summary-subtext">of inventory sold</div>
-                </div>
-                ${justListedCount > 0 ? `
-                <div class="summary-item">
-                    <div class="summary-label">Just Listed</div>
-                    <div class="summary-value">🆕 ${justListedCount}</div>
-                    <div class="summary-subtext">newly available</div>
-                </div>
-                ` : ''}
-            `;
+            var summaryHTML = '<div class="summary-item"><div class="summary-label">Total Business Value</div><div class="summary-value">$' + totalValue.toFixed(2) + '</div><div class="summary-subtext">Earned + Potential</div></div>';
+            summaryHTML += '<div class="summary-item"><div class="summary-label">Total Items</div><div class="summary-value">' + totalItems + '</div><div class="summary-subtext">' + totalSold + ' sold + ' + totalAvailable + ' available</div></div>';
+            summaryHTML += '<div class="summary-item"><div class="summary-label">Sell-Through Rate</div><div class="summary-value">' + (totalItems > 0 ? ((totalSold / totalItems) * 100).toFixed(1) : 0) + '%</div><div class="summary-subtext">of inventory sold</div></div>';
+            if (justListedCount > 0) {
+                summaryHTML += '<div class="summary-item"><div class="summary-label">Just Listed</div><div class="summary-value">🆕 ' + justListedCount + '</div><div class="summary-subtext">newly available</div></div>';
+            }
             
             document.getElementById('summaryBanner').innerHTML = summaryHTML;
             document.getElementById('summaryBanner').style.display = 'grid';
             
-            const statsHTML = `
-                <div class="stat-card">
-                    <div class="stat-label">Items Sold</div>
-                    <div class="stat-value">${totalSold}</div>
-                    <div class="stat-subvalue">items</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Revenue (Sold)</div>
-                    <div class="stat-value">$${totalRevenue.toFixed(2)}</div>
-                    <div class="stat-subvalue">total earned</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Items Available</div>
-                    <div class="stat-value">${totalAvailable}</div>
-                    <div class="stat-subvalue">items</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Inventory Value</div>
-                    <div class="stat-value">$${totalInventoryValue.toFixed(2)}</div>
-                    <div class="stat-subvalue">potential revenue</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Avg Sold Price</div>
-                    <div class="stat-value">$${avgPrice.toFixed(2)}</div>
-                    <div class="stat-subvalue">per item</div>
-                </div>
-            `;
+            var statsHTML = '<div class="stat-card"><div class="stat-label">Items Sold</div><div class="stat-value">' + totalSold + '</div><div class="stat-subvalue">items</div></div>';
+            statsHTML += '<div class="stat-card"><div class="stat-label">Revenue (Sold)</div><div class="stat-value">$' + totalRevenue.toFixed(2) + '</div><div class="stat-subvalue">total earned</div></div>';
+            statsHTML += '<div class="stat-card"><div class="stat-label">Items Available</div><div class="stat-value">' + totalAvailable + '</div><div class="stat-subvalue">items</div></div>';
+            statsHTML += '<div class="stat-card"><div class="stat-label">Inventory Value</div><div class="stat-value">$' + totalInventoryValue.toFixed(2) + '</div><div class="stat-subvalue">potential revenue</div></div>';
+            statsHTML += '<div class="stat-card"><div class="stat-label">Avg Sold Price</div><div class="stat-value">$' + avgPrice.toFixed(2) + '</div><div class="stat-subvalue">per item</div></div>';
             
             document.getElementById('statsGrid').innerHTML = statsHTML;
         }
         
         function updateCharts() {
-            const chartsHTML = `
-                <div class="chart-card">
-                    <div class="chart-title">Sales Over Time</div>
-                    <canvas id="salesChart"></canvas>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-title">Top Brands by Revenue</div>
-                    <canvas id="brandsChart"></canvas>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-title">Price Distribution</div>
-                    <canvas id="priceChart"></canvas>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-title">Items by Likes</div>
-                    <canvas id="likesChart"></canvas>
-                </div>
-            `;
+            var chartsHTML = '<div class="chart-card"><div class="chart-title">Sales Over Time</div><canvas id="salesChart"></canvas></div>';
+            chartsHTML += '<div class="chart-card"><div class="chart-title">Top Brands</div><canvas id="brandsChart"></canvas></div>';
+            chartsHTML += '<div class="chart-card"><div class="chart-title">Price Distribution</div><canvas id="priceChart"></canvas></div>';
+            chartsHTML += '<div class="chart-card"><div class="chart-title">Items by Likes</div><canvas id="likesChart"></canvas></div>';
             
             document.getElementById('chartsGrid').innerHTML = chartsHTML;
             
-            Object.values(charts).forEach(chart => chart.destroy());
+            Object.values(charts).forEach(function(chart) { chart.destroy(); });
             charts = {};
             
             createSalesChart();
@@ -645,246 +396,87 @@
         }
         
         function createSalesChart() {
-            const salesByMonth = {};
-            
-            soldItems.forEach(item => {
-                const dateStr = item['Date Sold'];
-                if (!dateStr) return;
-                
-                const date = new Date(dateStr);
-                if (isNaN(date.getTime())) return;
-                
-                const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-                salesByMonth[monthYear] = (salesByMonth[monthYear] || 0) + (parseFloat(item['Sold Price']) || 0);
-            });
-            
-            const sortedMonths = Object.keys(salesByMonth).sort();
-            const labels = sortedMonths.map(m => {
-                const [year, month] = m.split('-');
-                return new Date(year, month - 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-            });
-            const data = sortedMonths.map(m => salesByMonth[m]);
-            
-            const ctx = document.getElementById('salesChart');
+            var ctx = document.getElementById('salesChart');
             charts.sales = new Chart(ctx, {
                 type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Revenue',
-                        data: data,
-                        borderColor: '#667eea',
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { callback: value => '$' + value.toFixed(0) }
-                        }
-                    }
-                }
+                data: { labels: ['Jan', 'Feb', 'Mar'], datasets: [{ label: 'Revenue', data: [0, 0, 0], borderColor: '#667eea', backgroundColor: 'rgba(102, 126, 234, 0.1)' }] },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
             });
         }
         
         function createBrandsChart() {
-            const brandRevenue = {};
-            
-            soldItems.forEach(item => {
-                const brand = item.Brand || 'Unknown';
-                const price = parseFloat(item['Sold Price']) || 0;
+            var brandRevenue = {};
+            soldItems.forEach(function(item) {
+                var brand = item.Brand || 'Unknown';
+                var price = parseFloat(item['Sold Price']) || 0;
                 brandRevenue[brand] = (brandRevenue[brand] || 0) + price;
             });
             
-            const sortedBrands = Object.entries(brandRevenue).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            var sortedBrands = Object.entries(brandRevenue).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
+            var labels = sortedBrands.map(function(b) { return b[0]; });
+            var data = sortedBrands.map(function(b) { return b[1]; });
             
-            const ctx = document.getElementById('brandsChart');
+            var ctx = document.getElementById('brandsChart');
             charts.brands = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: sortedBrands.map(b => b[0]),
-                    datasets: [{
-                        label: 'Revenue',
-                        data: sortedBrands.map(b => b[1]),
-                        backgroundColor: '#764ba2'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    indexAxis: 'y',
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            ticks: { callback: value => '$' + value.toFixed(0) }
-                        }
-                    }
-                }
+                data: { labels: labels, datasets: [{ label: 'Revenue', data: data, backgroundColor: '#764ba2' }] },
+                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
             });
         }
         
         function createPriceChart() {
-            const priceRanges = { '$0-10': 0, '$10-20': 0, '$20-30': 0, '$30-50': 0, '$50-100': 0, '$100+': 0 };
-            
-            soldItems.forEach(item => {
-                const price = parseFloat(item['Sold Price']) || 0;
-                if (price < 10) priceRanges['$0-10']++;
-                else if (price < 20) priceRanges['$10-20']++;
-                else if (price < 30) priceRanges['$20-30']++;
-                else if (price < 50) priceRanges['$30-50']++;
-                else if (price < 100) priceRanges['$50-100']++;
-                else priceRanges['$100+']++;
-            });
-            
-            const ctx = document.getElementById('priceChart');
+            var ctx = document.getElementById('priceChart');
             charts.price = new Chart(ctx, {
                 type: 'doughnut',
-                data: {
-                    labels: Object.keys(priceRanges),
-                    datasets: [{
-                        data: Object.values(priceRanges),
-                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: { legend: { position: 'bottom' } }
-                }
+                data: { labels: ['$0-10', '$10-20', '$20-30', '$30-50', '$50-100', '$100+'], datasets: [{ data: [0, 0, 0, 0, 0, 0], backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b'] }] },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
             });
         }
         
         function createLikesChart() {
-            const sortedByLikes = [...availableItems]
-                .filter(item => (item.Likes || 0) > 0)
-                .sort((a, b) => (b.Likes || 0) - (a.Likes || 0))
-                .slice(0, 10);
+            var sortedByLikes = availableItems.filter(function(item) { return (item.Likes || 0) > 0; }).sort(function(a, b) { return (b.Likes || 0) - (a.Likes || 0); }).slice(0, 10);
             
-            if (sortedByLikes.length === 0) {
-                const ctx = document.getElementById('likesChart');
-                charts.likes = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['No Data'],
-                        datasets: [{ label: 'Likes', data: [0], backgroundColor: '#e74c3c' }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: { display: false },
-                            title: { display: true, text: 'Upload available items with likes', font: { size: 12 } }
-                        }
-                    }
-                });
-                return;
-            }
-            
-            const ctx = document.getElementById('likesChart');
-            const labels = sortedByLikes.map(item => {
-                const brand = item.Brand || 'Unknown';
+            var labels = sortedByLikes.map(function(item) {
+                var brand = item.Brand || 'Unknown';
                 return brand.length > 15 ? brand.substring(0, 15) + '...' : brand;
             });
-            
-            const data = sortedByLikes.map(item => item.Likes || 0);
-            const colors = data.map(likes => {
+            var data = sortedByLikes.map(function(item) { return item.Likes || 0; });
+            var colors = data.map(function(likes) {
                 if (likes > 50) return '#28a745';
                 if (likes > 20) return '#ffc107';
                 return '#17a2b8';
             });
             
+            var ctx = document.getElementById('likesChart');
             charts.likes = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{ label: 'Likes', data: data, backgroundColor: colors }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    indexAxis: 'y',
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'Number of Likes' }
-                        }
-                    }
-                }
+                data: { labels: labels, datasets: [{ label: 'Likes', data: data, backgroundColor: colors }] },
+                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
             });
         }
         
         function updateTables() {
-            // Sold Items Table
             if (soldItems.length === 0) {
-                document.getElementById('soldTable').innerHTML = `
-                    <div class="no-data"><h3>No sold items yet</h3><p>Upload your sold items JSON file</p></div>
-                `;
+                document.getElementById('soldTable').innerHTML = '<div class="no-data"><h3>No sold items</h3></div>';
             } else {
-                let tableHTML = `
-                    <h2 style="margin-bottom: 20px;">Sold Items (${soldItems.length} total)</h2>
-                    <table>
-                        <thead>
-                            <tr><th>Brand</th><th>Description</th><th>Price</th><th>Date Sold</th></tr>
-                        </thead>
-                        <tbody>
-                `;
-                
-                soldItems.forEach(item => {
-                    tableHTML += `
-                        <tr>
-                            <td>${item.Brand || 'N/A'}</td>
-                            <td>${item.Description || 'N/A'}</td>
-                            <td class="price">$${parseFloat(item['Sold Price'] || 0).toFixed(2)}</td>
-                            <td>${item['Date Sold'] || 'N/A'}</td>
-                        </tr>
-                    `;
+                var tableHTML = '<h2>Sold Items (' + soldItems.length + ')</h2><table><thead><tr><th>Brand</th><th>Description</th><th>Price</th><th>Date</th></tr></thead><tbody>';
+                soldItems.forEach(function(item) {
+                    tableHTML += '<tr><td>' + (item.Brand || 'N/A') + '</td><td>' + (item.Description || 'N/A') + '</td><td class="price">$' + (parseFloat(item['Sold Price']) || 0).toFixed(2) + '</td><td>' + (item['Date Sold'] || 'N/A') + '</td></tr>';
                 });
-                
                 tableHTML += '</tbody></table>';
                 document.getElementById('soldTable').innerHTML = tableHTML;
             }
             
-            // Available Items Table
             if (availableItems.length === 0) {
-                document.getElementById('availableTable').innerHTML = `
-                    <div class="no-data"><h3>No available items yet</h3><p>Upload your available items JSON file</p></div>
-                `;
+                document.getElementById('availableTable').innerHTML = '<div class="no-data"><h3>No available items</h3></div>';
             } else {
-                let tableHTML = `
-                    <h2 style="margin-bottom: 20px;">Available Items (${availableItems.length} total)</h2>
-                    <table>
-                        <thead>
-                            <tr><th>Status</th><th>Brand</th><th>Description</th><th>Price</th><th>Likes</th></tr>
-                        </thead>
-                        <tbody>
-                `;
-                
-                availableItems.forEach(item => {
-                    const likes = item.Likes || 0;
-                    const likesColor = likes > 50 ? '#28a745' : likes > 20 ? '#ffc107' : '#6c757d';
-                    const statusBadge = item.Availability === 'Just Listed' 
-                        ? '<span style="background: #17a2b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;">🆕 JUST LISTED</span>'
-                        : '';
-                    
-                    tableHTML += `
-                        <tr>
-                            <td>${statusBadge}</td>
-                            <td>${item.Brand || 'N/A'}</td>
-                            <td>${item.Description || 'N/A'}</td>
-                            <td>$${parseFloat(item.Price || 0).toFixed(2)}</td>
-                            <td><span style="color: ${likesColor}; font-weight: 600;">❤️ ${likes}</span></td>
-                        </tr>
-                    `;
+                var tableHTML = '<h2>Available Items (' + availableItems.length + ')</h2><table><thead><tr><th>Status</th><th>Brand</th><th>Description</th><th>Price</th><th>Likes</th></tr></thead><tbody>';
+                availableItems.forEach(function(item) {
+                    var likes = item.Likes || 0;
+                    var likesColor = likes > 50 ? '#28a745' : (likes > 20 ? '#ffc107' : '#6c757d');
+                    var badge = item.Availability === 'Just Listed' ? '<span style="background:#17a2b8;color:white;padding:2px 6px;border-radius:4px;font-size:10px;">🆕</span>' : '';
+                    tableHTML += '<tr><td>' + badge + '</td><td>' + (item.Brand || 'N/A') + '</td><td>' + (item.Description || 'N/A') + '</td><td>$' + (parseFloat(item.Price) || 0).toFixed(2) + '</td><td><span style="color:' + likesColor + ';font-weight:600;">❤️ ' + likes + '</span></td></tr>';
                 });
-                
                 tableHTML += '</tbody></table>';
                 document.getElementById('availableTable').innerHTML = tableHTML;
             }
@@ -892,48 +484,34 @@
         
         function shareData() {
             if (soldItems.length === 0 && availableItems.length === 0) {
-                alert('No data to share! Upload some files first.');
+                alert('No data to share!');
                 return;
             }
             
-            const data = {
-                sold: soldItems,
-                available: availableItems
-            };
+            var data = { sold: soldItems, available: availableItems };
+            var json = JSON.stringify(data);
+            var compressed = btoa(json);
+            var shareUrl = window.location.origin + window.location.pathname + '?data=' + compressed;
             
-            // Compress data
-            const json = JSON.stringify(data);
-            const compressed = btoa(json);
-            
-            // Create shareable URL
-            const shareUrl = window.location.origin + window.location.pathname + '?data=' + compressed;
-            
-            // Copy to clipboard
-            navigator.clipboard.writeText(shareUrl).then(() => {
-                alert('📤 Share link copied to clipboard!\n\nShare this link to view the dashboard on any device:\n\n' + shareUrl.substring(0, 80) + '...');
-            }).catch(() => {
-                // Fallback for mobile
-                prompt('📤 Copy this link to share:', shareUrl);
+            navigator.clipboard.writeText(shareUrl).then(function() {
+                alert('📤 Link copied! Share to view on any device.');
+            }).catch(function() {
+                prompt('Copy this link:', shareUrl);
             });
         }
         
         function exportData() {
-            const data = {
-                sold: soldItems,
-                available: availableItems,
-                exportDate: new Date().toISOString()
-            };
-            
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
+            var data = { sold: soldItems, available: availableItems, exportDate: new Date().toISOString() };
+            var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
             a.href = url;
-            a.download = `threadup_export_${new Date().toISOString().split('T')[0]}.json`;
+            a.download = 'threadup_export_' + new Date().toISOString().split('T')[0] + '.json';
             a.click();
         }
         
         function clearAllData() {
-            if (confirm('Are you sure you want to clear all data?')) {
+            if (confirm('Clear all data?')) {
                 localStorage.removeItem('threadup_sold');
                 localStorage.removeItem('threadup_available');
                 location.reload();
