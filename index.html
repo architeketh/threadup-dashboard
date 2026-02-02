@@ -271,6 +271,28 @@
         .clear-btn:hover {
             background: #c82333;
         }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -416,6 +438,58 @@
         setupDropZone('soldDropZone', 'soldFile', handleSoldFile);
         setupDropZone('availableDropZone', 'availableFile', handleAvailableFile);
         
+        // Helper function to merge items (avoid duplicates)
+        function mergeItems(existingItems, newItems) {
+            const merged = [...existingItems];
+            const existingKeys = new Set(
+                existingItems.map(item => createItemKey(item))
+            );
+            
+            newItems.forEach(item => {
+                const key = createItemKey(item);
+                if (!existingKeys.has(key)) {
+                    merged.push(item);
+                    existingKeys.add(key);
+                }
+            });
+            
+            return merged;
+        }
+        
+        // Create unique key for an item
+        function createItemKey(item) {
+            const brand = (item.Brand || '').toLowerCase().trim();
+            const desc = (item.Description || '').toLowerCase().trim();
+            const price = item['Sold Price'] || item.Price || '';
+            const date = item['Date Sold'] || item['Date Listed'] || '';
+            return `${brand}|${desc}|${price}|${date}`;
+        }
+        
+        // Show notification toast
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                background: ${type === 'success' ? '#28a745' : '#17a2b8'};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+                font-weight: 500;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
         function handleSoldFile(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -423,15 +497,27 @@
             const reader = new FileReader();
             reader.onload = (event) => {
                 try {
-                    soldItems = JSON.parse(event.target.result);
+                    const newItems = JSON.parse(event.target.result);
+                    
+                    // Merge with existing data (avoid duplicates based on Brand + Description + Price)
+                    const mergedItems = mergeItems(soldItems, newItems);
+                    const addedCount = mergedItems.length - soldItems.length;
+                    
+                    soldItems = mergedItems;
                     localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
                     
                     // Visual feedback
                     const dropZone = document.getElementById('soldDropZone');
                     dropZone.classList.add('file-loaded');
-                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ Loaded ${soldItems.length} items`;
+                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ Loaded ${soldItems.length} items (+${addedCount} new)`;
                     
                     updateDashboard();
+                    
+                    if (addedCount > 0) {
+                        showNotification(`Added ${addedCount} new sold items!`, 'success');
+                    } else {
+                        showNotification('No new items found (all items already tracked)', 'info');
+                    }
                 } catch (error) {
                     alert('Error reading sold items file: ' + error.message);
                 }
@@ -446,15 +532,27 @@
             const reader = new FileReader();
             reader.onload = (event) => {
                 try {
-                    availableItems = JSON.parse(event.target.result);
+                    const newItems = JSON.parse(event.target.result);
+                    
+                    // Merge with existing data
+                    const mergedItems = mergeItems(availableItems, newItems);
+                    const addedCount = mergedItems.length - availableItems.length;
+                    
+                    availableItems = mergedItems;
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems));
                     
                     // Visual feedback
                     const dropZone = document.getElementById('availableDropZone');
                     dropZone.classList.add('file-loaded');
-                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ Loaded ${availableItems.length} items`;
+                    dropZone.querySelector('.drop-zone-hint').textContent = `✅ Loaded ${availableItems.length} items (+${addedCount} new)`;
                     
                     updateDashboard();
+                    
+                    if (addedCount > 0) {
+                        showNotification(`Added ${addedCount} new available items!`, 'success');
+                    } else {
+                        showNotification('No new items found (all items already tracked)', 'info');
+                    }
                 } catch (error) {
                     alert('Error reading available items file: ' + error.message);
                 }
