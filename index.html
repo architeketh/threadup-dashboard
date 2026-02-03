@@ -189,8 +189,7 @@
             
             <div style="margin-bottom: 15px;">
                 <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
-                <button class="export-btn" onclick="exportData()">💾 Export</button>
-                <button class="export-btn" onclick="shareData()" style="background: #17a2b8;">📤 Share</button>
+                <button class="export-btn" onclick="shareData()" style="background: #17a2b8;">📤 Share HTML</button>
                 <button class="export-btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Clear</button>
             </div>
             
@@ -243,23 +242,23 @@
         </div>
     </div>
     
+    <script id="embedded-data" type="application/json">
+    </script>
+    
     <script>
         var soldItems = [];
         var availableItems = [];
         var charts = {};
         
         window.addEventListener('load', function() {
-            var urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('data')) {
+            var embeddedData = document.getElementById('embedded-data').textContent.trim();
+            if (embeddedData) {
                 try {
-                    var compressed = urlParams.get('data');
-                    var decompressed = atob(compressed);
-                    var data = JSON.parse(decompressed);
+                    var data = JSON.parse(embeddedData);
                     soldItems = data.sold || [];
                     availableItems = data.available || [];
-                    alert('Viewing shared dashboard!');
                 } catch (e) {
-                    console.error('Error loading shared data:', e);
+                    console.error('Error loading embedded data:', e);
                 }
             } else {
                 var savedSold = localStorage.getItem('threadup_sold');
@@ -379,58 +378,18 @@
         }
         
         function updateCharts() {
-            var chartsHTML = '<div class="chart-card"><div class="chart-title">Sales Over Time</div><canvas id="salesChart"></canvas></div>';
-            chartsHTML += '<div class="chart-card"><div class="chart-title">Top Brands</div><canvas id="brandsChart"></canvas></div>';
+            var chartsHTML = '<div class="chart-card"><div class="chart-title">Items by Likes</div><canvas id="likesChart"></canvas></div>';
+            chartsHTML += '<div class="chart-card"><div class="chart-title">Top Brands by Revenue</div><canvas id="brandsChart"></canvas></div>';
             chartsHTML += '<div class="chart-card"><div class="chart-title">Price Distribution</div><canvas id="priceChart"></canvas></div>';
-            chartsHTML += '<div class="chart-card"><div class="chart-title">Items by Likes</div><canvas id="likesChart"></canvas></div>';
             
             document.getElementById('chartsGrid').innerHTML = chartsHTML;
             
             Object.values(charts).forEach(function(chart) { chart.destroy(); });
             charts = {};
             
-            createSalesChart();
+            createLikesChart();
             createBrandsChart();
             createPriceChart();
-            createLikesChart();
-        }
-        
-        function createSalesChart() {
-            var ctx = document.getElementById('salesChart');
-            charts.sales = new Chart(ctx, {
-                type: 'line',
-                data: { labels: ['Jan', 'Feb', 'Mar'], datasets: [{ label: 'Revenue', data: [0, 0, 0], borderColor: '#667eea', backgroundColor: 'rgba(102, 126, 234, 0.1)' }] },
-                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
-            });
-        }
-        
-        function createBrandsChart() {
-            var brandRevenue = {};
-            soldItems.forEach(function(item) {
-                var brand = item.Brand || 'Unknown';
-                var price = parseFloat(item['Sold Price']) || 0;
-                brandRevenue[brand] = (brandRevenue[brand] || 0) + price;
-            });
-            
-            var sortedBrands = Object.entries(brandRevenue).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
-            var labels = sortedBrands.map(function(b) { return b[0]; });
-            var data = sortedBrands.map(function(b) { return b[1]; });
-            
-            var ctx = document.getElementById('brandsChart');
-            charts.brands = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: labels, datasets: [{ label: 'Revenue', data: data, backgroundColor: '#764ba2' }] },
-                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
-            });
-        }
-        
-        function createPriceChart() {
-            var ctx = document.getElementById('priceChart');
-            charts.price = new Chart(ctx, {
-                type: 'doughnut',
-                data: { labels: ['$0-10', '$10-20', '$20-30', '$30-50', '$50-100', '$100+'], datasets: [{ data: [0, 0, 0, 0, 0, 0], backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b'] }] },
-                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
-            });
         }
         
         function createLikesChart() {
@@ -452,6 +411,61 @@
                 type: 'bar',
                 data: { labels: labels, datasets: [{ label: 'Likes', data: data, backgroundColor: colors }] },
                 options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+            });
+        }
+        
+        function createBrandsChart() {
+            var brandRevenue = {};
+            soldItems.forEach(function(item) {
+                var brand = item.Brand || 'Unknown';
+                var price = parseFloat(item['Sold Price']) || 0;
+                brandRevenue[brand] = (brandRevenue[brand] || 0) + price;
+            });
+            
+            var sortedBrands = Object.entries(brandRevenue).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
+            var labels = sortedBrands.map(function(b) { return b[0]; });
+            var data = sortedBrands.map(function(b) { return b[1]; });
+            
+            var colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b', '#fa709a', '#fee140', '#30cfd0', '#a8edea'];
+            
+            var ctx = document.getElementById('brandsChart');
+            charts.brands = new Chart(ctx, {
+                type: 'bar',
+                data: { labels: labels, datasets: [{ label: 'Revenue', data: data, backgroundColor: colors }] },
+                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+            });
+        }
+        
+        function createPriceChart() {
+            var priceRanges = { '$0-10': 0, '$10-20': 0, '$20-30': 0, '$30-50': 0, '$50-100': 0, '$100+': 0 };
+            
+            soldItems.forEach(function(item) {
+                var price = parseFloat(item['Sold Price']) || 0;
+                if (price < 10) priceRanges['$0-10']++;
+                else if (price < 20) priceRanges['$10-20']++;
+                else if (price < 30) priceRanges['$20-30']++;
+                else if (price < 50) priceRanges['$30-50']++;
+                else if (price < 100) priceRanges['$50-100']++;
+                else priceRanges['$100+']++;
+            });
+            
+            var ctx = document.getElementById('priceChart');
+            charts.price = new Chart(ctx, {
+                type: 'doughnut',
+                data: { 
+                    labels: Object.keys(priceRanges), 
+                    datasets: [{ 
+                        data: Object.values(priceRanges), 
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b'] 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: true, 
+                    plugins: { 
+                        legend: { position: 'bottom' } 
+                    } 
+                }
             });
         }
         
@@ -484,30 +498,28 @@
         
         function shareData() {
             if (soldItems.length === 0 && availableItems.length === 0) {
-                alert('No data to share!');
+                alert('No data to share! Upload files first.');
                 return;
             }
             
+            var currentHTML = document.documentElement.outerHTML;
             var data = { sold: soldItems, available: availableItems };
-            var json = JSON.stringify(data);
-            var compressed = btoa(json);
-            var shareUrl = window.location.origin + window.location.pathname + '?data=' + compressed;
+            var dataJSON = JSON.stringify(data, null, 2);
             
-            navigator.clipboard.writeText(shareUrl).then(function() {
-                alert('📤 Link copied! Share to view on any device.');
-            }).catch(function() {
-                prompt('Copy this link:', shareUrl);
-            });
-        }
-        
-        function exportData() {
-            var data = { sold: soldItems, available: availableItems, exportDate: new Date().toISOString() };
-            var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            var newHTML = currentHTML.replace(
+                '<script id="embedded-data" type="application/json">\n    </script>',
+                '<script id="embedded-data" type="application/json">\n' + dataJSON + '\n    </script>'
+            );
+            
+            var blob = new Blob([newHTML], { type: 'text/html' });
             var url = URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = url;
-            a.download = 'threadup_export_' + new Date().toISOString().split('T')[0] + '.json';
+            a.download = 'threadup_dashboard_' + new Date().toISOString().split('T')[0] + '.html';
             a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('📤 Dashboard downloaded as HTML!\n\nShare this file via email/text.\nAnyone can open it in their browser to view your data!');
         }
         
         function clearAllData() {
