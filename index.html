@@ -30,10 +30,10 @@
         
         .upload-section {
             background: white;
-            padding: 30px;
+            padding: 15px 20px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
         }
         
@@ -47,7 +47,7 @@
         .drop-zone {
             border: 3px dashed #667eea;
             border-radius: 12px;
-            padding: 40px 20px;
+            padding: 20px 20px;
             cursor: pointer;
             transition: all 0.3s;
             background: #f8f9ff;
@@ -70,9 +70,9 @@
             cursor: pointer;
         }
         
-        .drop-zone-icon { font-size: 48px; margin-bottom: 10px; }
-        .drop-zone-text { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 5px; }
-        .drop-zone-hint { font-size: 14px; color: #666; }
+        .drop-zone-icon { font-size: 32px; margin-bottom: 8px; }
+        .drop-zone-text { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px; }
+        .drop-zone-hint { font-size: 12px; color: #666; }
         .file-loaded { background: #d4edda; border-color: #28a745; }
         
         .tabs {
@@ -191,9 +191,9 @@
             h1 { font-size: 22px; }
             .subtitle { font-size: 12px; }
             
-            .upload-section { padding: 15px; margin-bottom: 15px; }
-            .upload-section h2 { font-size: 18px; }
-            .upload-section p { font-size: 12px; }
+            .upload-section { padding: 12px 15px; margin-bottom: 12px; }
+            .upload-section h2 { font-size: 16px; margin-bottom: 6px; }
+            .upload-section p { font-size: 11px; margin-bottom: 8px; }
             
             .upload-zones {
                 grid-template-columns: 1fr;
@@ -201,10 +201,10 @@
                 margin: 15px 0;
             }
             
-            .drop-zone { padding: 30px 15px; }
-            .drop-zone-icon { font-size: 36px; }
-            .drop-zone-text { font-size: 16px; }
-            .drop-zone-hint { font-size: 12px; }
+            .drop-zone { padding: 15px 10px; }
+            .drop-zone-icon { font-size: 28px; }
+            .drop-zone-text { font-size: 14px; }
+            .drop-zone-hint { font-size: 11px; }
             
             .export-btn {
                 padding: 10px 12px;
@@ -347,13 +347,12 @@
         </header>
         
         <div class="upload-section" id="uploadSection">
-            <h2 style="margin-bottom: 10px; color: #333;">📊 Manage Your Data</h2>
-            <p style="color: #666; margin-bottom: 15px;">Upload files or export for GitHub sharing</p>
+            <h2 style="margin-bottom: 8px; color: #333; font-size: 18px;">📊 Manage Your Data</h2>
+            <p style="color: #666; margin-bottom: 10px; font-size: 13px;">Upload files or export for GitHub sharing</p>
             
-            <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 10px;">
                 <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
                 <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
-                <button class="export-btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Clear</button>
             </div>
             
             <div class="info-box" id="shareInstructions" style="display: none;">
@@ -367,8 +366,8 @@
                 </ol>
             </div>
             
-            <details open style="margin-top: 20px;">
-                <summary style="cursor: pointer; color: #667eea; font-weight: 500; padding: 10px; background: #f8f9ff; border-radius: 6px; user-select: none;">
+            <details style="margin-top: 10px;">
+                <summary style="cursor: pointer; color: #667eea; font-weight: 500; padding: 8px; background: #f8f9ff; border-radius: 6px; user-select: none; font-size: 14px;">
                     📤 Upload Files
                 </summary>
                 <div style="margin-top: 15px;">
