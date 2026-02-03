@@ -215,6 +215,7 @@
                 font-size: 12px;
                 margin: 3px;
                 display: inline-block;
+                white-space: nowrap;
             }
             
             .tabs {
@@ -302,9 +303,11 @@
             .summary-value { font-size: 22px; }
             
             .export-btn {
-                display: block;
-                width: 100%;
-                margin: 5px 0;
+                display: inline-block;
+                width: auto;
+                margin: 3px 2px;
+                padding: 10px 12px;
+                font-size: 11px;
             }
             
             .tab { padding: 8px 12px; font-size: 11px; }
@@ -364,16 +367,20 @@
             <div style="margin-bottom: 10px;">
                 <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
                 <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
+                <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
             </div>
             
             <div class="info-box" id="shareInstructions" style="display: none;">
-                <h3>📤 How to Share Your Dashboard</h3>
+                <h3>📤 How to Share & Track Sales</h3>
                 <ol>
+                    <li>Upload your data files (sold + available items)</li>
+                    <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
                     <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code> and <code>available.json</code></li>
                     <li>In your repo, go to <code>data/</code> folder on GitHub</li>
                     <li>Click "Upload files" and add both JSON files</li>
                     <li>Commit changes</li>
                     <li><strong>Share:</strong> <code>https://architeketh.github.io/threadup-dashboard/</code></li>
+                    <li>Next time you upload, you'll see <strong>🔥 New Sales</strong> since last update!</li>
                 </ol>
             </div>
             
@@ -434,10 +441,66 @@
         var soldSortDirection = 'asc';
         var availableSortColumn = null;
         var availableSortDirection = 'asc';
+        var lastUpdateDate = null;
+        var previousSoldCount = 0;
+        var salesSinceUpdate = 0;
         
         window.addEventListener('load', function() {
+            loadPreviousStats();
             loadDataFromGitHub();
         });
+        
+        function loadPreviousStats() {
+            var savedUpdateDate = localStorage.getItem('threadup_last_update');
+            var savedPreviousCount = localStorage.getItem('threadup_previous_sold_count');
+            var savedCurrentCount = localStorage.getItem('threadup_current_sold_count');
+            
+            if (savedUpdateDate) {
+                lastUpdateDate = new Date(savedUpdateDate);
+            }
+            if (savedPreviousCount) {
+                previousSoldCount = parseInt(savedPreviousCount);
+            }
+            if (savedCurrentCount) {
+                var savedCurrent = parseInt(savedCurrentCount);
+                if (savedCurrent > 0) {
+                    previousSoldCount = savedCurrent;
+                }
+            }
+        }
+        
+        function updateTrackingStats() {
+            var currentDate = new Date();
+            var currentSoldCount = soldItems.length;
+            
+            if (previousSoldCount === 0) {
+                previousSoldCount = currentSoldCount;
+                salesSinceUpdate = 0;
+            } else {
+                salesSinceUpdate = currentSoldCount - previousSoldCount;
+            }
+            
+            if (!lastUpdateDate) {
+                lastUpdateDate = currentDate;
+            }
+            
+            localStorage.setItem('threadup_last_update', currentDate.toISOString());
+            localStorage.setItem('threadup_current_sold_count', currentSoldCount.toString());
+        }
+        
+        function resetTrackingStats() {
+            previousSoldCount = soldItems.length;
+            lastUpdateDate = new Date();
+            salesSinceUpdate = 0;
+            
+            localStorage.setItem('threadup_last_update', lastUpdateDate.toISOString());
+            localStorage.setItem('threadup_previous_sold_count', previousSoldCount.toString());
+            localStorage.setItem('threadup_current_sold_count', previousSoldCount.toString());
+            
+            updateDashboard();
+            
+            alert('✅ Tracking updated!\n\n📊 Baseline set: ' + previousSoldCount + ' sold items\n📅 Date: ' + lastUpdateDate.toLocaleDateString() + '\n\n💡 Next time you upload data, you\'ll see new sales since today!');
+        }
         
         function loadDataFromGitHub() {
             Promise.all([
@@ -496,7 +559,7 @@
                     updateDropZones();
                     updateDashboard();
                     document.getElementById('shareInstructions').style.display = 'block';
-                    alert('Loaded ' + soldItems.length + ' sold items!');
+                    alert('✅ Loaded ' + soldItems.length + ' sold items!\n\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales over time!');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
@@ -516,7 +579,7 @@
                     updateDropZones();
                     updateDashboard();
                     document.getElementById('shareInstructions').style.display = 'block';
-                    alert('Loaded ' + availableItems.length + ' available items!');
+                    alert('✅ Loaded ' + availableItems.length + ' available items!\n\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales over time!');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
@@ -557,9 +620,31 @@
                 return item.Availability === 'Just Listed';
             }).length;
             
+            updateTrackingStats();
+            
+            var daysSinceUpdate = 0;
+            var lastUpdateText = 'Never';
+            
+            if (lastUpdateDate) {
+                var now = new Date();
+                var diffTime = Math.abs(now - lastUpdateDate);
+                daysSinceUpdate = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                lastUpdateText = lastUpdateDate.toLocaleDateString();
+            }
+            
             var summaryHTML = '<div class="summary-item"><div class="summary-label">Total Value</div><div class="summary-value">$' + totalValue.toFixed(0) + '</div><div class="summary-subtext">Earned + Potential</div></div>';
             summaryHTML += '<div class="summary-item"><div class="summary-label">Total Items</div><div class="summary-value">' + totalItems + '</div><div class="summary-subtext">' + totalSold + ' sold / ' + totalAvailable + ' avail</div></div>';
+            
+            if (salesSinceUpdate > 0) {
+                summaryHTML += '<div class="summary-item"><div class="summary-label">New Sales</div><div class="summary-value" style="color: #4ade80;">+' + salesSinceUpdate + '</div><div class="summary-subtext">since last update</div></div>';
+            }
+            
             summaryHTML += '<div class="summary-item"><div class="summary-label">Sell-Through</div><div class="summary-value">' + (totalItems > 0 ? ((totalSold / totalItems) * 100).toFixed(0) : 0) + '%</div><div class="summary-subtext">of inventory</div></div>';
+            
+            if (lastUpdateDate) {
+                summaryHTML += '<div class="summary-item"><div class="summary-label">Last Updated</div><div class="summary-value" style="font-size: 18px;">' + lastUpdateText + '</div><div class="summary-subtext">' + daysSinceUpdate + ' day' + (daysSinceUpdate !== 1 ? 's' : '') + ' ago</div></div>';
+            }
+            
             if (justListedCount > 0) {
                 summaryHTML += '<div class="summary-item"><div class="summary-label">Just Listed</div><div class="summary-value">🆕 ' + justListedCount + '</div><div class="summary-subtext">new items</div></div>';
             }
