@@ -144,6 +144,17 @@
             font-size: 14px;
         }
         .export-btn:hover { background: #218838; }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .info-box h3 { color: #1976D2; margin-bottom: 10px; font-size: 16px; }
+        .info-box ol { margin-left: 20px; color: #555; }
+        .info-box li { margin: 8px 0; }
+        .info-box code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
         details summary::-webkit-details-marker { display: none; }
         details summary::marker { display: none; }
         details summary::before { content: '▶ '; display: inline-block; transition: transform 0.2s; }
@@ -159,13 +170,25 @@
         </header>
         
         <div class="upload-section" id="uploadSection">
-            <h2 style="margin-bottom: 10px; color: #333;">📊 Upload Your Data</h2>
-            <p style="color: #666; margin-bottom: 15px;">Upload JSON files from your bookmarklet scrapers</p>
+            <h2 style="margin-bottom: 10px; color: #333;">📊 Manage Your Data</h2>
+            <p style="color: #666; margin-bottom: 15px;">Upload files or export for GitHub sharing</p>
             
             <div style="margin-bottom: 15px;">
                 <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
-                <button class="export-btn" onclick="shareData()" style="background: #17a2b8;">📤 Share HTML</button>
+                <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
                 <button class="export-btn" onclick="clearAllData()" style="background: #dc3545;">🗑️ Clear</button>
+            </div>
+            
+            <div class="info-box" id="shareInstructions" style="display: none;">
+                <h3>📤 How to Share Your Dashboard</h3>
+                <ol>
+                    <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code> and <code>available.json</code></li>
+                    <li>In your repo, create a folder: <code>data/</code></li>
+                    <li>Put both files in <code>data/</code> folder</li>
+                    <li>Commit and push to GitHub</li>
+                    <li><strong>Share this URL:</strong> <code id="shareUrl">https://architeketh.github.io/threadup-dashboard/</code></li>
+                    <li>Anyone who visits will see your data automatically! 🎉</li>
+                </ol>
             </div>
             
             <details open style="margin-top: 20px;">
@@ -218,34 +241,44 @@
     </div>
     
     <script>
-        // DATA_PLACEHOLDER_START
-        var EMBEDDED_DATA = null;
-        // DATA_PLACEHOLDER_END
-        
         var soldItems = [];
         var availableItems = [];
         var charts = {};
         
         window.addEventListener('load', function() {
-            if (EMBEDDED_DATA) {
-                soldItems = EMBEDDED_DATA.sold || [];
-                availableItems = EMBEDDED_DATA.available || [];
+            loadDataFromGitHub();
+        });
+        
+        function loadDataFromGitHub() {
+            Promise.all([
+                fetch('data/sold.json').then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch('data/available.json').then(r => r.ok ? r.json() : null).catch(() => null)
+            ]).then(function(results) {
+                var githubSold = results[0];
+                var githubAvailable = results[1];
+                
+                if (githubSold) {
+                    soldItems = githubSold;
+                    console.log('Loaded sold items from GitHub:', soldItems.length);
+                }
+                if (githubAvailable) {
+                    availableItems = githubAvailable;
+                    console.log('Loaded available items from GitHub:', availableItems.length);
+                }
+                
+                if (soldItems.length === 0 && availableItems.length === 0) {
+                    var savedSold = localStorage.getItem('threadup_sold');
+                    var savedAvailable = localStorage.getItem('threadup_available');
+                    if (savedSold) soldItems = JSON.parse(savedSold);
+                    if (savedAvailable) availableItems = JSON.parse(savedAvailable);
+                }
                 
                 if (soldItems.length > 0 || availableItems.length > 0) {
-                    document.getElementById('uploadSection').style.display = 'none';
+                    updateDropZones();
+                    updateDashboard();
                 }
-            } else {
-                var savedSold = localStorage.getItem('threadup_sold');
-                var savedAvailable = localStorage.getItem('threadup_available');
-                if (savedSold) soldItems = JSON.parse(savedSold);
-                if (savedAvailable) availableItems = JSON.parse(savedAvailable);
-            }
-            
-            if (soldItems.length > 0 || availableItems.length > 0) {
-                updateDropZones();
-                updateDashboard();
-            }
-        });
+            });
+        }
         
         function updateDropZones() {
             if (soldItems.length > 0) {
@@ -272,7 +305,8 @@
                     localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
                     updateDropZones();
                     updateDashboard();
-                    alert('Loaded ' + soldItems.length + ' sold items!');
+                    document.getElementById('shareInstructions').style.display = 'block';
+                    alert('Loaded ' + soldItems.length + ' sold items!\n\nClick "Export for GitHub" to share.');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
@@ -291,7 +325,8 @@
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems));
                     updateDropZones();
                     updateDashboard();
-                    alert('Loaded ' + availableItems.length + ' available items!');
+                    document.getElementById('shareInstructions').style.display = 'block';
+                    alert('Loaded ' + availableItems.length + ' available items!\n\nClick "Export for GitHub" to share.');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
@@ -470,39 +505,35 @@
             }
         }
         
-        function shareData() {
+        function exportForGitHub() {
             if (soldItems.length === 0 && availableItems.length === 0) {
-                alert('No data to share! Upload files first.');
+                alert('No data to export! Upload files first.');
                 return;
             }
             
-            var data = { sold: soldItems, available: availableItems };
-            var dataJSON = JSON.stringify(data, null, 2);
-            
-            var currentScript = document.currentScript || document.querySelector('script');
-            var scriptContent = currentScript.textContent;
-            var newScriptContent = scriptContent.replace(
-                '// DATA_PLACEHOLDER_START\n        var EMBEDDED_DATA = null;\n        // DATA_PLACEHOLDER_END',
-                '// DATA_PLACEHOLDER_START\n        var EMBEDDED_DATA = ' + dataJSON + ';\n        // DATA_PLACEHOLDER_END'
-            );
-            
-            var htmlTemplate = document.documentElement.outerHTML;
-            var scriptStart = htmlTemplate.indexOf(scriptContent);
-            if (scriptStart !== -1) {
-                var before = htmlTemplate.substring(0, scriptStart);
-                var after = htmlTemplate.substring(scriptStart + scriptContent.length);
-                htmlTemplate = before + newScriptContent + after;
+            if (soldItems.length > 0) {
+                var soldBlob = new Blob([JSON.stringify(soldItems, null, 2)], { type: 'application/json' });
+                var soldUrl = URL.createObjectURL(soldBlob);
+                var soldLink = document.createElement('a');
+                soldLink.href = soldUrl;
+                soldLink.download = 'sold.json';
+                soldLink.click();
+                URL.revokeObjectURL(soldUrl);
             }
             
-            var blob = new Blob([htmlTemplate], { type: 'text/html' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'threadup_dashboard_' + new Date().toISOString().split('T')[0] + '.html';
-            a.click();
-            URL.revokeObjectURL(url);
+            if (availableItems.length > 0) {
+                var availableBlob = new Blob([JSON.stringify(availableItems, null, 2)], { type: 'application/json' });
+                var availableUrl = URL.createObjectURL(availableBlob);
+                var availableLink = document.createElement('a');
+                availableLink.href = availableUrl;
+                availableLink.download = 'available.json';
+                availableLink.click();
+                URL.revokeObjectURL(availableUrl);
+            }
             
-            alert('📤 Dashboard saved!\n\nThis HTML file works offline on any device.\nSend it via email/text and recipient just opens it!');
+            setTimeout(function() {
+                alert('📤 Files downloaded!\n\n1. Create a "data" folder in your repo\n2. Add sold.json and available.json to it\n3. Commit and push\n4. Share your URL - data loads automatically!');
+            }, 500);
         }
         
         function clearAllData() {
