@@ -1,1 +1,121 @@
-[]
+[
+  {
+    "Brand": "Ugg Lowmel Suede",
+    "Description": "Low-Top Sneaker – Tan Sneakers",
+    "Price": 83.99,
+    "Likes": 4,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Air Force",
+    "Description": "1 LV8 Low GS – Red White Pink Sneakers",
+    "Price": 95.99,
+    "Likes": 10,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Adidas Tyshawn Low",
+    "Description": "Suede Skate Sneaker – Maroon\n Sneakers",
+    "Price": 95.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike AF1 Air",
+    "Description": "Force 1 (GS) Sneakers",
+    "Price": 83.99,
+    "Likes": 3,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Sneakers",
+    "Description": "",
+    "Price": 71.99,
+    "Likes": 13,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Air Force",
+    "Description": "1 '07 Next Nature Women's \"Pale Ivory/Apricot Agate/White/Sail\" Sneakers",
+    "Price": 71.99,
+    "Likes": 8,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Converse X Missoni",
+    "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
+    "Price": 83.99,
+    "Likes": 14,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Dunk Low",
+    "Description": "GS “Pink Blast / White” Leather Sneakers",
+    "Price": 71.99,
+    "Likes": 59,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Dunk Low",
+    "Description": "GS “Emerald Rise / White” Leather Sneakers",
+    "Price": 83.99,
+    "Likes": 28,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Dunk Low",
+    "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
+    "Price": 132.99,
+    "Likes": 23,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Sneakers",
+    "Description": "",
+    "Price": 71.99,
+    "Likes": 19,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Bebe Kamala Mini",
+    "Description": "Tweed Square  – Black, Silver, Gold & Navy (NWT) Crossbody Bag",
+    "Price": 36.99,
+    "Likes": 37,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Adidas Stan Smith",
+    "Description": "Leather – Camp Patch Edition Sneakers",
+    "Price": 59.99,
+    "Likes": 8,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Adidas Stan Smith",
+    "Description": " Leather – Camp Patch Edition Sneakers",
+    "Price": 59.99,
+    "Likes": 20,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Adidas Samba LT",
+    "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
+    "Price": 71.99,
+    "Likes": 62,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike SB Heritage",
+    "Description": "Vulc Sneakers",
+    "Price": 59.99,
+    "Likes": 84,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Jordan Legacy 312",
+    "Description": "Low Sneakers",
+    "Price": 83.99,
+    "Likes": 21,
+    "Availability": "Available"
+  }
+]
