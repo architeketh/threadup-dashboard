@@ -146,7 +146,11 @@
         
         .items-table { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; }
-        th { background: #f8f9fa; padding: 12px; text-align: left; font-weight: 600; color: #333; border-bottom: 2px solid #dee2e6; font-size: 14px; }
+        th { background: #f8f9fa; padding: 12px; text-align: left; font-weight: 600; color: #333; border-bottom: 2px solid #dee2e6; font-size: 14px; cursor: pointer; user-select: none; position: relative; }
+        th:hover { background: #e9ecef; }
+        th.sortable::after { content: ' ⇅'; color: #999; font-size: 12px; }
+        th.sorted-asc::after { content: ' ▲'; color: #667eea; }
+        th.sorted-desc::after { content: ' ▼'; color: #667eea; }
         td { padding: 12px; border-bottom: 1px solid #dee2e6; color: #666; font-size: 14px; }
         tr:hover { background: #f8f9fa; }
         .price { color: #28a745; font-weight: 600; }
@@ -267,6 +271,13 @@
             .items-table td span[style*="background:#17a2b8"] {
                 font-size: 8px !important;
                 padding: 1px 3px !important;
+            }
+            
+            /* Smaller sort indicators on mobile */
+            th.sortable::after,
+            th.sorted-asc::after,
+            th.sorted-desc::after {
+                font-size: 10px;
             }
             
             table { min-width: 600px; }
@@ -419,6 +430,10 @@
         var soldItems = [];
         var availableItems = [];
         var charts = {};
+        var soldSortColumn = null;
+        var soldSortDirection = 'asc';
+        var availableSortColumn = null;
+        var availableSortDirection = 'asc';
         
         window.addEventListener('load', function() {
             loadDataFromGitHub();
@@ -655,11 +670,78 @@
             });
         }
         
+        function sortSoldItems(column) {
+            if (soldSortColumn === column) {
+                soldSortDirection = soldSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                soldSortColumn = column;
+                soldSortDirection = 'asc';
+            }
+            
+            soldItems.sort(function(a, b) {
+                var aVal, bVal;
+                if (column === 'price') {
+                    aVal = parseFloat(a['Sold Price']) || 0;
+                    bVal = parseFloat(b['Sold Price']) || 0;
+                } else if (column === 'brand') {
+                    aVal = (a.Brand || '').toLowerCase();
+                    bVal = (b.Brand || '').toLowerCase();
+                } else if (column === 'date') {
+                    aVal = a['Date Sold'] || '';
+                    bVal = b['Date Sold'] || '';
+                }
+                
+                if (soldSortDirection === 'asc') {
+                    return aVal > bVal ? 1 : -1;
+                } else {
+                    return aVal < bVal ? 1 : -1;
+                }
+            });
+            
+            updateTables();
+        }
+        
+        function sortAvailableItems(column) {
+            if (availableSortColumn === column) {
+                availableSortDirection = availableSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                availableSortColumn = column;
+                availableSortDirection = 'asc';
+            }
+            
+            availableItems.sort(function(a, b) {
+                var aVal, bVal;
+                if (column === 'price') {
+                    aVal = parseFloat(a.Price) || 0;
+                    bVal = parseFloat(b.Price) || 0;
+                } else if (column === 'likes') {
+                    aVal = a.Likes || 0;
+                    bVal = b.Likes || 0;
+                } else if (column === 'brand') {
+                    aVal = (a.Brand || '').toLowerCase();
+                    bVal = (b.Brand || '').toLowerCase();
+                }
+                
+                if (availableSortDirection === 'asc') {
+                    return aVal > bVal ? 1 : -1;
+                } else {
+                    return aVal < bVal ? 1 : -1;
+                }
+            });
+            
+            updateTables();
+        }
+        
         function updateTables() {
             if (soldItems.length === 0) {
                 document.getElementById('soldTable').innerHTML = '<div class="no-data"><h3>No sold items</h3></div>';
             } else {
-                var tableHTML = '<h2>Sold Items (' + soldItems.length + ')</h2><table><thead><tr><th>Brand</th><th>Description</th><th>Price</th><th>Date</th></tr></thead><tbody>';
+                var tableHTML = '<h2>Sold Items (' + soldItems.length + ')</h2><table><thead><tr>';
+                tableHTML += '<th class="sortable' + (soldSortColumn === 'brand' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'brand\')">Brand</th>';
+                tableHTML += '<th>Description</th>';
+                tableHTML += '<th class="sortable' + (soldSortColumn === 'price' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'price\')">Price</th>';
+                tableHTML += '<th class="sortable' + (soldSortColumn === 'date' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'date\')">Date</th>';
+                tableHTML += '</tr></thead><tbody>';
                 soldItems.forEach(function(item) {
                     tableHTML += '<tr><td>' + (item.Brand || 'N/A') + '</td><td>' + (item.Description || 'N/A') + '</td><td class="price">$' + (parseFloat(item['Sold Price']) || 0).toFixed(2) + '</td><td>' + (item['Date Sold'] || 'N/A') + '</td></tr>';
                 });
@@ -670,7 +752,12 @@
             if (availableItems.length === 0) {
                 document.getElementById('availableTable').innerHTML = '<div class="no-data"><h3>No available items</h3></div>';
             } else {
-                var tableHTML = '<h2>Available Items (' + availableItems.length + ')</h2><table><thead><tr><th>Brand</th><th>Description</th><th>Price</th><th>Likes</th></tr></thead><tbody>';
+                var tableHTML = '<h2>Available Items (' + availableItems.length + ')</h2><table><thead><tr>';
+                tableHTML += '<th class="sortable' + (availableSortColumn === 'brand' ? ' sorted-' + availableSortDirection : '') + '" onclick="sortAvailableItems(\'brand\')">Brand</th>';
+                tableHTML += '<th>Description</th>';
+                tableHTML += '<th class="sortable' + (availableSortColumn === 'price' ? ' sorted-' + availableSortDirection : '') + '" onclick="sortAvailableItems(\'price\')">Price</th>';
+                tableHTML += '<th class="sortable' + (availableSortColumn === 'likes' ? ' sorted-' + availableSortDirection : '') + '" onclick="sortAvailableItems(\'likes\')">Likes</th>';
+                tableHTML += '</tr></thead><tbody>';
                 availableItems.forEach(function(item) {
                     var likes = item.Likes || 0;
                     var likesColor = likes > 50 ? '#28a745' : (likes > 20 ? '#ffc107' : '#6c757d');
