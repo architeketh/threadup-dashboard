@@ -217,33 +217,24 @@
         </div>
     </div>
     
-    <script id="embedded-data" type="application/json">null</script>
-    
     <script>
+        // DATA_PLACEHOLDER_START
+        var EMBEDDED_DATA = null;
+        // DATA_PLACEHOLDER_END
+        
         var soldItems = [];
         var availableItems = [];
         var charts = {};
         
         window.addEventListener('load', function() {
-            var embeddedDataEl = document.getElementById('embedded-data');
-            if (embeddedDataEl) {
-                try {
-                    var embeddedText = embeddedDataEl.textContent.trim();
-                    if (embeddedText && embeddedText !== 'null') {
-                        var embeddedData = JSON.parse(embeddedText);
-                        soldItems = embeddedData.sold || [];
-                        availableItems = embeddedData.available || [];
-                        
-                        if (soldItems.length > 0 || availableItems.length > 0) {
-                            document.getElementById('uploadSection').style.display = 'none';
-                        }
-                    }
-                } catch (e) {
-                    console.log('No embedded data');
+            if (EMBEDDED_DATA) {
+                soldItems = EMBEDDED_DATA.sold || [];
+                availableItems = EMBEDDED_DATA.available || [];
+                
+                if (soldItems.length > 0 || availableItems.length > 0) {
+                    document.getElementById('uploadSection').style.display = 'none';
                 }
-            }
-            
-            if (soldItems.length === 0 && availableItems.length === 0) {
+            } else {
                 var savedSold = localStorage.getItem('threadup_sold');
                 var savedAvailable = localStorage.getItem('threadup_available');
                 if (savedSold) soldItems = JSON.parse(savedSold);
@@ -485,16 +476,25 @@
                 return;
             }
             
-            var currentHTML = document.documentElement.outerHTML;
             var data = { sold: soldItems, available: availableItems };
-            var dataJSON = JSON.stringify(data);
+            var dataJSON = JSON.stringify(data, null, 2);
             
-            var newHTML = currentHTML.replace(
-                '<script id="embedded-data" type="application/json">null<\/script>',
-                '<script id="embedded-data" type="application/json">' + dataJSON + '<\/script>'
+            var currentScript = document.currentScript || document.querySelector('script');
+            var scriptContent = currentScript.textContent;
+            var newScriptContent = scriptContent.replace(
+                '// DATA_PLACEHOLDER_START\n        var EMBEDDED_DATA = null;\n        // DATA_PLACEHOLDER_END',
+                '// DATA_PLACEHOLDER_START\n        var EMBEDDED_DATA = ' + dataJSON + ';\n        // DATA_PLACEHOLDER_END'
             );
             
-            var blob = new Blob([newHTML], { type: 'text/html' });
+            var htmlTemplate = document.documentElement.outerHTML;
+            var scriptStart = htmlTemplate.indexOf(scriptContent);
+            if (scriptStart !== -1) {
+                var before = htmlTemplate.substring(0, scriptStart);
+                var after = htmlTemplate.substring(scriptStart + scriptContent.length);
+                htmlTemplate = before + newScriptContent + after;
+            }
+            
+            var blob = new Blob([htmlTemplate], { type: 'text/html' });
             var url = URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = url;
@@ -502,7 +502,7 @@
             a.click();
             URL.revokeObjectURL(url);
             
-            alert('📤 Dashboard saved!\n\nThis HTML file works offline.\nSend it via email/text.\nRecipient opens it in any browser - DONE!');
+            alert('📤 Dashboard saved!\n\nThis HTML file works offline on any device.\nSend it via email/text and recipient just opens it!');
         }
         
         function clearAllData() {
