@@ -107,42 +107,42 @@
         .summary-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
+            gap: 20px;
             text-align: center;
         }
         
         .summary-item { display: flex; flex-direction: column; align-items: center; }
-        .summary-label { font-size: 14px; opacity: 0.9; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .summary-value { font-size: 36px; font-weight: bold; line-height: 1; }
-        .summary-subtext { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+        .summary-label { font-size: 12px; opacity: 0.9; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .summary-value { font-size: 28px; font-weight: bold; line-height: 1; }
+        .summary-subtext { font-size: 11px; opacity: 0.8; margin-top: 4px; }
         
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
         
-        .stat-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .stat-label { color: #666; font-size: 14px; margin-bottom: 8px; }
-        .stat-value { color: #333; font-size: 32px; font-weight: bold; }
-        .stat-subvalue { color: #888; font-size: 14px; margin-top: 5px; }
+        .stat-card { background: white; padding: 18px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .stat-label { color: #666; font-size: 13px; margin-bottom: 6px; }
+        .stat-value { color: #333; font-size: 26px; font-weight: bold; }
+        .stat-subvalue { color: #888; font-size: 12px; margin-top: 4px; }
         
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
         }
         
-        .chart-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chart-title { font-size: 18px; color: #333; margin-bottom: 20px; font-weight: 600; }
+        .chart-card { background: white; padding: 18px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .chart-title { font-size: 16px; color: #333; margin-bottom: 15px; font-weight: 600; }
         
         .items-table { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; }
@@ -225,35 +225,35 @@
             }
             
             .summary-banner {
-                padding: 15px;
-                gap: 15px;
-                margin-bottom: 15px;
+                padding: 12px;
+                gap: 12px;
+                margin-bottom: 12px;
                 grid-template-columns: 1fr 1fr;
             }
             
-            .summary-label { font-size: 11px; }
-            .summary-value { font-size: 24px; }
-            .summary-subtext { font-size: 10px; }
+            .summary-label { font-size: 10px; }
+            .summary-value { font-size: 20px; }
+            .summary-subtext { font-size: 9px; }
             
             .stats-grid {
                 grid-template-columns: 1fr;
                 gap: 10px;
-                margin-bottom: 15px;
+                margin-bottom: 12px;
             }
             
-            .stat-card { padding: 15px; }
-            .stat-label { font-size: 12px; }
-            .stat-value { font-size: 24px; }
-            .stat-subvalue { font-size: 12px; }
+            .stat-card { padding: 12px; }
+            .stat-label { font-size: 11px; }
+            .stat-value { font-size: 20px; }
+            .stat-subvalue { font-size: 11px; }
             
             .charts-grid {
                 grid-template-columns: 1fr;
-                gap: 15px;
-                margin-bottom: 15px;
+                gap: 12px;
+                margin-bottom: 12px;
             }
             
-            .chart-card { padding: 15px; }
-            .chart-title { font-size: 16px; margin-bottom: 15px; }
+            .chart-card { padding: 12px; }
+            .chart-title { font-size: 14px; margin-bottom: 12px; }
             
             .items-table { 
                 padding: 15px; 
@@ -284,11 +284,11 @@
             
             .summary-banner {
                 grid-template-columns: 1fr;
-                padding: 12px;
-                gap: 12px;
+                padding: 10px;
+                gap: 10px;
             }
             
-            .summary-value { font-size: 28px; }
+            .summary-value { font-size: 22px; }
             
             .export-btn {
                 display: block;
@@ -635,10 +635,11 @@
             
             var ctx = document.getElementById('priceChart');
             charts.price = new Chart(ctx, {
-                type: 'doughnut',
+                type: 'bar',
                 data: { 
                     labels: Object.keys(priceRanges), 
                     datasets: [{ 
+                        label: 'Items',
                         data: Object.values(priceRanges), 
                         backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b'] 
                     }] 
@@ -646,8 +647,9 @@
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: true, 
+                    indexAxis: 'y',
                     plugins: { 
-                        legend: { position: 'bottom' } 
+                        legend: { display: false } 
                     } 
                 }
             });
