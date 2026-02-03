@@ -1,9 +1,30 @@
 [
   {
+    "Brand": "Nike AF1 Air",
+    "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
+    "Price": 29.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike AF1 Air",
+    "Description": "Force 1 Wild Low - Phantom / Phantom / Light Orewood Brown\n Sneakers",
+    "Price": 95.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Court Borough",
+    "Description": "Mid 2 GS Leather Panda Sneakers",
+    "Price": 59.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Ugg Lowmel Suede",
     "Description": "Low-Top Sneaker – Tan Sneakers",
     "Price": 83.99,
-    "Likes": 9,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
