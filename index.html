@@ -386,6 +386,7 @@
                 <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
                 <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
                 <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
+                <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
                 <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
             </div>
             
@@ -974,10 +975,44 @@
             updateCharts();
         }
         
+        function setupGitHubToken() {
+            var currentToken = localStorage.getItem('threadup_github_token');
+            var message = 'Enter your GitHub Personal Access Token:\n\n';
+            
+            if (currentToken) {
+                var preview = currentToken.substring(0, 10) + '...' + currentToken.substring(currentToken.length - 10);
+                message += 'Current token: ' + preview + '\n\n';
+                message += 'Leave blank to keep current token, or paste new token:';
+            } else {
+                message += '(Starts with ghp_ or github_pat_)';
+            }
+            
+            var token = prompt(message);
+            
+            if (token === null) return; // Cancelled
+            
+            if (token === '' && currentToken) {
+                alert('✅ Keeping current token:\n\n' + currentToken.substring(0, 10) + '...');
+                return;
+            }
+            
+            if (token === '' && !currentToken) {
+                alert('❌ No token entered!');
+                return;
+            }
+            
+            if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+                alert('⚠️ Warning: Token should start with "ghp_" or "github_pat_"\n\nSaving anyway...');
+            }
+            
+            localStorage.setItem('threadup_github_token', token);
+            alert('✅ GitHub token saved!\n\nYou can now use "Save Changes to GitHub"');
+        }
+        
         async function saveChangesToGitHub() {
             var TOKEN = localStorage.getItem('threadup_github_token');
             if (!TOKEN) {
-                alert('❌ GitHub token not found!\n\nPlease run the auto-sync bookmarklet first to save your token.');
+                alert('❌ GitHub token not found!\n\nClick "🔑 Setup GitHub Token" button first.');
                 return;
             }
             
