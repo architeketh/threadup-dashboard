@@ -383,7 +383,7 @@
             <p style="color: #666; margin-bottom: 10px; font-size: 13px;">Upload files or export for GitHub sharing</p>
             
             <div style="margin-bottom: 10px;">
-                <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
+                <button class="export-btn" onclick="loadDataFromGitHub(true)" style="background: #667eea;">🔄 Reload from GitHub</button>
                 <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
                 <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
                 <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
@@ -522,20 +522,24 @@
             alert('✅ Tracking updated!\n\n📊 Baseline set: ' + previousSoldCount + ' sold items\n📅 Date: ' + lastUpdateDate.toLocaleDateString() + '\n\n💡 Next time you upload data, you\'ll see new sales since today!');
         }
         
-        function loadDataFromGitHub() {
+        function loadDataFromGitHub(forceReload) {
+            var cacheBust = forceReload ? '?t=' + new Date().getTime() : '';
+            
             Promise.all([
-                fetch('data/sold.json').then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch('data/available.json').then(r => r.ok ? r.json() : null).catch(() => null)
+                fetch('data/sold.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch('data/available.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null)
             ]).then(function(results) {
                 var githubSold = results[0];
                 var githubAvailable = results[1];
                 
                 if (githubSold) {
                     soldItems = githubSold;
+                    localStorage.setItem('threadup_sold', JSON.stringify(soldItems)); // Sync to localStorage
                     console.log('Loaded sold items from GitHub:', soldItems.length);
                 }
                 if (githubAvailable) {
                     availableItems = githubAvailable;
+                    localStorage.setItem('threadup_available', JSON.stringify(availableItems)); // Sync to localStorage
                     console.log('Loaded available items from GitHub:', availableItems.length);
                 }
                 
@@ -549,6 +553,10 @@
                 if (soldItems.length > 0 || availableItems.length > 0) {
                     updateDropZones();
                     updateDashboard();
+                }
+                
+                if (forceReload) {
+                    alert('✅ Reloaded from GitHub!\n\n' + soldItems.length + ' sold items\n' + availableItems.length + ' available items');
                 }
             });
         }
