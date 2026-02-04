@@ -136,7 +136,7 @@
         
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -155,6 +155,24 @@
         tr:hover { background: #f8f9fa; }
         .price { color: #28a745; font-weight: 600; }
         .no-data { text-align: center; padding: 40px; color: #666; }
+        
+        .date-input {
+            border: 1px solid #dee2e6;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            width: 110px;
+            font-family: inherit;
+        }
+        .date-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+        .date-input.modified {
+            border-color: #ff9800;
+            background: #fff3e0;
+        }
         
         .export-btn {
             background: #28a745;
@@ -368,6 +386,7 @@
                 <button class="export-btn" onclick="location.reload()" style="background: #667eea;">🔄 Refresh</button>
                 <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
                 <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
+                <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
             </div>
             
             <div class="info-box" id="shareInstructions" style="display: none;">
@@ -662,7 +681,8 @@
         }
         
         function updateCharts() {
-            var chartsHTML = '<div class="chart-card"><div class="chart-title">Items by Likes</div><canvas id="likesChart"></canvas></div>';
+            var chartsHTML = '<div class="chart-card"><div class="chart-title">Sales Over Time</div><canvas id="salesTimeChart"></canvas></div>';
+            chartsHTML += '<div class="chart-card"><div class="chart-title">Items by Likes</div><canvas id="likesChart"></canvas></div>';
             chartsHTML += '<div class="chart-card"><div class="chart-title">Top Brands by Revenue</div><canvas id="brandsChart"></canvas></div>';
             chartsHTML += '<div class="chart-card"><div class="chart-title">Price Distribution</div><canvas id="priceChart"></canvas></div>';
             
@@ -671,9 +691,79 @@
             Object.values(charts).forEach(function(chart) { chart.destroy(); });
             charts = {};
             
+            createSalesTimeChart();
             createLikesChart();
             createBrandsChart();
             createPriceChart();
+        }
+        
+        function createSalesTimeChart() {
+            // Group sales by date
+            var salesByDate = {};
+            soldItems.forEach(function(item) {
+                var date = item['Date Sold'] || 'Unknown';
+                if (date && date !== 'Unknown' && date !== 'Unknown Date') {
+                    if (!salesByDate[date]) {
+                        salesByDate[date] = { count: 0, revenue: 0 };
+                    }
+                    salesByDate[date].count++;
+                    salesByDate[date].revenue += parseFloat(item['Sold Price']) || 0;
+                }
+            });
+            
+            // Sort by date
+            var sortedDates = Object.keys(salesByDate).sort();
+            var labels = sortedDates.map(function(date) {
+                var d = new Date(date);
+                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            });
+            var counts = sortedDates.map(function(date) { return salesByDate[date].count; });
+            var revenues = sortedDates.map(function(date) { return salesByDate[date].revenue; });
+            
+            var ctx = document.getElementById('salesTimeChart');
+            if (sortedDates.length === 0) {
+                ctx.getContext('2d').font = '14px sans-serif';
+                ctx.getContext('2d').fillStyle = '#999';
+                ctx.getContext('2d').textAlign = 'center';
+                ctx.getContext('2d').fillText('Add dates to sold items to see sales trends', ctx.width / 2, ctx.height / 2);
+                return;
+            }
+            
+            charts.salesTime = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Items Sold',
+                        data: counts,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    var idx = context.dataIndex;
+                                    return 'Revenue: $' + revenues[idx].toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                }
+            });
         }
         
         function createLikesChart() {
@@ -821,14 +911,25 @@
             if (soldItems.length === 0) {
                 document.getElementById('soldTable').innerHTML = '<div class="no-data"><h3>No sold items</h3></div>';
             } else {
-                var tableHTML = '<h2>Sold Items (' + soldItems.length + ')</h2><table><thead><tr>';
+                var tableHTML = '<h2>Sold Items (' + soldItems.length + ') <span style="font-size: 14px; color: #666; font-weight: normal;">Click dates to edit</span></h2><table><thead><tr>';
                 tableHTML += '<th class="sortable' + (soldSortColumn === 'brand' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'brand\')">Brand</th>';
                 tableHTML += '<th>Description</th>';
                 tableHTML += '<th class="sortable' + (soldSortColumn === 'price' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'price\')">Price</th>';
-                tableHTML += '<th class="sortable' + (soldSortColumn === 'date' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'date\')">Date</th>';
+                tableHTML += '<th class="sortable' + (soldSortColumn === 'date' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'date\')">Date Sold</th>';
                 tableHTML += '</tr></thead><tbody>';
-                soldItems.forEach(function(item) {
-                    tableHTML += '<tr><td>' + (item.Brand || 'N/A') + '</td><td>' + (item.Description || 'N/A') + '</td><td class="price">$' + (parseFloat(item['Sold Price']) || 0).toFixed(2) + '</td><td>' + (item['Date Sold'] || 'N/A') + '</td></tr>';
+                soldItems.forEach(function(item, index) {
+                    var dateValue = item['Date Sold'] || '';
+                    var formattedDate = dateValue;
+                    if (dateValue && dateValue !== 'Unknown' && dateValue !== 'Unknown Date') {
+                        // Keep existing format
+                        formattedDate = dateValue;
+                    } else {
+                        // Default to today for unknown dates
+                        var today = new Date();
+                        formattedDate = today.toISOString().split('T')[0];
+                    }
+                    
+                    tableHTML += '<tr><td>' + (item.Brand || 'N/A') + '</td><td>' + (item.Description || 'N/A') + '</td><td class="price">$' + (parseFloat(item['Sold Price']) || 0).toFixed(2) + '</td><td><input type="date" class="date-input" data-index="' + index + '" value="' + formattedDate + '" onchange="dateChanged(this)"></td></tr>';
                 });
                 tableHTML += '</tbody></table>';
                 document.getElementById('soldTable').innerHTML = tableHTML;
@@ -854,6 +955,92 @@
                 });
                 tableHTML += '</tbody></table>';
                 document.getElementById('availableTable').innerHTML = tableHTML;
+            }
+        }
+        
+        function dateChanged(input) {
+            var index = parseInt(input.getAttribute('data-index'));
+            var newDate = input.value;
+            soldItems[index]['Date Sold'] = newDate;
+            input.classList.add('modified');
+            
+            // Show save button
+            document.getElementById('saveBtn').style.display = 'inline-block';
+            
+            // Update localStorage
+            localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
+            
+            // Update charts to reflect new date
+            updateCharts();
+        }
+        
+        async function saveChangesToGitHub() {
+            var TOKEN = localStorage.getItem('threadup_github_token');
+            if (!TOKEN) {
+                alert('❌ GitHub token not found!\n\nPlease run the auto-sync bookmarklet first to save your token.');
+                return;
+            }
+            
+            if (!confirm('Save updated sold items to GitHub?\n\nThis will update your dashboard everywhere.')) {
+                return;
+            }
+            
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.textContent = '⏳ Saving...';
+            saveBtn.disabled = true;
+            
+            try {
+                var REPO = 'architeketh/threadup-dashboard';
+                var url = 'https://api.github.com/repos/' + REPO + '/contents/data/sold.json';
+                
+                // Get current file SHA
+                var getSHA = await fetch(url, {
+                    headers: { 'Authorization': 'token ' + TOKEN }
+                });
+                
+                var sha = null;
+                if (getSHA.ok) {
+                    var data = await getSHA.json();
+                    sha = data.sha;
+                }
+                
+                // Upload updated file
+                var response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'token ' + TOKEN,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Update sold items dates',
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(soldItems, null, 2)))),
+                        sha: sha
+                    })
+                });
+                
+                if (response.ok) {
+                    saveBtn.textContent = '✅ Saved!';
+                    saveBtn.style.background = '#28a745';
+                    
+                    // Remove modified class from inputs
+                    var inputs = document.querySelectorAll('.date-input.modified');
+                    inputs.forEach(function(inp) { inp.classList.remove('modified'); });
+                    
+                    setTimeout(function() {
+                        saveBtn.style.display = 'none';
+                        saveBtn.textContent = '💾 Save Changes to GitHub';
+                        saveBtn.style.background = '#ff9800';
+                        saveBtn.disabled = false;
+                    }, 3000);
+                    
+                    alert('✅ Saved to GitHub!\n\nYour dashboard will update everywhere in 1-2 minutes.');
+                } else {
+                    throw new Error('Upload failed');
+                }
+            } catch (error) {
+                alert('❌ Failed to save to GitHub\n\nError: ' + error.message);
+                saveBtn.textContent = '💾 Save Changes to GitHub';
+                saveBtn.disabled = false;
             }
         }
         
