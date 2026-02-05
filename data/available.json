@@ -1,5 +1,26 @@
 [
   {
+    "Brand": "Cushion Aire Hope",
+    "Description": "Slip-on Cozy Ankle Boots",
+    "Price": 36.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Cushion Aire Hope",
+    "Description": "Slip-on Cozy Boots",
+    "Price": 36.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Cushion Aire Hip",
+    "Description": "Cozy Ankle Boots",
+    "Price": 36.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 29.99,
@@ -10,28 +31,28 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Wild Low - Phantom / Phantom / Light Orewood Brown\n Sneakers",
     "Price": 95.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 3,
+    "Likes": 4,
     "Availability": "Available"
   },
   {
     "Brand": "Ugg Lowmel Suede",
     "Description": "Low-Top Sneaker – Tan Sneakers",
     "Price": 83.99,
-    "Likes": 10,
+    "Likes": 11,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas Tyshawn Low",
     "Description": "Suede Skate Sneaker – Maroon\n Sneakers",
     "Price": 95.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
@@ -45,7 +66,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 18,
+    "Likes": 21,
     "Availability": "Available"
   },
   {
@@ -59,7 +80,7 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 83.99,
-    "Likes": 14,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
