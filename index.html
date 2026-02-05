@@ -798,15 +798,43 @@
         }
         
         function createBrandsChart() {
+            // Common two-word brand names that should stay together
+            var twoWordBrands = ['Kate Spade', 'Marc Jacobs', 'Michael Kors', 'Tory Burch', 'Calvin Klein', 
+                                  'Ralph Lauren', 'Tommy Hilfiger', 'Free People', 'Steve Madden', 'Sam Edelman',
+                                  'Lucky Brand', 'Banana Republic', 'Old Navy', 'Gap Kids', 'Theory'];
+            
+            function getBaseBrand(fullBrand) {
+                if (!fullBrand || fullBrand === 'Unknown') return 'Unknown';
+                
+                // Check if it starts with a two-word brand
+                for (var i = 0; i < twoWordBrands.length; i++) {
+                    if (fullBrand.indexOf(twoWordBrands[i]) === 0) {
+                        return twoWordBrands[i];
+                    }
+                }
+                
+                // Otherwise, use first word
+                var firstWord = fullBrand.split(' ')[0];
+                return firstWord;
+            }
+            
             var brandRevenue = {};
+            var brandCount = {};
+            
             soldItems.forEach(function(item) {
-                var brand = item.Brand || 'Unknown';
+                var fullBrand = item.Brand || 'Unknown';
+                var baseBrand = getBaseBrand(fullBrand);
                 var price = parseFloat(item['Sold Price']) || 0;
-                brandRevenue[brand] = (brandRevenue[brand] || 0) + price;
+                
+                brandRevenue[baseBrand] = (brandRevenue[baseBrand] || 0) + price;
+                brandCount[baseBrand] = (brandCount[baseBrand] || 0) + 1;
             });
             
             var sortedBrands = Object.entries(brandRevenue).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
-            var labels = sortedBrands.map(function(b) { return b[0]; });
+            var labels = sortedBrands.map(function(b) { 
+                var count = brandCount[b[0]];
+                return b[0] + ' (' + count + ')';
+            });
             var data = sortedBrands.map(function(b) { return b[1]; });
             
             var colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b', '#fa709a', '#fee140', '#30cfd0', '#a8edea'];
