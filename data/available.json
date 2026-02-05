@@ -1,6 +1,13 @@
 [
   {
     "Brand": "Nike Dunk Low",
+    "Description": "“Peach Cream” (GS) - Peach Cream / Light Grey / Orang Sneakers",
+    "Price": 95.99,
+    "Likes": 2,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Dunk Low",
     "Description": "Next Nature - Pink Dark Pony / Light Soft Pink Sneakers",
     "Price": 71.99,
     "Likes": 1,
