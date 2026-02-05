@@ -696,6 +696,7 @@
             chartsHTML += '<div class="chart-card"><div class="chart-title">Top Brands by Revenue</div><canvas id="brandsChart"></canvas></div>';
             chartsHTML += '<div class="chart-card"><div class="chart-title">Price Distribution</div><canvas id="priceChart"></canvas></div>';
             chartsHTML += '<div class="chart-card"><div class="chart-title">Revenue by Month</div><canvas id="revenueMonthChart"></canvas></div>';
+            chartsHTML += '<div class="chart-card"><div class="chart-title">Inventory by Brand</div><canvas id="inventoryBrandChart"></canvas></div>';
             
             document.getElementById('chartsGrid').innerHTML = chartsHTML;
             
@@ -707,6 +708,7 @@
             createBrandsChart();
             createPriceChart();
             createRevenueByMonthChart();
+            createInventoryByBrandChart();
         }
         
         function createSalesTimeChart() {
@@ -1049,6 +1051,83 @@
                             }
                         }
                     }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+        
+        function createInventoryByBrandChart() {
+            // Common two-word brand names that should stay together
+            var twoWordBrands = ['Kate Spade', 'Marc Jacobs', 'Michael Kors', 'Tory Burch', 'Calvin Klein', 
+                                  'Ralph Lauren', 'Tommy Hilfiger', 'Free People', 'Steve Madden', 'Sam Edelman',
+                                  'Lucky Brand', 'Banana Republic', 'Old Navy', 'Gap Kids', 'Theory'];
+            
+            function getBaseBrand(fullBrand) {
+                if (!fullBrand || fullBrand === 'Unknown') return 'Unknown';
+                
+                // Check if it starts with a two-word brand
+                for (var i = 0; i < twoWordBrands.length; i++) {
+                    if (fullBrand.indexOf(twoWordBrands[i]) === 0) {
+                        return twoWordBrands[i];
+                    }
+                }
+                
+                // Otherwise, use first word
+                var firstWord = fullBrand.split(' ')[0];
+                return firstWord;
+            }
+            
+            var brandInventory = {};
+            var brandCount = {};
+            
+            availableItems.forEach(function(item) {
+                var fullBrand = item.Brand || 'Unknown';
+                var baseBrand = getBaseBrand(fullBrand);
+                var price = parseFloat(item.Price) || 0;
+                
+                brandInventory[baseBrand] = (brandInventory[baseBrand] || 0) + price;
+                brandCount[baseBrand] = (brandCount[baseBrand] || 0) + 1;
+            });
+            
+            var sortedBrands = Object.entries(brandInventory).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
+            var labels = sortedBrands.map(function(b) { 
+                var count = brandCount[b[0]];
+                return b[0] + ' (' + count + ')';
+            });
+            var data = sortedBrands.map(function(b) { return b[1]; });
+            
+            var colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b', '#fa709a', '#fee140', '#30cfd0', '#a8edea'];
+            
+            var ctx = document.getElementById('inventoryBrandChart');
+            charts.inventoryBrand = new Chart(ctx, {
+                type: 'bar',
+                data: { labels: labels, datasets: [{ label: 'Inventory Value', data: data, backgroundColor: colors }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: true, 
+                    indexAxis: 'y',
+                    scales: {
+                        x: { beginAtZero: true },
+                        y: { 
+                            ticks: { 
+                                autoSkip: false,
+                                maxRotation: 0,
+                                minRotation: 0
+                            }
+                        }
+                    },
+                    plugins: { 
+                        legend: { display: false },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: '#333',
+                            font: { size: 11 },
+                            formatter: function(value) {
+                                return '$' + value.toFixed(2);
+                            }
+                        }
+                    } 
                 },
                 plugins: [ChartDataLabels]
             });
