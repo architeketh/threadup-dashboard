@@ -1077,6 +1077,51 @@
                 return firstWord;
             }
             
+            function getBrandColor(brandName) {
+                // Consistent color mapping for brands
+                var brandColors = {
+                    'Nike': '#667eea',
+                    'Adidas': '#43e97b',
+                    'Coach': '#fa709a',
+                    'Ugg': '#4facfe',
+                    'Converse': '#00f2fe',
+                    'Jordan': '#fee140',
+                    'Bebe': '#f093fb',
+                    'Disney': '#764ba2',
+                    'Kate Spade': '#ff6b6b',
+                    'Michael Kors': '#30cfd0',
+                    'Marc Jacobs': '#a8edea',
+                    'Tory Burch': '#feca57',
+                    'Calvin Klein': '#ee5a6f',
+                    'Ralph Lauren': '#0abde3',
+                    'Tommy Hilfiger': '#c44569',
+                    'Free People': '#48dbfb',
+                    'Steve Madden': '#ff9ff3',
+                    'Sam Edelman': '#54a0ff',
+                    'Lucky Brand': '#00d2d3',
+                    'Banana Republic': '#5f27cd',
+                    'Cushion': '#e056fd',
+                    'New': '#686de0'
+                };
+                
+                // Return assigned color or generate consistent color from brand name
+                if (brandColors[brandName]) {
+                    return brandColors[brandName];
+                }
+                
+                // Generate consistent color from brand name hash
+                var hash = 0;
+                for (var i = 0; i < brandName.length; i++) {
+                    hash = brandName.charCodeAt(i) + ((hash << 5) - hash);
+                }
+                var color = '#';
+                for (var i = 0; i < 3; i++) {
+                    var value = (hash >> (i * 8)) & 0xFF;
+                    color += ('00' + value.toString(16)).substr(-2);
+                }
+                return color;
+            }
+            
             var brandInventory = {};
             var brandCount = {};
             
@@ -1095,8 +1140,7 @@
                 return b[0] + ' (' + count + ')';
             });
             var data = sortedBrands.map(function(b) { return b[1]; });
-            
-            var colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b', '#fa709a', '#fee140', '#30cfd0', '#a8edea'];
+            var colors = sortedBrands.map(function(b) { return getBrandColor(b[0]); });
             
             var ctx = document.getElementById('inventoryBrandChart');
             charts.inventoryBrand = new Chart(ctx, {
@@ -1106,6 +1150,11 @@
                     responsive: true, 
                     maintainAspectRatio: true, 
                     indexAxis: 'y',
+                    layout: {
+                        padding: {
+                            right: 80
+                        }
+                    },
                     scales: {
                         x: { beginAtZero: true },
                         y: { 
