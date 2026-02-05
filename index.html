@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThredUp Sales Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -756,6 +757,7 @@
                     maintainAspectRatio: true,
                     plugins: {
                         legend: { display: true },
+                        datalabels: { display: false },
                         tooltip: {
                             callbacks: {
                                 afterLabel: function(context) {
@@ -793,7 +795,24 @@
             charts.likes = new Chart(ctx, {
                 type: 'bar',
                 data: { labels: labels, datasets: [{ label: 'Likes', data: data, backgroundColor: colors }] },
-                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: true, 
+                    indexAxis: 'y', 
+                    plugins: { 
+                        legend: { display: false },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: '#333',
+                            font: { weight: 'bold', size: 11 },
+                            formatter: function(value) {
+                                return '❤️ ' + value;
+                            }
+                        }
+                    } 
+                },
+                plugins: [ChartDataLabels]
             });
         }
         
@@ -843,7 +862,24 @@
             charts.brands = new Chart(ctx, {
                 type: 'bar',
                 data: { labels: labels, datasets: [{ label: 'Revenue', data: data, backgroundColor: colors }] },
-                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: true, 
+                    indexAxis: 'y', 
+                    plugins: { 
+                        legend: { display: false },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: '#333',
+                            font: { weight: 'bold', size: 11 },
+                            formatter: function(value) {
+                                return '$' + value.toFixed(2);
+                            }
+                        }
+                    } 
+                },
+                plugins: [ChartDataLabels]
             });
         }
         
@@ -876,7 +912,8 @@
                     maintainAspectRatio: true, 
                     indexAxis: 'y',
                     plugins: { 
-                        legend: { display: false } 
+                        legend: { display: false },
+                        datalabels: { display: false }
                     } 
                 }
             });
