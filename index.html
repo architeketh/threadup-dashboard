@@ -695,6 +695,7 @@
             chartsHTML += '<div class="chart-card"><div class="chart-title">Items by Likes</div><canvas id="likesChart"></canvas></div>';
             chartsHTML += '<div class="chart-card"><div class="chart-title">Top Brands by Revenue</div><canvas id="brandsChart"></canvas></div>';
             chartsHTML += '<div class="chart-card"><div class="chart-title">Price Distribution</div><canvas id="priceChart"></canvas></div>';
+            chartsHTML += '<div class="chart-card"><div class="chart-title">Revenue by Month</div><canvas id="revenueMonthChart"></canvas></div>';
             
             document.getElementById('chartsGrid').innerHTML = chartsHTML;
             
@@ -705,6 +706,7 @@
             createLikesChart();
             createBrandsChart();
             createPriceChart();
+            createRevenueByMonthChart();
         }
         
         function createSalesTimeChart() {
@@ -936,6 +938,98 @@
                         datalabels: { display: false }
                     } 
                 }
+            });
+        }
+        
+        function createRevenueByMonthChart() {
+            var revenueByMonth = {};
+            
+            soldItems.forEach(function(item) {
+                var dateStr = item['Date Sold'];
+                if (!dateStr || dateStr === 'Unknown' || dateStr === 'Unknown Date') return;
+                
+                try {
+                    var date = new Date(dateStr);
+                    var monthKey = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+                    var revenue = parseFloat(item['Sold Price']) || 0;
+                    
+                    if (!revenueByMonth[monthKey]) {
+                        revenueByMonth[monthKey] = { revenue: 0, count: 0 };
+                    }
+                    revenueByMonth[monthKey].revenue += revenue;
+                    revenueByMonth[monthKey].count++;
+                } catch(e) {}
+            });
+            
+            var sortedMonths = Object.keys(revenueByMonth).sort();
+            var labels = sortedMonths.map(function(monthKey) {
+                var parts = monthKey.split('-');
+                var date = new Date(parts[0], parts[1] - 1, 1);
+                return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            });
+            var revenues = sortedMonths.map(function(monthKey) {
+                return revenueByMonth[monthKey].revenue;
+            });
+            var counts = sortedMonths.map(function(monthKey) {
+                return revenueByMonth[monthKey].count;
+            });
+            
+            var ctx = document.getElementById('revenueMonthChart');
+            
+            if (sortedMonths.length === 0) {
+                ctx.getContext('2d').font = '14px sans-serif';
+                ctx.getContext('2d').fillStyle = '#999';
+                ctx.getContext('2d').textAlign = 'center';
+                ctx.getContext('2d').fillText('Add dates to sold items to see monthly revenue', ctx.width / 2, ctx.height / 2);
+                return;
+            }
+            
+            charts.revenueMonth = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Revenue',
+                        data: revenues,
+                        backgroundColor: '#667eea',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: '#333',
+                            font: { size: 11 },
+                            formatter: function(value) {
+                                return '$' + value.toFixed(2);
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    var idx = context.dataIndex;
+                                    return counts[idx] + ' items sold';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
             });
         }
         
