@@ -3,1036 +3,858 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThredUp Sales Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <title>🛍️ ThredUp Sales Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #333;
         }
         
-        .container { max-width: 1400px; margin: 0 auto; }
-        
-        header {
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
         
-        h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
-        .subtitle { color: #666; font-size: 14px; }
-        
-        .upload-section {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
             text-align: center;
         }
         
-        .upload-zones {
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .file-upload-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .file-upload-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .github-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .github-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .github-btn.reload {
+            background: #667eea;
+            color: white;
+        }
+        
+        .github-btn.export {
+            background: #10b981;
+            color: white;
+        }
+        
+        .github-btn.mark-updated {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .github-btn.setup {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .github-btn.save {
+            background: #8b5cf6;
+            color: white;
+        }
+        
+        .github-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .instructions h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .upload-area {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            margin: 20px 0;
+            margin-top: 20px;
         }
         
-        .drop-zone {
-            border: 3px dashed #667eea;
-            border-radius: 12px;
-            padding: 20px 20px;
+        .upload-box {
+            border: 3px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            background: #f8f9ff;
-            position: relative;
+            background: white;
         }
         
-        .drop-zone:hover {
-            border-color: #5568d3;
-            background: #f0f2ff;
-            transform: translateY(-2px);
+        .upload-box:hover {
+            border-color: #667eea;
+            background: #f7fafc;
         }
         
-        .drop-zone input[type="file"] {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            cursor: pointer;
+        .upload-box.dragover {
+            border-color: #667eea;
+            background: #eef2ff;
         }
         
-        .drop-zone-icon { font-size: 32px; margin-bottom: 8px; }
-        .drop-zone-text { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px; }
-        .drop-zone-hint { font-size: 12px; color: #666; }
-        .file-loaded { background: #d4edda; border-color: #28a745; }
+        .upload-box input {
+            display: none;
+        }
+        
+        .upload-box .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .upload-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .upload-box p {
+            color: #718096;
+        }
         
         .tabs {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
-            background: white;
-            padding: 10px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow-x: auto;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
         }
         
         .tab {
-            padding: 12px 24px;
-            background: #f8f9fa;
+            padding: 15px 30px;
+            background: none;
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            color: #718096;
             font-weight: 600;
-            color: #666;
+            cursor: pointer;
             transition: all 0.3s;
-            white-space: nowrap;
-            font-size: 14px;
+            border-bottom: 3px solid transparent;
+            font-size: 1em;
         }
         
-        .tab:hover { background: #e9ecef; }
-        .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .tab:hover {
+            color: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .change {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .chart-card h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .items-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .items-table h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f7fafc;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f7fafc;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+        }
+        
+        .empty-state .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #4a5568;
+        }
         
         .summary-banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 15px;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .summary-item {
             text-align: center;
         }
         
-        .summary-item { display: flex; flex-direction: column; align-items: center; }
-        .summary-label { font-size: 12px; opacity: 0.9; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .summary-value { font-size: 28px; font-weight: bold; line-height: 1; }
-        .summary-subtext { font-size: 11px; opacity: 0.8; margin-top: 4px; }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+        .summary-item .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 8px;
         }
         
-        .stat-card { background: white; padding: 18px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .stat-label { color: #666; font-size: 13px; margin-bottom: 6px; }
-        .stat-value { color: #333; font-size: 26px; font-weight: bold; }
-        .stat-subvalue { color: #888; font-size: 12px; margin-top: 4px; }
-        
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+        .summary-item .value {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
         
-        .chart-card { background: white; padding: 18px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .chart-title { font-size: 16px; color: #333; margin-bottom: 15px; font-weight: 600; }
-        
-        .items-table { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th { background: #f8f9fa; padding: 12px; text-align: left; font-weight: 600; color: #333; border-bottom: 2px solid #dee2e6; font-size: 14px; cursor: pointer; user-select: none; position: relative; }
-        th:hover { background: #e9ecef; }
-        th.sortable::after { content: ' ⇅'; color: #999; font-size: 12px; }
-        th.sorted-asc::after { content: ' ▲'; color: #667eea; }
-        th.sorted-desc::after { content: ' ▼'; color: #667eea; }
-        td { padding: 12px; border-bottom: 1px solid #dee2e6; color: #666; font-size: 14px; }
-        tr:hover { background: #f8f9fa; }
-        .price { color: #28a745; font-weight: 600; }
-        .no-data { text-align: center; padding: 40px; color: #666; }
-        
-        .date-input {
-            border: 1px solid #dee2e6;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 13px;
-            width: 110px;
-            font-family: inherit;
-        }
-        .date-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
-        }
-        .date-input.modified {
-            border-color: #ff9800;
-            background: #fff3e0;
+        .summary-item .subtitle {
+            font-size: 0.85em;
+            opacity: 0.8;
         }
         
-        .export-btn {
-            background: #28a745;
+        .new-sales-badge {
+            background: #10b981;
             color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 5px;
-            font-size: 14px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
         }
         
-        .export-btn:hover { background: #218838; }
-        
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 4px;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
-        .info-box h3 { color: #1976D2; margin-bottom: 10px; font-size: 16px; }
-        .info-box ol { margin-left: 20px; color: #555; }
-        .info-box li { margin: 8px 0; font-size: 13px; }
-        .info-box code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
         
-        details summary::-webkit-details-marker { display: none; }
-        details summary::marker { display: none; }
-        details summary::before { content: '▶ '; display: inline-block; transition: transform 0.2s; }
-        details[open] summary::before { transform: rotate(90deg); }
-        details summary:hover { background: #e8ebff !important; }
-        
-        /* MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            
-            header { padding: 20px; margin-bottom: 15px; }
-            h1 { font-size: 22px; }
-            .subtitle { font-size: 12px; }
-            
-            .upload-section { padding: 12px 15px; margin-bottom: 12px; }
-            .upload-section h2 { font-size: 16px; margin-bottom: 6px; }
-            .upload-section p { font-size: 11px; margin-bottom: 8px; }
-            
-            .upload-zones {
-                grid-template-columns: 1fr;
-                gap: 10px;
-                margin: 15px 0;
-            }
-            
-            .drop-zone { padding: 15px 10px; }
-            .drop-zone-icon { font-size: 28px; }
-            .drop-zone-text { font-size: 14px; }
-            .drop-zone-hint { font-size: 11px; }
-            
-            .export-btn {
-                padding: 10px 12px;
-                font-size: 12px;
-                margin: 3px;
-                display: inline-block;
-                white-space: nowrap;
-            }
-            
-            .tabs {
-                padding: 8px;
-                gap: 5px;
-                margin-bottom: 15px;
-            }
-            
-            .tab {
-                padding: 10px 16px;
-                font-size: 12px;
-            }
-            
-            .summary-banner {
-                padding: 12px;
-                gap: 12px;
-                margin-bottom: 12px;
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .summary-label { font-size: 10px; }
-            .summary-value { font-size: 20px; }
-            .summary-subtext { font-size: 9px; }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-                margin-bottom: 12px;
-            }
-            
-            .stat-card { padding: 12px; }
-            .stat-label { font-size: 11px; }
-            .stat-value { font-size: 20px; }
-            .stat-subvalue { font-size: 11px; }
-            
             .charts-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
-                margin-bottom: 12px;
             }
             
-            .chart-card { padding: 12px; }
-            .chart-title { font-size: 14px; margin-bottom: 12px; }
-            
-            .items-table { 
-                padding: 15px; 
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+            .header h1 {
+                font-size: 1.8em;
             }
-            
-            .items-table h2 { font-size: 18px; margin-bottom: 10px; }
-            
-            /* Smaller Just Listed badge on mobile */
-            .items-table td span[style*="background:#17a2b8"] {
-                font-size: 8px !important;
-                padding: 1px 3px !important;
-            }
-            
-            /* Smaller sort indicators on mobile */
-            th.sortable::after,
-            th.sorted-asc::after,
-            th.sorted-desc::after {
-                font-size: 10px;
-            }
-            
-            table { min-width: 600px; }
-            th { padding: 8px; font-size: 12px; }
-            td { padding: 8px; font-size: 12px; }
-            
-            .info-box { padding: 10px; font-size: 12px; }
-            .info-box h3 { font-size: 14px; }
-            .info-box li { font-size: 11px; }
-        }
-        
-        /* EXTRA SMALL MOBILE */
-        @media (max-width: 480px) {
-            h1 { font-size: 20px; }
             
             .summary-banner {
                 grid-template-columns: 1fr;
-                padding: 10px;
-                gap: 10px;
-            }
-            
-            .summary-value { font-size: 22px; }
-            
-            .export-btn {
-                display: inline-block;
-                width: auto;
-                margin: 3px 2px;
-                padding: 10px 12px;
-                font-size: 11px;
-            }
-            
-            .tab { padding: 8px 12px; font-size: 11px; }
-        }
-        
-        /* TABLE COLUMN WIDTHS FOR MOBILE */
-        @media (max-width: 768px) {
-            table { min-width: 100%; }
-            
-            /* Brand column */
-            .items-table table th:nth-child(1),
-            .items-table table td:nth-child(1) { 
-                width: 25%;
-                max-width: 120px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            
-            /* Description column - narrower */
-            .items-table table th:nth-child(2),
-            .items-table table td:nth-child(2) { 
-                width: 35%;
-                max-width: 150px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            
-            /* Price column */
-            .items-table table th:nth-child(3),
-            .items-table table td:nth-child(3) { 
-                width: 20%;
-                text-align: right;
-            }
-            
-            /* Likes/Date column */
-            .items-table table th:nth-child(4),
-            .items-table table td:nth-child(4) { 
-                width: 20%;
-                text-align: center;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
+        <div class="header">
             <h1>🛍️ ThredUp Sales Dashboard</h1>
-            <p class="subtitle">Track your sales performance and inventory</p>
-        </header>
+            <p>Track your sales performance and inventory</p>
+        </div>
         
-        <div class="upload-section" id="uploadSection">
-            <h2 style="margin-bottom: 8px; color: #333; font-size: 18px;">📊 Manage Your Data</h2>
-            <p style="color: #666; margin-bottom: 10px; font-size: 13px;">Upload files or export for GitHub sharing</p>
-            
-            <div style="margin-bottom: 10px;">
-                <button class="export-btn" onclick="loadDataFromGitHub(true)" style="background: #667eea;">🔄 Reload from GitHub</button>
-                <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
-                <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
-                <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
-                <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
-            </div>
-            
-            <div class="info-box" id="shareInstructions" style="display: none;">
-                <h3>📤 How to Share & Track Sales</h3>
-                <ol>
-                    <li>Upload your data files (sold + available items)</li>
-                    <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
-                    <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code> and <code>available.json</code></li>
-                    <li>In your repo, go to <code>data/</code> folder on GitHub</li>
-                    <li>Click "Upload files" and add both JSON files</li>
-                    <li>Commit changes</li>
-                    <li><strong>Share:</strong> <code>https://architeketh.github.io/threadup-dashboard/</code></li>
-                    <li>Next time you upload, you'll see <strong>🔥 New Sales</strong> since last update!</li>
-                </ol>
-            </div>
-            
-            <details style="margin-top: 10px;">
-                <summary style="cursor: pointer; color: #667eea; font-weight: 500; padding: 8px; background: #f8f9ff; border-radius: 6px; user-select: none; font-size: 14px;">
-                    📤 Upload Files
-                </summary>
-                <div style="margin-top: 15px;">
-                    <div class="upload-zones">
-                        <div class="drop-zone" id="soldDropZone">
-                            <input type="file" id="soldFile" accept=".json">
-                            <div class="drop-zone-icon">📦</div>
-                            <div class="drop-zone-text">Sold Items</div>
-                            <div class="drop-zone-hint">Drop JSON or click</div>
-                        </div>
-                        
-                        <div class="drop-zone" id="availableDropZone">
-                            <input type="file" id="availableFile" accept=".json">
-                            <div class="drop-zone-icon">🏷️</div>
-                            <div class="drop-zone-text">Available Items</div>
-                            <div class="drop-zone-hint">Drop JSON or click</div>
-                        </div>
+        <div class="content">
+            <div class="file-upload-section">
+                <h2>📊 Manage Your Data</h2>
+                <p style="margin-bottom: 20px; color: #4a5568;">Upload files or export for GitHub sharing</p>
+                
+                <div class="github-actions">
+                    <button class="github-btn reload" onclick="reloadFromGitHub()">🔄 Reload from GitHub</button>
+                    <button class="github-btn export" onclick="exportForGitHub()">📤 Export for GitHub</button>
+                    <button class="github-btn mark-updated" onclick="markAsUpdated()">✓ Mark as Updated</button>
+                    <button class="github-btn setup" onclick="setupGitHubToken()">🔑 Setup GitHub Token</button>
+                    <button class="github-btn save" onclick="saveToGitHub()">💾 Save Changes to GitHub</button>
+                </div>
+                
+                <div class="instructions">
+                    <h3>📤 How to Share & Track Sales</h3>
+                    <ol>
+                        <li>Upload your data files (sold + available items)</li>
+                        <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
+                        <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code> and <code>available.json</code></li>
+                        <li>In your repo, go to <code>data/</code> folder on GitHub</li>
+                        <li>Click "Upload files" and add both JSON files</li>
+                        <li>Commit changes</li>
+                        <li><strong>Share:</strong> <code>https://architeketh.github.io/threadup-dashboard/</code></li>
+                        <li>Next time you upload, you'll see <strong>🔥 New Sales</strong> since last update!</li>
+                    </ol>
+                </div>
+                
+                <div class="upload-area">
+                    <div class="upload-box" id="soldUpload">
+                        <div class="icon">📦</div>
+                        <h3>Sold Items</h3>
+                        <p>Drop JSON or click</p>
+                        <input type="file" id="soldFile" accept=".json">
+                    </div>
+                    
+                    <div class="upload-box" id="availableUpload">
+                        <div class="icon">🏷️</div>
+                        <h3>Available Items</h3>
+                        <p>Drop JSON or click</p>
+                        <input type="file" id="availableFile" accept=".json">
                     </div>
                 </div>
-            </details>
-        </div>
-        
-        <div class="tabs" id="tabs" style="display: none;">
-            <button class="tab active" onclick="switchTab('overview', event)">📊 Overview</button>
-            <button class="tab" onclick="switchTab('sold', event)">📦 Sold Items</button>
-            <button class="tab" onclick="switchTab('available', event)">🏷️ Available Items</button>
-        </div>
-        
-        <div id="overview-content" class="tab-content active">
-            <div class="summary-banner" id="summaryBanner" style="display: none;"></div>
-            <div class="stats-grid" id="statsGrid"></div>
-            <div class="charts-grid" id="chartsGrid"></div>
-        </div>
-        
-        <div id="sold-content" class="tab-content">
-            <div class="items-table" id="soldTable">
-                <div class="no-data"><h3>No sold items yet</h3><p>Upload sold items JSON</p></div>
             </div>
-        </div>
-        
-        <div id="available-content" class="tab-content">
-            <div class="items-table" id="availableTable">
-                <div class="no-data"><h3>No available items yet</h3><p>Upload available items JSON</p></div>
+            
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('overview')">📊 Overview</button>
+                <button class="tab" onclick="switchTab('sold')">📦 Sold Items</button>
+                <button class="tab" onclick="switchTab('available')">🏷️ Available Items</button>
+            </div>
+            
+            <div id="overview" class="tab-content active">
+                <div id="overviewContent"></div>
+            </div>
+            
+            <div id="sold" class="tab-content">
+                <div id="soldContent"></div>
+            </div>
+            
+            <div id="available" class="tab-content">
+                <div id="availableContent"></div>
             </div>
         </div>
     </div>
     
     <script>
-        var soldItems = [];
-        var availableItems = [];
-        var charts = {};
-        var soldSortColumn = null;
-        var soldSortDirection = 'asc';
-        var availableSortColumn = null;
-        var availableSortDirection = 'asc';
-        var lastUpdateDate = null;
-        var previousSoldCount = 0;
-        var salesSinceUpdate = 0;
+        let soldData = [];
+        let availableData = [];
+        let lastUpdateState = null;
+        let githubToken = localStorage.getItem('github_token') || '';
+        const REPO_OWNER = 'architeketh';
+        const REPO_NAME = 'threadup-dashboard';
         
-        window.addEventListener('load', function() {
-            loadPreviousStats();
-            loadDataFromGitHub();
-        });
+        // Consistent brand color palette
+        const brandColors = {
+            'NIKE': '#1E3A8A',           // Deep blue
+            'ADIDAS': '#10B981',         // Green
+            'COACH': '#F97316',          // Orange
+            'LULULEMON': '#EC4899',      // Pink
+            'MICHAEL KORS': '#8B5CF6',   // Purple
+            'KATE SPADE': '#F59E0B',     // Amber
+            'UNDER ARMOUR': '#EF4444',   // Red
+            'GUCCI': '#059669',          // Emerald
+            'PUMA': '#14B8A6',           // Teal
+            'REEBOK': '#6366F1',         // Indigo
+            'NEW BALANCE': '#0EA5E9',    // Sky blue
+            'PATAGONIA': '#84CC16',      // Lime
+            'THE NORTH FACE': '#DC2626', // Bright red
+            'COLUMBIA': '#2563EB',       // Blue
+            'VANS': '#DC2626',           // Red
+            'CONVERSE': '#1F2937',       // Gray
+            'TORY BURCH': '#D97706',     // Dark orange
+            'FENDI': '#7C3AED',          // Violet
+            'PRADA': '#000000',          // Black
+            'BURBERRY': '#B45309'        // Brown
+        };
         
-        function loadPreviousStats() {
-            var savedUpdateDate = localStorage.getItem('threadup_last_update');
-            var savedPreviousCount = localStorage.getItem('threadup_previous_sold_count');
-            var savedCurrentCount = localStorage.getItem('threadup_current_sold_count');
-            
-            if (savedUpdateDate) {
-                lastUpdateDate = new Date(savedUpdateDate);
+        // Default colors for brands not in the palette
+        const defaultColors = [
+            '#667eea', '#764ba2', '#f093fb', '#4facfe',
+            '#43e97b', '#fa709a', '#fee140', '#30cfd0',
+            '#a8edea', '#fed6e3', '#c471f5', '#12c2e9'
+        ];
+        
+        function getBrandColor(brand) {
+            const upperBrand = brand.toUpperCase();
+            if (brandColors[upperBrand]) {
+                return brandColors[upperBrand];
             }
-            if (savedPreviousCount) {
-                previousSoldCount = parseInt(savedPreviousCount);
-            }
-            if (savedCurrentCount) {
-                var savedCurrent = parseInt(savedCurrentCount);
-                if (savedCurrent > 0) {
-                    previousSoldCount = savedCurrent;
-                }
-            }
+            // Generate consistent color for unknown brands
+            const hash = brand.split('').reduce((acc, char) => {
+                return char.charCodeAt(0) + ((acc << 5) - acc);
+            }, 0);
+            return defaultColors[Math.abs(hash) % defaultColors.length];
         }
         
-        function updateTrackingStats() {
-            var currentDate = new Date();
-            var currentSoldCount = soldItems.length;
+        function setupFileUpload(uploadBoxId, inputId, dataType) {
+            const uploadBox = document.getElementById(uploadBoxId);
+            const input = document.getElementById(inputId);
             
-            if (previousSoldCount === 0) {
-                previousSoldCount = currentSoldCount;
-                salesSinceUpdate = 0;
-            } else {
-                salesSinceUpdate = currentSoldCount - previousSoldCount;
-            }
+            uploadBox.addEventListener('click', () => input.click());
             
-            if (!lastUpdateDate) {
-                lastUpdateDate = currentDate;
-            }
+            uploadBox.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadBox.classList.add('dragover');
+            });
             
-            localStorage.setItem('threadup_last_update', currentDate.toISOString());
-            localStorage.setItem('threadup_current_sold_count', currentSoldCount.toString());
-        }
-        
-        function resetTrackingStats() {
-            previousSoldCount = soldItems.length;
-            lastUpdateDate = new Date();
-            salesSinceUpdate = 0;
+            uploadBox.addEventListener('dragleave', () => {
+                uploadBox.classList.remove('dragover');
+            });
             
-            localStorage.setItem('threadup_last_update', lastUpdateDate.toISOString());
-            localStorage.setItem('threadup_previous_sold_count', previousSoldCount.toString());
-            localStorage.setItem('threadup_current_sold_count', previousSoldCount.toString());
+            uploadBox.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadBox.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file) handleFile(file, dataType);
+            });
             
-            updateDashboard();
-            
-            alert('✅ Tracking updated!\n\n📊 Baseline set: ' + previousSoldCount + ' sold items\n📅 Date: ' + lastUpdateDate.toLocaleDateString() + '\n\n💡 Next time you upload data, you\'ll see new sales since today!');
-        }
-        
-        function loadDataFromGitHub(forceReload) {
-            var cacheBust = forceReload ? '?t=' + new Date().getTime() : '';
-            
-            Promise.all([
-                fetch('data/sold.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch('data/available.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null)
-            ]).then(function(results) {
-                var githubSold = results[0];
-                var githubAvailable = results[1];
-                
-                if (githubSold) {
-                    soldItems = githubSold;
-                    localStorage.setItem('threadup_sold', JSON.stringify(soldItems)); // Sync to localStorage
-                    console.log('Loaded sold items from GitHub:', soldItems.length);
-                }
-                if (githubAvailable) {
-                    availableItems = githubAvailable;
-                    localStorage.setItem('threadup_available', JSON.stringify(availableItems)); // Sync to localStorage
-                    console.log('Loaded available items from GitHub:', availableItems.length);
-                }
-                
-                if (soldItems.length === 0 && availableItems.length === 0) {
-                    var savedSold = localStorage.getItem('threadup_sold');
-                    var savedAvailable = localStorage.getItem('threadup_available');
-                    if (savedSold) soldItems = JSON.parse(savedSold);
-                    if (savedAvailable) availableItems = JSON.parse(savedAvailable);
-                }
-                
-                if (soldItems.length > 0 || availableItems.length > 0) {
-                    updateDropZones();
-                    updateDashboard();
-                }
-                
-                if (forceReload) {
-                    alert('✅ Reloaded from GitHub!\n\n' + soldItems.length + ' sold items\n' + availableItems.length + ' available items');
-                }
+            input.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) handleFile(file, dataType);
             });
         }
         
-        function updateDropZones() {
-            if (soldItems.length > 0) {
-                document.getElementById('soldDropZone').classList.add('file-loaded');
-                document.getElementById('soldDropZone').querySelector('.drop-zone-hint').textContent = soldItems.length + ' items';
-            }
-            if (availableItems.length > 0) {
-                document.getElementById('availableDropZone').classList.add('file-loaded');
-                document.getElementById('availableDropZone').querySelector('.drop-zone-hint').textContent = availableItems.length + ' items';
-            }
-        }
-        
-        document.getElementById('soldFile').addEventListener('change', handleSoldFile);
-        document.getElementById('availableFile').addEventListener('change', handleAvailableFile);
-        
-        function handleSoldFile(e) {
-            var file = e.target.files[0];
-            if (!file) return;
-            
-            var reader = new FileReader();
-            reader.onload = function(event) {
+        function handleFile(file, dataType) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
                 try {
-                    soldItems = JSON.parse(event.target.result);
-                    localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
-                    updateDropZones();
-                    updateDashboard();
-                    document.getElementById('shareInstructions').style.display = 'block';
-                    alert('✅ Loaded ' + soldItems.length + ' sold items!\n\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales over time!');
+                    const data = JSON.parse(e.target.result);
+                    if (dataType === 'sold') {
+                        soldData = data;
+                        localStorage.setItem('threadup_sold', JSON.stringify(data));
+                    } else {
+                        availableData = data;
+                        localStorage.setItem('threadup_available', JSON.stringify(data));
+                    }
+                    renderDashboard();
                 } catch (error) {
-                    alert('Error: ' + error.message);
+                    alert('Error parsing JSON file: ' + error.message);
                 }
             };
             reader.readAsText(file);
         }
         
-        function handleAvailableFile(e) {
-            var file = e.target.files[0];
-            if (!file) return;
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    availableItems = JSON.parse(event.target.result);
-                    localStorage.setItem('threadup_available', JSON.stringify(availableItems));
-                    updateDropZones();
-                    updateDashboard();
-                    document.getElementById('shareInstructions').style.display = 'block';
-                    alert('✅ Loaded ' + availableItems.length + ' available items!\n\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales over time!');
-                } catch (error) {
-                    alert('Error: ' + error.message);
-                }
-            };
-            reader.readAsText(file);
-        }
-        
-        function switchTab(tab, event) {
-            var tabs = document.querySelectorAll('.tab');
-            tabs.forEach(function(t) { t.classList.remove('active'); });
             event.target.classList.add('active');
-            
-            var contents = document.querySelectorAll('.tab-content');
-            contents.forEach(function(c) { c.classList.remove('active'); });
-            document.getElementById(tab + '-content').classList.add('active');
+            document.getElementById(tabName).classList.add('active');
         }
         
-        function updateDashboard() {
-            document.getElementById('tabs').style.display = 'flex';
-            updateStats();
-            updateCharts();
-            updateTables();
+        function markAsUpdated() {
+            lastUpdateState = {
+                soldCount: soldData.length,
+                soldTotal: soldData.reduce((sum, item) => sum + (parseFloat(item['Sold Price']) || 0), 0),
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('last_update_state', JSON.stringify(lastUpdateState));
+            alert('✓ Marked as updated! New sales will be tracked from now on.');
+            renderDashboard();
         }
         
-        function updateStats() {
-            var totalSold = soldItems.length;
-            var totalAvailable = availableItems.length;
-            var totalRevenue = soldItems.reduce(function(sum, item) {
-                return sum + (parseFloat(item['Sold Price']) || 0);
-            }, 0);
-            var totalInventoryValue = availableItems.reduce(function(sum, item) {
-                return sum + (parseFloat(item.Price) || 0);
-            }, 0);
-            var avgPrice = totalSold > 0 ? totalRevenue / totalSold : 0;
-            var totalValue = totalRevenue + totalInventoryValue;
-            var totalItems = totalSold + totalAvailable;
-            var justListedCount = availableItems.filter(function(item) {
-                return item.Availability === 'Just Listed';
-            }).length;
+        function exportForGitHub() {
+            const soldBlob = new Blob([JSON.stringify(soldData, null, 2)], { type: 'application/json' });
+            const availableBlob = new Blob([JSON.stringify(availableData, null, 2)], { type: 'application/json' });
             
-            updateTrackingStats();
+            const soldUrl = URL.createObjectURL(soldBlob);
+            const availableUrl = URL.createObjectURL(availableBlob);
             
-            var daysSinceUpdate = 0;
-            var lastUpdateText = 'Never';
+            const soldLink = document.createElement('a');
+            soldLink.href = soldUrl;
+            soldLink.download = 'sold.json';
+            soldLink.click();
             
-            if (lastUpdateDate) {
-                var now = new Date();
-                var diffTime = Math.abs(now - lastUpdateDate);
-                daysSinceUpdate = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                lastUpdateText = lastUpdateDate.toLocaleDateString();
-            }
+            setTimeout(() => {
+                const availableLink = document.createElement('a');
+                availableLink.href = availableUrl;
+                availableLink.download = 'available.json';
+                availableLink.click();
+            }, 100);
             
-            var summaryHTML = '<div class="summary-item"><div class="summary-label">Total Value</div><div class="summary-value">$' + totalValue.toFixed(0) + '</div><div class="summary-subtext">Earned + Potential</div></div>';
-            summaryHTML += '<div class="summary-item"><div class="summary-label">Total Items</div><div class="summary-value">' + totalItems + '</div><div class="summary-subtext">' + totalSold + ' sold / ' + totalAvailable + ' avail</div></div>';
-            
-            if (salesSinceUpdate > 0) {
-                summaryHTML += '<div class="summary-item"><div class="summary-label">New Sales</div><div class="summary-value" style="color: #4ade80;">+' + salesSinceUpdate + '</div><div class="summary-subtext">since last update</div></div>';
-            }
-            
-            summaryHTML += '<div class="summary-item"><div class="summary-label">Sell-Through</div><div class="summary-value">' + (totalItems > 0 ? ((totalSold / totalItems) * 100).toFixed(0) : 0) + '%</div><div class="summary-subtext">of inventory</div></div>';
-            
-            if (lastUpdateDate) {
-                summaryHTML += '<div class="summary-item"><div class="summary-label">Last Updated</div><div class="summary-value" style="font-size: 18px;">' + lastUpdateText + '</div><div class="summary-subtext">' + daysSinceUpdate + ' day' + (daysSinceUpdate !== 1 ? 's' : '') + ' ago</div></div>';
-            }
-            
-            if (justListedCount > 0) {
-                summaryHTML += '<div class="summary-item"><div class="summary-label">Just Listed</div><div class="summary-value">🆕 ' + justListedCount + '</div><div class="summary-subtext">new items</div></div>';
-            }
-            
-            document.getElementById('summaryBanner').innerHTML = summaryHTML;
-            document.getElementById('summaryBanner').style.display = 'grid';
-            
-            var statsHTML = '<div class="stat-card"><div class="stat-label">Items Sold</div><div class="stat-value">' + totalSold + '</div><div class="stat-subvalue">items</div></div>';
-            statsHTML += '<div class="stat-card"><div class="stat-label">Revenue (Sold)</div><div class="stat-value">$' + totalRevenue.toFixed(2) + '</div><div class="stat-subvalue">total earned</div></div>';
-            statsHTML += '<div class="stat-card"><div class="stat-label">Items Available</div><div class="stat-value">' + totalAvailable + '</div><div class="stat-subvalue">items</div></div>';
-            statsHTML += '<div class="stat-card"><div class="stat-label">Inventory Value</div><div class="stat-value">$' + totalInventoryValue.toFixed(2) + '</div><div class="stat-subvalue">potential revenue</div></div>';
-            statsHTML += '<div class="stat-card"><div class="stat-label">Avg Sold Price</div><div class="stat-value">$' + avgPrice.toFixed(2) + '</div><div class="stat-subvalue">per item</div></div>';
-            
-            document.getElementById('statsGrid').innerHTML = statsHTML;
+            alert('📤 Files exported! Upload them to your data/ folder on GitHub.');
         }
         
-        function updateCharts() {
-            var chartsHTML = '<div class="chart-card"><div class="chart-title">Sales Over Time</div><canvas id="salesTimeChart"></canvas></div>';
-            chartsHTML += '<div class="chart-card"><div class="chart-title">Items by Likes</div><canvas id="likesChart"></canvas></div>';
-            chartsHTML += '<div class="chart-card"><div class="chart-title">Top Brands by Revenue</div><canvas id="brandsChart"></canvas></div>';
-            chartsHTML += '<div class="chart-card"><div class="chart-title">Price Distribution</div><canvas id="priceChart"></canvas></div>';
-            chartsHTML += '<div class="chart-card"><div class="chart-title">Revenue by Month</div><canvas id="revenueMonthChart"></canvas></div>';
-            chartsHTML += '<div class="chart-card"><div class="chart-title">Inventory by Brand</div><canvas id="inventoryBrandChart"></canvas></div>';
-            
-            document.getElementById('chartsGrid').innerHTML = chartsHTML;
-            
-            Object.values(charts).forEach(function(chart) { chart.destroy(); });
-            charts = {};
-            
-            createSalesTimeChart();
-            createLikesChart();
-            createBrandsChart();
-            createPriceChart();
-            createRevenueByMonthChart();
-            createInventoryByBrandChart();
-        }
-        
-        function createSalesTimeChart() {
-            // Group sales by date
-            var salesByDate = {};
-            soldItems.forEach(function(item) {
-                var date = item['Date Sold'] || 'Unknown';
-                if (date && date !== 'Unknown' && date !== 'Unknown Date') {
-                    if (!salesByDate[date]) {
-                        salesByDate[date] = { count: 0, revenue: 0 };
-                    }
-                    salesByDate[date].count++;
-                    salesByDate[date].revenue += parseFloat(item['Sold Price']) || 0;
+        async function reloadFromGitHub() {
+            try {
+                const soldResponse = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/data/sold.json`);
+                const availableResponse = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/data/available.json`);
+                
+                if (soldResponse.ok) {
+                    soldData = await soldResponse.json();
+                    localStorage.setItem('threadup_sold', JSON.stringify(soldData));
                 }
-            });
+                
+                if (availableResponse.ok) {
+                    availableData = await availableResponse.json();
+                    localStorage.setItem('threadup_available', JSON.stringify(availableData));
+                }
+                
+                renderDashboard();
+                alert('🔄 Data reloaded from GitHub!');
+            } catch (error) {
+                alert('❌ Error loading from GitHub: ' + error.message);
+            }
+        }
+        
+        function setupGitHubToken() {
+            const token = prompt('Enter your GitHub Personal Access Token (with repo permissions):\n\nTo create one:\n1. Go to GitHub Settings → Developer settings → Personal access tokens\n2. Generate new token (classic)\n3. Select "repo" scope\n4. Copy and paste here', githubToken);
             
-            // Sort by date
-            var sortedDates = Object.keys(salesByDate).sort();
-            var labels = sortedDates.map(function(date) {
-                var d = new Date(date);
-                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            });
-            var counts = sortedDates.map(function(date) { return salesByDate[date].count; });
-            var revenues = sortedDates.map(function(date) { return salesByDate[date].revenue; });
-            
-            var ctx = document.getElementById('salesTimeChart');
-            if (sortedDates.length === 0) {
-                ctx.getContext('2d').font = '14px sans-serif';
-                ctx.getContext('2d').fillStyle = '#999';
-                ctx.getContext('2d').textAlign = 'center';
-                ctx.getContext('2d').fillText('Add dates to sold items to see sales trends', ctx.width / 2, ctx.height / 2);
+            if (token) {
+                githubToken = token;
+                localStorage.setItem('github_token', token);
+                alert('✓ Token saved!');
+            }
+        }
+        
+        async function saveToGitHub() {
+            if (!githubToken) {
+                alert('⚠️ Please setup your GitHub token first!');
+                setupGitHubToken();
                 return;
             }
             
-            charts.salesTime = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Items Sold',
-                        data: counts,
-                        borderColor: '#667eea',
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: { display: true },
-                        datalabels: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                afterLabel: function(context) {
-                                    var idx = context.dataIndex;
-                                    return 'Revenue: $' + revenues[idx].toFixed(2);
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { stepSize: 1 }
-                        }
-                    }
-                }
-            });
+            try {
+                await uploadToGitHub('data/sold.json', soldData);
+                await uploadToGitHub('data/available.json', availableData);
+                alert('💾 Files saved to GitHub!');
+            } catch (error) {
+                alert('❌ Error saving to GitHub: ' + error.message);
+            }
         }
         
-        function createLikesChart() {
-            var sortedByLikes = availableItems.filter(function(item) { return (item.Likes || 0) > 0; }).sort(function(a, b) { return (b.Likes || 0) - (a.Likes || 0); }).slice(0, 10);
+        async function uploadToGitHub(path, data) {
+            const content = btoa(JSON.stringify(data, null, 2));
             
-            var labels = sortedByLikes.map(function(item) {
-                var brand = item.Brand || 'Unknown';
-                return brand.length > 15 ? brand.substring(0, 15) + '...' : brand;
-            });
-            var data = sortedByLikes.map(function(item) { return item.Likes || 0; });
-            var colors = data.map(function(likes) {
-                if (likes > 50) return '#28a745';
-                if (likes > 20) return '#ffc107';
-                return '#17a2b8';
-            });
-            
-            var ctx = document.getElementById('likesChart');
-            charts.likes = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: labels, datasets: [{ label: 'Likes', data: data, backgroundColor: colors }] },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: true, 
-                    indexAxis: 'y',
-                    scales: {
-                        x: { beginAtZero: true },
-                        y: { 
-                            ticks: { 
-                                autoSkip: false,
-                                maxRotation: 0,
-                                minRotation: 0
-                            }
-                        }
-                    },
-                    plugins: { 
-                        legend: { display: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'end',
-                            color: '#333',
-                            font: { size: 11 },
-                            formatter: function(value) {
-                                return '❤️ ' + value;
-                            }
-                        }
-                    } 
-                },
-                plugins: [ChartDataLabels]
-            });
-        }
-        
-        function createBrandsChart() {
-            // Common two-word brand names that should stay together
-            var twoWordBrands = ['Kate Spade', 'Marc Jacobs', 'Michael Kors', 'Tory Burch', 'Calvin Klein', 
-                                  'Ralph Lauren', 'Tommy Hilfiger', 'Free People', 'Steve Madden', 'Sam Edelman',
-                                  'Lucky Brand', 'Banana Republic', 'Old Navy', 'Gap Kids', 'Theory'];
-            
-            function getBaseBrand(fullBrand) {
-                if (!fullBrand || fullBrand === 'Unknown') return 'Unknown';
-                
-                // Check if it starts with a two-word brand
-                for (var i = 0; i < twoWordBrands.length; i++) {
-                    if (fullBrand.indexOf(twoWordBrands[i]) === 0) {
-                        return twoWordBrands[i];
-                    }
+            const getShaResponse = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Accept': 'application/vnd.github.v3+json'
                 }
-                
-                // Otherwise, use first word
-                var firstWord = fullBrand.split(' ')[0];
-                return firstWord;
+            });
+            
+            let sha = '';
+            if (getShaResponse.ok) {
+                const fileData = await getShaResponse.json();
+                sha = fileData.sha;
             }
             
-            var brandRevenue = {};
-            var brandCount = {};
-            
-            soldItems.forEach(function(item) {
-                var fullBrand = item.Brand || 'Unknown';
-                var baseBrand = getBaseBrand(fullBrand);
-                var price = parseFloat(item['Sold Price']) || 0;
-                
-                brandRevenue[baseBrand] = (brandRevenue[baseBrand] || 0) + price;
-                brandCount[baseBrand] = (brandCount[baseBrand] || 0) + 1;
-            });
-            
-            var sortedBrands = Object.entries(brandRevenue).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
-            var labels = sortedBrands.map(function(b) { 
-                var count = brandCount[b[0]];
-                return b[0] + ' (' + count + ')';
-            });
-            var data = sortedBrands.map(function(b) { return b[1]; });
-            
-            var colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b', '#fa709a', '#fee140', '#30cfd0', '#a8edea'];
-            
-            var ctx = document.getElementById('brandsChart');
-            charts.brands = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: labels, datasets: [{ label: 'Revenue', data: data, backgroundColor: colors }] },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: true, 
-                    indexAxis: 'y',
-                    scales: {
-                        x: { beginAtZero: true },
-                        y: { 
-                            ticks: { 
-                                autoSkip: false,
-                                maxRotation: 0,
-                                minRotation: 0
-                            }
-                        }
-                    },
-                    plugins: { 
-                        legend: { display: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'end',
-                            color: '#333',
-                            font: { size: 11 },
-                            formatter: function(value) {
-                                return '$' + value.toFixed(2);
-                            }
-                        }
-                    } 
+            const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
                 },
-                plugins: [ChartDataLabels]
+                body: JSON.stringify({
+                    message: `Update ${path}`,
+                    content: content,
+                    sha: sha || undefined
+                })
             });
+            
+            if (!response.ok) {
+                throw new Error(`Failed to upload ${path}`);
+            }
         }
         
-        function createPriceChart() {
-            var priceRanges = { '$0-10': 0, '$10-20': 0, '$20-30': 0, '$30-50': 0, '$50-100': 0, '$100+': 0 };
+        function renderDashboard() {
+            renderOverview();
+            renderSoldItems();
+            renderAvailableItems();
+        }
+        
+        function renderOverview() {
+            const content = document.getElementById('overviewContent');
             
-            soldItems.forEach(function(item) {
-                var price = parseFloat(item['Sold Price']) || 0;
-                if (price < 10) priceRanges['$0-10']++;
-                else if (price < 20) priceRanges['$10-20']++;
-                else if (price < 30) priceRanges['$20-30']++;
-                else if (price < 50) priceRanges['$30-50']++;
-                else if (price < 100) priceRanges['$50-100']++;
-                else priceRanges['$100+']++;
-            });
+            if (soldData.length === 0 && availableData.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📊</div>
+                        <h3>No data yet</h3>
+                        <p>Upload your sold and available items to see insights</p>
+                    </div>
+                `;
+                return;
+            }
             
-            var ctx = document.getElementById('priceChart');
-            charts.price = new Chart(ctx, {
-                type: 'bar',
-                data: { 
-                    labels: Object.keys(priceRanges), 
-                    datasets: [{ 
-                        label: 'Items',
-                        data: Object.values(priceRanges), 
-                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b'] 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: true, 
-                    indexAxis: 'y',
-                    plugins: { 
-                        legend: { display: false },
-                        datalabels: { display: false }
-                    } 
+            const savedState = localStorage.getItem('last_update_state');
+            lastUpdateState = savedState ? JSON.parse(savedState) : null;
+            
+            const totalSold = soldData.length;
+            const totalRevenue = soldData.reduce((sum, item) => sum + (parseFloat(item['Sold Price']) || 0), 0);
+            const totalAvailable = availableData.length;
+            const totalInventoryValue = availableData.reduce((sum, item) => sum + (parseFloat(item['Price']) || 0), 0);
+            const avgSoldPrice = totalSold > 0 ? totalRevenue / totalSold : 0;
+            
+            const totalBusinessValue = totalRevenue + totalInventoryValue;
+            const totalItems = totalSold + totalAvailable;
+            const sellThroughRate = totalItems > 0 ? (totalSold / totalItems * 100).toFixed(1) : 0;
+            
+            let newSalesBadge = '';
+            if (lastUpdateState) {
+                const newSalesCount = totalSold - lastUpdateState.soldCount;
+                const newRevenue = totalRevenue - lastUpdateState.soldTotal;
+                if (newSalesCount > 0) {
+                    newSalesBadge = `<span class="new-sales-badge">🔥 ${newSalesCount} new sale${newSalesCount > 1 ? 's' : ''} • $${newRevenue.toFixed(2)}</span>`;
                 }
-            });
-        }
-        
-        function createRevenueByMonthChart() {
-            var revenueByMonth = {};
+            }
             
-            soldItems.forEach(function(item) {
-                var dateStr = item['Date Sold'];
-                if (!dateStr || dateStr === 'Unknown' || dateStr === 'Unknown Date') return;
+            content.innerHTML = `
+                <div class="summary-banner">
+                    <div class="summary-item">
+                        <div class="label">Total Business Value</div>
+                        <div class="value">$${totalBusinessValue.toFixed(2)}</div>
+                        <div class="subtitle">Earned + Potential</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="label">Total Items</div>
+                        <div class="value">${totalItems}</div>
+                        <div class="subtitle">${totalSold} sold + ${totalAvailable} available</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="label">Sell-Through Rate</div>
+                        <div class="value">${sellThroughRate}%</div>
+                        <div class="subtitle">of inventory sold</div>
+                    </div>
+                </div>
                 
-                try {
-                    var date = new Date(dateStr);
-                    var monthKey = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
-                    var revenue = parseFloat(item['Sold Price']) || 0;
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Items Sold ${newSalesBadge}</h3>
+                        <div class="value">${totalSold}</div>
+                    </div>
                     
-                    if (!revenueByMonth[monthKey]) {
-                        revenueByMonth[monthKey] = { revenue: 0, count: 0 };
-                    }
-                    revenueByMonth[monthKey].revenue += revenue;
-                    revenueByMonth[monthKey].count++;
-                } catch(e) {}
+                    <div class="stat-card">
+                        <h3>Revenue (Sold)</h3>
+                        <div class="value">$${totalRevenue.toFixed(2)}</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Items Available</h3>
+                        <div class="value">${totalAvailable}</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Inventory Value</h3>
+                        <div class="value">$${totalInventoryValue.toFixed(2)}</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Avg Sold Price</h3>
+                        <div class="value">$${avgSoldPrice.toFixed(2)}</div>
+                    </div>
+                </div>
+                
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Revenue by Brand</h3>
+                        <div class="chart-container">
+                            <canvas id="revenueByBrand"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h3>Items Sold by Brand</h3>
+                        <div class="chart-container">
+                            <canvas id="itemsByBrand"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h3>Price Distribution</h3>
+                        <div class="chart-container">
+                            <canvas id="priceDistribution"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h3>Sales Over Time</h3>
+                        <div class="chart-container">
+                            <canvas id="salesOverTime"></canvas>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            renderCharts();
+        }
+        
+        function renderCharts() {
+            renderRevenueByBrand();
+            renderItemsByBrand();
+            renderPriceDistribution();
+            renderSalesOverTime();
+        }
+        
+        function renderRevenueByBrand() {
+            const brandRevenue = {};
+            soldData.forEach(item => {
+                const brand = item.Brand || 'Unknown';
+                const price = parseFloat(item['Sold Price']) || 0;
+                brandRevenue[brand] = (brandRevenue[brand] || 0) + price;
             });
             
-            var sortedMonths = Object.keys(revenueByMonth).sort();
-            var labels = sortedMonths.map(function(monthKey) {
-                var parts = monthKey.split('-');
-                var date = new Date(parts[0], parts[1] - 1, 1);
-                var month = date.toLocaleDateString('en-US', { month: 'short' });
-                var year = date.getFullYear().toString().slice(-2);
-                return month + " '" + year;
-            });
-            var revenues = sortedMonths.map(function(monthKey) {
-                return revenueByMonth[monthKey].revenue;
-            });
-            var counts = sortedMonths.map(function(monthKey) {
-                return revenueByMonth[monthKey].count;
-            });
+            const sortedBrands = Object.entries(brandRevenue)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
             
-            // Colorful bars - cycle through colors
-            var colorPalette = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b', '#fa709a', '#fee140', '#30cfd0', '#a8edea', '#ff6b6b', '#4ecdc4'];
-            var colors = sortedMonths.map(function(month, idx) {
-                return colorPalette[idx % colorPalette.length];
-            });
+            const labels = sortedBrands.map(([brand]) => brand);
+            const data = sortedBrands.map(([, revenue]) => revenue);
+            const colors = labels.map(brand => getBrandColor(brand));
             
-            var ctx = document.getElementById('revenueMonthChart');
-            
-            if (sortedMonths.length === 0) {
-                ctx.getContext('2d').font = '14px sans-serif';
-                ctx.getContext('2d').fillStyle = '#999';
-                ctx.getContext('2d').textAlign = 'center';
-                ctx.getContext('2d').fillText('Add dates to sold items to see monthly revenue', ctx.width / 2, ctx.height / 2);
-                return;
-            }
-            
-            charts.revenueMonth = new Chart(ctx, {
+            const ctx = document.getElementById('revenueByBrand');
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
                         label: 'Revenue',
-                        data: revenues,
+                        data: data,
                         backgroundColor: colors,
-                        borderRadius: 4,
-                        barPercentage: 0.6
+                        borderColor: colors.map(c => c + 'cc'),
+                        borderWidth: 2
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: true,
-                    layout: {
-                        padding: {
-                            top: 30
-                        }
-                    },
+                    maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            offset: 4,
-                            color: '#333',
-                            font: { size: 11 },
-                            formatter: function(value) {
-                                return '$' + value.toFixed(2);
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                afterLabel: function(context) {
-                                    var idx = context.dataIndex;
-                                    return counts[idx] + ' items sold';
-                                }
-                            }
+                        legend: {
+                            display: false
                         }
                     },
                     scales: {
@@ -1040,370 +862,294 @@
                             beginAtZero: true,
                             ticks: {
                                 callback: function(value) {
-                                    return '$' + value;
+                                    return '$' + value.toFixed(0);
                                 }
                             }
                         },
                         x: {
                             ticks: {
-                                maxRotation: 0,
-                                minRotation: 0
-                            }
-                        }
-                    }
-                },
-                plugins: [ChartDataLabels]
-            });
-        }
-        
-        function createInventoryByBrandChart() {
-            // Common two-word brand names that should stay together
-            var twoWordBrands = ['Kate Spade', 'Marc Jacobs', 'Michael Kors', 'Tory Burch', 'Calvin Klein', 
-                                  'Ralph Lauren', 'Tommy Hilfiger', 'Free People', 'Steve Madden', 'Sam Edelman',
-                                  'Lucky Brand', 'Banana Republic', 'Old Navy', 'Gap Kids', 'Theory'];
-            
-            function getBaseBrand(fullBrand) {
-                if (!fullBrand || fullBrand === 'Unknown') return 'Unknown';
-                
-                // Check if it starts with a two-word brand
-                for (var i = 0; i < twoWordBrands.length; i++) {
-                    if (fullBrand.indexOf(twoWordBrands[i]) === 0) {
-                        return twoWordBrands[i];
-                    }
-                }
-                
-                // Otherwise, use first word
-                var firstWord = fullBrand.split(' ')[0];
-                return firstWord;
-            }
-            
-            var brandInventory = {};
-            var brandCount = {};
-            
-            availableItems.forEach(function(item) {
-                var fullBrand = item.Brand || 'Unknown';
-                var baseBrand = getBaseBrand(fullBrand);
-                var price = parseFloat(item.Price) || 0;
-                
-                brandInventory[baseBrand] = (brandInventory[baseBrand] || 0) + price;
-                brandCount[baseBrand] = (brandCount[baseBrand] || 0) + 1;
-            });
-            
-            var sortedBrands = Object.entries(brandInventory).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
-            var labels = sortedBrands.map(function(b) { 
-                var count = brandCount[b[0]];
-                return b[0] + ' (' + count + ')';
-            });
-            var data = sortedBrands.map(function(b) { return b[1]; });
-            
-            var colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b', '#fa709a', '#fee140', '#30cfd0', '#a8edea'];
-            
-            var ctx = document.getElementById('inventoryBrandChart');
-            charts.inventoryBrand = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: labels, datasets: [{ label: 'Inventory Value', data: data, backgroundColor: colors }] },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: true, 
-                    indexAxis: 'y',
-                    scales: {
-                        x: { beginAtZero: true },
-                        y: { 
-                            ticks: { 
                                 autoSkip: false,
-                                maxRotation: 0,
-                                minRotation: 0
+                                maxRotation: 45,
+                                minRotation: 45,
+                                font: {
+                                    size: 11
+                                }
                             }
                         }
-                    },
-                    plugins: { 
-                        legend: { display: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'end',
-                            color: '#333',
-                            font: { size: 11 },
-                            formatter: function(value) {
-                                return '$' + value.toFixed(2);
-                            }
-                        }
-                    } 
+                    }
+                }
+            });
+        }
+        
+        function renderItemsByBrand() {
+            const brandCounts = {};
+            soldData.forEach(item => {
+                const brand = item.Brand || 'Unknown';
+                brandCounts[brand] = (brandCounts[brand] || 0) + 1;
+            });
+            
+            const sortedBrands = Object.entries(brandCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+            
+            const labels = sortedBrands.map(([brand]) => brand);
+            const data = sortedBrands.map(([, count]) => count);
+            const colors = labels.map(brand => getBrandColor(brand));
+            
+            const ctx = document.getElementById('itemsByBrand');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
                 },
-                plugins: [ChartDataLabels]
-            });
-        }
-        
-        function sortSoldItems(column) {
-            if (soldSortColumn === column) {
-                soldSortDirection = soldSortDirection === 'asc' ? 'desc' : 'asc';
-            } else {
-                soldSortColumn = column;
-                soldSortDirection = 'asc';
-            }
-            
-            soldItems.sort(function(a, b) {
-                var aVal, bVal;
-                if (column === 'price') {
-                    aVal = parseFloat(a['Sold Price']) || 0;
-                    bVal = parseFloat(b['Sold Price']) || 0;
-                } else if (column === 'brand') {
-                    aVal = (a.Brand || '').toLowerCase();
-                    bVal = (b.Brand || '').toLowerCase();
-                } else if (column === 'date') {
-                    aVal = a['Date Sold'] || '';
-                    bVal = b['Date Sold'] || '';
-                }
-                
-                if (soldSortDirection === 'asc') {
-                    return aVal > bVal ? 1 : -1;
-                } else {
-                    return aVal < bVal ? 1 : -1;
-                }
-            });
-            
-            updateTables();
-        }
-        
-        function sortAvailableItems(column) {
-            if (availableSortColumn === column) {
-                availableSortDirection = availableSortDirection === 'asc' ? 'desc' : 'asc';
-            } else {
-                availableSortColumn = column;
-                availableSortDirection = 'asc';
-            }
-            
-            availableItems.sort(function(a, b) {
-                var aVal, bVal;
-                if (column === 'price') {
-                    aVal = parseFloat(a.Price) || 0;
-                    bVal = parseFloat(b.Price) || 0;
-                } else if (column === 'likes') {
-                    aVal = a.Likes || 0;
-                    bVal = b.Likes || 0;
-                } else if (column === 'brand') {
-                    aVal = (a.Brand || '').toLowerCase();
-                    bVal = (b.Brand || '').toLowerCase();
-                }
-                
-                if (availableSortDirection === 'asc') {
-                    return aVal > bVal ? 1 : -1;
-                } else {
-                    return aVal < bVal ? 1 : -1;
-                }
-            });
-            
-            updateTables();
-        }
-        
-        function updateTables() {
-            if (soldItems.length === 0) {
-                document.getElementById('soldTable').innerHTML = '<div class="no-data"><h3>No sold items</h3></div>';
-            } else {
-                var tableHTML = '<h2>Sold Items (' + soldItems.length + ') <span style="font-size: 14px; color: #666; font-weight: normal;">Click dates to edit</span></h2><table><thead><tr>';
-                tableHTML += '<th class="sortable' + (soldSortColumn === 'brand' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'brand\')">Brand</th>';
-                tableHTML += '<th>Description</th>';
-                tableHTML += '<th class="sortable' + (soldSortColumn === 'price' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'price\')">Price</th>';
-                tableHTML += '<th class="sortable' + (soldSortColumn === 'date' ? ' sorted-' + soldSortDirection : '') + '" onclick="sortSoldItems(\'date\')">Date Sold</th>';
-                tableHTML += '</tr></thead><tbody>';
-                soldItems.forEach(function(item, index) {
-                    var dateValue = item['Date Sold'] || '';
-                    var formattedDate = dateValue;
-                    if (dateValue && dateValue !== 'Unknown' && dateValue !== 'Unknown Date') {
-                        // Keep existing format
-                        formattedDate = dateValue;
-                    } else {
-                        // Default to today for unknown dates
-                        var today = new Date();
-                        formattedDate = today.toISOString().split('T')[0];
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 11
+                                },
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    return data.labels.map((label, i) => {
+                                        return {
+                                            text: `${label} (${data.datasets[0].data[i]})`,
+                                            fillStyle: data.datasets[0].backgroundColor[i],
+                                            hidden: false,
+                                            index: i
+                                        };
+                                    });
+                                }
+                            }
+                        }
                     }
-                    
-                    tableHTML += '<tr><td>' + (item.Brand || 'N/A') + '</td><td>' + (item.Description || 'N/A') + '</td><td class="price">$' + (parseFloat(item['Sold Price']) || 0).toFixed(2) + '</td><td><input type="date" class="date-input" data-index="' + index + '" value="' + formattedDate + '" onchange="dateChanged(this)"></td></tr>';
-                });
-                tableHTML += '</tbody></table>';
-                document.getElementById('soldTable').innerHTML = tableHTML;
-            }
-            
-            if (availableItems.length === 0) {
-                document.getElementById('availableTable').innerHTML = '<div class="no-data"><h3>No available items</h3></div>';
-            } else {
-                var tableHTML = '<h2>Available Items (' + availableItems.length + ')</h2><table><thead><tr>';
-                tableHTML += '<th class="sortable' + (availableSortColumn === 'brand' ? ' sorted-' + availableSortDirection : '') + '" onclick="sortAvailableItems(\'brand\')">Brand</th>';
-                tableHTML += '<th>Description</th>';
-                tableHTML += '<th class="sortable' + (availableSortColumn === 'price' ? ' sorted-' + availableSortDirection : '') + '" onclick="sortAvailableItems(\'price\')">Price</th>';
-                tableHTML += '<th class="sortable' + (availableSortColumn === 'likes' ? ' sorted-' + availableSortDirection : '') + '" onclick="sortAvailableItems(\'likes\')">Likes</th>';
-                tableHTML += '</tr></thead><tbody>';
-                availableItems.forEach(function(item) {
-                    var likes = item.Likes || 0;
-                    var likesColor = likes > 50 ? '#28a745' : (likes > 20 ? '#ffc107' : '#6c757d');
-                    var brandDisplay = item.Brand || 'N/A';
-                    if (item.Availability === 'Just Listed') {
-                        brandDisplay = brandDisplay + ' <span style="background:#17a2b8;color:white;padding:2px 4px;border-radius:3px;font-size:9px;font-weight:bold;">🆕</span>';
-                    }
-                    tableHTML += '<tr><td>' + brandDisplay + '</td><td>' + (item.Description || 'N/A') + '</td><td>$' + (parseFloat(item.Price) || 0).toFixed(2) + '</td><td><span style="color:' + likesColor + ';font-weight:600;">❤️ ' + likes + '</span></td></tr>';
-                });
-                tableHTML += '</tbody></table>';
-                document.getElementById('availableTable').innerHTML = tableHTML;
-            }
-        }
-        
-        function dateChanged(input) {
-            var index = parseInt(input.getAttribute('data-index'));
-            var newDate = input.value;
-            soldItems[index]['Date Sold'] = newDate;
-            input.classList.add('modified');
-            
-            // Show save button
-            document.getElementById('saveBtn').style.display = 'inline-block';
-            
-            // Update localStorage
-            localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
-            
-            // Update charts to reflect new date
-            updateCharts();
-        }
-        
-        function setupGitHubToken() {
-            var currentToken = localStorage.getItem('threadup_github_token');
-            var message = 'Enter your GitHub Personal Access Token:\n\n';
-            
-            if (currentToken) {
-                var preview = currentToken.substring(0, 10) + '...' + currentToken.substring(currentToken.length - 10);
-                message += 'Current token: ' + preview + '\n\n';
-                message += 'Leave blank to keep current token, or paste new token:';
-            } else {
-                message += '(Starts with ghp_ or github_pat_)';
-            }
-            
-            var token = prompt(message);
-            
-            if (token === null) return; // Cancelled
-            
-            if (token === '' && currentToken) {
-                alert('✅ Keeping current token:\n\n' + currentToken.substring(0, 10) + '...');
-                return;
-            }
-            
-            if (token === '' && !currentToken) {
-                alert('❌ No token entered!');
-                return;
-            }
-            
-            if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
-                alert('⚠️ Warning: Token should start with "ghp_" or "github_pat_"\n\nSaving anyway...');
-            }
-            
-            localStorage.setItem('threadup_github_token', token);
-            alert('✅ GitHub token saved!\n\nYou can now use "Save Changes to GitHub"');
-        }
-        
-        async function saveChangesToGitHub() {
-            var TOKEN = localStorage.getItem('threadup_github_token');
-            if (!TOKEN) {
-                alert('❌ GitHub token not found!\n\nClick "🔑 Setup GitHub Token" button first.');
-                return;
-            }
-            
-            if (!confirm('Save updated sold items to GitHub?\n\nThis will update your dashboard everywhere.')) {
-                return;
-            }
-            
-            var saveBtn = document.getElementById('saveBtn');
-            saveBtn.textContent = '⏳ Saving...';
-            saveBtn.disabled = true;
-            
-            try {
-                var REPO = 'architeketh/threadup-dashboard';
-                var url = 'https://api.github.com/repos/' + REPO + '/contents/data/sold.json';
-                
-                // Get current file SHA
-                var getSHA = await fetch(url, {
-                    headers: { 'Authorization': 'token ' + TOKEN }
-                });
-                
-                var sha = null;
-                if (getSHA.ok) {
-                    var data = await getSHA.json();
-                    sha = data.sha;
                 }
-                
-                // Upload updated file
-                var response = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'token ' + TOKEN,
-                        'Content-Type': 'application/json'
+            });
+        }
+        
+        function renderPriceDistribution() {
+            const prices = soldData.map(item => parseFloat(item['Sold Price']) || 0);
+            
+            const ranges = {
+                '$0-25': 0,
+                '$26-50': 0,
+                '$51-75': 0,
+                '$76-100': 0,
+                '$100+': 0
+            };
+            
+            prices.forEach(price => {
+                if (price <= 25) ranges['$0-25']++;
+                else if (price <= 50) ranges['$26-50']++;
+                else if (price <= 75) ranges['$51-75']++;
+                else if (price <= 100) ranges['$76-100']++;
+                else ranges['$100+']++;
+            });
+            
+            const ctx = document.getElementById('priceDistribution');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(ranges),
+                    datasets: [{
+                        label: 'Number of Items',
+                        data: Object.values(ranges),
+                        backgroundColor: '#667eea',
+                        borderColor: '#5568d3',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     },
-                    body: JSON.stringify({
-                        message: 'Update sold items dates',
-                        content: btoa(unescape(encodeURIComponent(JSON.stringify(soldItems, null, 2)))),
-                        sha: sha
-                    })
-                });
-                
-                if (response.ok) {
-                    saveBtn.textContent = '✅ Saved!';
-                    saveBtn.style.background = '#28a745';
-                    
-                    // Remove modified class from inputs
-                    var inputs = document.querySelectorAll('.date-input.modified');
-                    inputs.forEach(function(inp) { inp.classList.remove('modified'); });
-                    
-                    setTimeout(function() {
-                        saveBtn.style.display = 'none';
-                        saveBtn.textContent = '💾 Save Changes to GitHub';
-                        saveBtn.style.background = '#ff9800';
-                        saveBtn.disabled = false;
-                    }, 3000);
-                    
-                    alert('✅ Saved to GitHub!\n\nYour dashboard will update everywhere in 1-2 minutes.');
-                } else {
-                    throw new Error('Upload failed');
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
                 }
-            } catch (error) {
-                alert('❌ Failed to save to GitHub\n\nError: ' + error.message);
-                saveBtn.textContent = '💾 Save Changes to GitHub';
-                saveBtn.disabled = false;
-            }
+            });
         }
         
-        function exportForGitHub() {
-            if (soldItems.length === 0 && availableItems.length === 0) {
-                alert('No data to export! Upload files first.');
+        function renderSalesOverTime() {
+            const salesByDate = {};
+            
+            soldData.forEach(item => {
+                const dateStr = item['Date Sold'];
+                if (dateStr) {
+                    const date = new Date(dateStr);
+                    const monthYear = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                    salesByDate[monthYear] = (salesByDate[monthYear] || 0) + 1;
+                }
+            });
+            
+            const sortedDates = Object.entries(salesByDate).sort((a, b) => {
+                return new Date(a[0]) - new Date(b[0]);
+            });
+            
+            const ctx = document.getElementById('salesOverTime');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: sortedDates.map(([date]) => date),
+                    datasets: [{
+                        label: 'Items Sold',
+                        data: sortedDates.map(([, count]) => count),
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function renderSoldItems() {
+            const content = document.getElementById('soldContent');
+            
+            if (soldData.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📦</div>
+                        <h3>No sold items yet</h3>
+                        <p>Upload sold items JSON</p>
+                    </div>
+                `;
                 return;
             }
             
-            if (soldItems.length > 0) {
-                var soldBlob = new Blob([JSON.stringify(soldItems, null, 2)], { type: 'application/json' });
-                var soldUrl = URL.createObjectURL(soldBlob);
-                var soldLink = document.createElement('a');
-                soldLink.href = soldUrl;
-                soldLink.download = 'sold.json';
-                soldLink.click();
-                URL.revokeObjectURL(soldUrl);
-            }
+            const tableHTML = `
+                <div class="items-table">
+                    <h3>Sold Items (${soldData.length})</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Brand</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                    <th>Date Sold</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${soldData.map(item => `
+                                    <tr>
+                                        <td>${item.Brand || 'N/A'}</td>
+                                        <td>${item.Description || 'N/A'}</td>
+                                        <td>$${parseFloat(item['Sold Price'] || 0).toFixed(2)}</td>
+                                        <td>${item['Date Sold'] || 'N/A'}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
             
-            if (availableItems.length > 0) {
-                var availableBlob = new Blob([JSON.stringify(availableItems, null, 2)], { type: 'application/json' });
-                var availableUrl = URL.createObjectURL(availableBlob);
-                var availableLink = document.createElement('a');
-                availableLink.href = availableUrl;
-                availableLink.download = 'available.json';
-                availableLink.click();
-                URL.revokeObjectURL(availableUrl);
-            }
-            
-            setTimeout(function() {
-                alert('📤 Files downloaded!\n\n1. Go to your repo on GitHub\n2. Navigate to data/ folder\n3. Upload both JSON files\n4. Commit and share your URL!');
-            }, 500);
+            content.innerHTML = tableHTML;
         }
         
-        function clearAllData() {
-            if (confirm('Clear all data?')) {
-                localStorage.removeItem('threadup_sold');
-                localStorage.removeItem('threadup_available');
-                location.reload();
+        function renderAvailableItems() {
+            const content = document.getElementById('availableContent');
+            
+            if (availableData.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🏷️</div>
+                        <h3>No available items yet</h3>
+                        <p>Upload available items JSON</p>
+                    </div>
+                `;
+                return;
             }
+            
+            const tableHTML = `
+                <div class="items-table">
+                    <h3>Available Items (${availableData.length})</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Brand</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                    <th>Date Listed</th>
+                                    ${availableData[0]?.Likes !== undefined ? '<th>Likes</th>' : ''}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${availableData.map(item => `
+                                    <tr>
+                                        <td>${item.Brand || 'N/A'}</td>
+                                        <td>${item.Description || 'N/A'}</td>
+                                        <td>$${parseFloat(item.Price || 0).toFixed(2)}</td>
+                                        <td>${item['Date Listed'] || 'N/A'}</td>
+                                        ${item.Likes !== undefined ? `<td>${item.Likes || 0}</td>` : ''}
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            content.innerHTML = tableHTML;
         }
+        
+        setupFileUpload('soldUpload', 'soldFile', 'sold');
+        setupFileUpload('availableUpload', 'availableFile', 'available');
+        
+        const savedSold = localStorage.getItem('threadup_sold');
+        const savedAvailable = localStorage.getItem('threadup_available');
+        
+        if (savedSold) soldData = JSON.parse(savedSold);
+        if (savedAvailable) availableData = JSON.parse(savedAvailable);
+        
+        renderDashboard();
+        
+        reloadFromGitHub();
     </script>
 </body>
 </html>
