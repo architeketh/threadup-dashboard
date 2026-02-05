@@ -1,5 +1,19 @@
 [
   {
+    "Brand": "Nike Dunk Low",
+    "Description": "Next Nature - Pink Dark Pony / Light Soft Pink Sneakers",
+    "Price": 71.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Court Borough",
+    "Description": "Low RC BG “Multi-Color” (Nike Refurbished)\n Sneakers",
+    "Price": 71.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Nike AM1 Air",
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
@@ -87,7 +101,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 (GS) Sneakers",
     "Price": 83.99,
-    "Likes": 11,
+    "Likes": 12,
     "Availability": "Available"
   },
   {
@@ -115,14 +129,14 @@
     "Brand": "Nike Dunk Low",
     "Description": "GS “Pink Blast / White” Leather Sneakers",
     "Price": 71.99,
-    "Likes": 64,
+    "Likes": 66,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "GS “Emerald Rise / White” Leather Sneakers",
     "Price": 83.99,
-    "Likes": 29,
+    "Likes": 30,
     "Availability": "Available"
   },
   {
@@ -164,7 +178,7 @@
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Price": 71.99,
-    "Likes": 64,
+    "Likes": 65,
     "Availability": "Available"
   },
   {
