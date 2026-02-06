@@ -24,6 +24,21 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .header-image {
+            flex-shrink: 0;
+            width: 200px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .header-text {
+            flex: 1;
         }
         
         h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
@@ -210,7 +225,18 @@
         @media (max-width: 768px) {
             body { padding: 10px; }
             
-            header { padding: 20px; margin-bottom: 15px; }
+            header { 
+                padding: 20px; 
+                margin-bottom: 15px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-image {
+                width: 100%;
+                max-width: 300px;
+            }
+            
             h1 { font-size: 22px; }
             .subtitle { font-size: 12px; }
             
@@ -375,8 +401,11 @@
 <body>
     <div class="container">
         <header>
-            <h1>🛍️ ThredUp Sales Dashboard</h1>
-            <p class="subtitle">Track your sales performance and inventory</p>
+            <img src="ABC-isfor-XYZ-collection-by-Tanya.png" alt="Shoe Collection" class="header-image">
+            <div class="header-text">
+                <h1>🛍️ ThredUp Sales Dashboard</h1>
+                <p class="subtitle">Track your sales performance and inventory</p>
+            </div>
         </header>
         
         <div class="upload-section" id="uploadSection">
