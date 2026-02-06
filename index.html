@@ -29,23 +29,27 @@
             gap: 20px;
             overflow: hidden;
             position: relative;
+            height: 140px;
         }
         
         .header-image {
             flex-shrink: 0;
-            width: 900px;
+            width: 1350px;
             height: auto;
             object-fit: contain;
-            border-radius: 8px;
             order: 2;
-            transform-origin: right center;
-            margin-right: -150px;
+            transform-origin: left center;
+            position: absolute;
+            right: -200px;
+            top: 50%;
+            transform: translateY(-50%);
         }
         
         .header-text {
             flex: 1;
             order: 1;
             z-index: 1;
+            position: relative;
         }
         
         h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
@@ -262,12 +266,19 @@
                 margin-bottom: 15px;
                 flex-direction: column;
                 text-align: center;
+                height: auto;
+                min-height: 120px;
             }
             
             .header-image {
                 width: 100%;
                 max-width: 500px;
                 order: 2;
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                margin-top: 15px;
             }
             
             h1 { font-size: 22px; }
