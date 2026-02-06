@@ -2,7 +2,7 @@
   {
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
-    "Price": 59.99,
+    "Price": 65.99,
     "Likes": 1,
     "Availability": "Available"
   },
@@ -10,14 +10,14 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 59.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
@@ -38,7 +38,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG “Multi-Color” (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
@@ -52,7 +52,7 @@
     "Brand": "Cushion Aire Hip",
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 6,
+    "Likes": 7,
     "Availability": "Available"
   },
   {
@@ -80,7 +80,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Boots",
     "Price": 36.99,
-    "Likes": 3,
+    "Likes": 4,
     "Availability": "Available"
   },
   {
@@ -95,13 +95,6 @@
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 29.99,
     "Likes": 6,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Nike AF1 Air",
-    "Description": "Force 1 Wild Low - Phantom / Phantom / Light Orewood Brown\n Sneakers",
-    "Price": 95.99,
-    "Likes": 3,
     "Availability": "Available"
   },
   {
@@ -178,7 +171,7 @@
     "Brand": "Bebe Kamala Mini",
     "Description": "Tweed Square  – Black, Silver, Gold & Navy (NWT) Crossbody Bag",
     "Price": 36.99,
-    "Likes": 41,
+    "Likes": 0,
     "Availability": "Available"
   },
   {
