@@ -1,33 +1,39 @@
 [
   {
-    "Brand": "Adidas Break Start",
-    "Description": "Low W Court-Style | Beige Neutral\n Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2026-02-03"
+    "Brand": "Nike AF1 Air",
+    "Description": "Force 1 Wild Low - Phantom / Phantom / Light Orewood Brown\n Sneakers",
+    "Sold Price": 95.99,
+    "Date Sold": "2026-02-06"
   },
   {
-    "Brand": "Adidas Gazelle Bold",
-    "Description": "J Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-22"
+    "Brand": "Nike Air Force",
+    "Description": "1 LV8 Low GS – Red White Pink Sneakers",
+    "Sold Price": 95.99,
+    "Date Sold": "2026-02-06"
   },
   {
-    "Brand": "Adidas Gazelle Bold",
-    "Description": "J Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-22"
+    "Brand": "Nike Dunk Low",
+    "Description": "GS “Desert Khaki / Pink” Leather  Sneakers",
+    "Sold Price": 71.99,
+    "Date Sold": "2026-02-06"
   },
   {
-    "Brand": "Adidas Gazelle Bold",
-    "Description": "J Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-22"
+    "Brand": "Nike Dunk Low",
+    "Description": "GS “Emerald Rise / White” Leather Sneakers",
+    "Sold Price": 83.99,
+    "Date Sold": "2026-02-06"
   },
   {
-    "Brand": "Adidas Gazelle Bold",
-    "Description": "J Sneakers",
+    "Brand": "Ugg W Scuffette",
+    "Description": "II Mule/Clog",
+    "Sold Price": 95.99,
+    "Date Sold": "2026-01-26"
+  },
+  {
+    "Brand": "Converse Chuck Taylor",
+    "Description": "All Star High “LOVE” Heart Tongue Edition Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2025-12-22"
+    "Date Sold": "2026-02-06"
   },
   {
     "Brand": "Adidas Gazelle Bold",
@@ -36,10 +42,34 @@
     "Date Sold": "2026-01-19"
   },
   {
+    "Brand": "Monsac 90s Minimalist",
+    "Description": "Italian  Leather Crossbody Bag",
+    "Sold Price": 71.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 71.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 83.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
     "Brand": "Adidas Gazelle Indoor",
     "Description": "Sneakers",
     "Sold Price": 83.99,
     "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Nike Pacific Pink",
+    "Description": "Retro Gum Sole Trainer Sneakers",
+    "Sold Price": 83.99,
+    "Date Sold": "2026-01-08"
   },
   {
     "Brand": "Adidas Gazelle Low",
@@ -48,80 +78,8 @@
     "Date Sold": "2026-01-04"
   },
   {
-    "Brand": "Adidas Gazelle Womens",
-    "Description": "Indoor Sneakers",
-    "Sold Price": 83.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Adidas Grand Court",
-    "Description": "Base 00s Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2026-01-25"
-  },
-  {
-    "Brand": "Adidas Handball Spezial",
-    "Description": "J Light Blue / Cloud White / Gum Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Adidas Originals Gazelle",
-    "Description": "J Clear Pink / Court Green / Bliss Pink with Gum Bottoms\nProduct code: JP7133 Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2026-01-23"
-  },
-  {
-    "Brand": "Adidas Originals Gazelle",
-    "Description": "J Black / White / Gold Metallic Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Adidas Samba LT",
-    "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2026-01-04"
-  },
-  {
-    "Brand": "Adidas Samba LT",
-    "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
-    "Sold Price": 71.99,
-    "Date Sold": "2026-02-02"
-  },
-  {
-    "Brand": "Adidas SAMBA MESSI",
-    "Description": "INDOOR SOCCER Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Adidas Samba Messi",
-    "Description": "Indoor Soccer Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-28"
-  },
-  {
-    "Brand": "Adidas Sneakers",
-    "Description": "",
-    "Sold Price": 48.99,
-    "Date Sold": "2026-01-04"
-  },
-  {
-    "Brand": "Adidas Sneakers",
-    "Description": "",
-    "Sold Price": 83.99,
-    "Date Sold": "2026-01-04"
-  },
-  {
-    "Brand": "Adidas Sneakers",
-    "Description": "",
-    "Sold Price": 71.99,
-    "Date Sold": "2026-01-04"
-  },
-  {
-    "Brand": "Adidas VL Court",
-    "Description": "Bold J Black / White / Rhinestone  Sneakers",
+    "Brand": "Adidas Break Start",
+    "Description": "Low W Court-Style | Beige Neutral\n Sneakers",
     "Sold Price": 59.99,
     "Date Sold": "2026-02-03"
   },
@@ -132,22 +90,46 @@
     "Date Sold": "2025-12-23"
   },
   {
-    "Brand": "Badgley Mischka ",
-    "Description": "Textured Black Tweed Crossbody Messenger",
-    "Sold Price": 71.99,
+    "Brand": "Adidas VL Court",
+    "Description": "Bold J Black / White / Rhinestone  Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2026-02-03"
+  },
+  {
+    "Brand": "Adidas Grand Court",
+    "Description": "Base 00s Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2026-01-25"
+  },
+  {
+    "Brand": "Hello Kitty",
+    "Description": "Red ABC Apple Schoolhouse Mini Tote Clutch",
+    "Sold Price": 22.99,
+    "Date Sold": "2025-12-23"
+  },
+  {
+    "Brand": "Disney x Primark",
+    "Description": "Mickey Mouse Logo Strap Crossbody Bag",
+    "Sold Price": 36.99,
+    "Date Sold": "2025-12-27"
+  },
+  {
+    "Brand": "Disney  x",
+    "Description": "Primark Mickey Mouse Quilted Black Crossbody Bag",
+    "Sold Price": 36.99,
     "Date Sold": "2025-12-22"
   },
   {
-    "Brand": "Brahmin Anywhere Wristlet",
-    "Description": "– Pecan Melbourne\nCroc-embossed  Leather Clutch",
+    "Brand": "Adidas Handball Spezial",
+    "Description": "J Light Blue / Cloud White / Gum Sneakers",
     "Sold Price": 59.99,
     "Date Sold": "2025-12-22"
   },
   {
-    "Brand": "Coach",
-    "Description": "City Bag with Turnlock (Style 125) - Black  Leather Crossbody Bag",
+    "Brand": "Coach Signature Jacquard",
+    "Description": "Buckle Hobo — early/mid-2000s Leather Shoulder Bag",
     "Sold Price": 132.99,
-    "Date Sold": "2025-12-22"
+    "Date Sold": "2026-02-06"
   },
   {
     "Brand": "Coach Companion Flap",
@@ -156,46 +138,52 @@
     "Date Sold": "2025-12-22"
   },
   {
-    "Brand": "Coach Crossbody Bag",
+    "Brand": "New Balance 550",
+    "Description": "Sneakers",
+    "Sold Price": 71.99,
+    "Date Sold": "2026-01-25"
+  },
+  {
+    "Brand": "Adidas Samba Messi",
+    "Description": "Indoor Soccer Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-28"
+  },
+  {
+    "Brand": "Nike Sneakers",
     "Description": "",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-23"
+  },
+  {
+    "Brand": "Adidas SAMBA MESSI",
+    "Description": "INDOOR SOCCER Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Adidas Originals Gazelle",
+    "Description": "J Black / White / Gold Metallic Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Adidas Gazelle Womens",
+    "Description": "Indoor Sneakers",
     "Sold Price": 83.99,
-    "Date Sold": "2026-01-26"
-  },
-  {
-    "Brand": "Coach Hamptons Multicolor",
-    "Description": "Stripe Canvas – Style 10704\n Tote",
-    "Sold Price": 132.99,
-    "Date Sold": "2026-01-05"
-  },
-  {
-    "Brand": "Coach Legacy Harness",
-    "Description": "F11199 Leather Satchel",
-    "Sold Price": 132.99,
     "Date Sold": "2025-12-22"
   },
   {
-    "Brand": "Coach Mini Skinny",
-    "Description": "ID Case – Signature Canvas (Light Khaki/Chalk) Card Holder",
-    "Sold Price": 36.99,
-    "Date Sold": "2025-12-22"
+    "Brand": "Adidas Originals Gazelle",
+    "Description": "J Clear Pink / Court Green / Bliss Pink with Gum Bottoms\nProduct code: JP7133 Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2026-01-23"
   },
   {
-    "Brand": "Coach Peyton Optic",
-    "Description": "Signature Carryall Leather Satchel",
-    "Sold Price": 132.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Coach Signature C",
-    "Description": "Jacquard Black – F15068 Shoulder Bag",
-    "Sold Price": 132.99,
-    "Date Sold": "2026-01-07"
-  },
-  {
-    "Brand": "Coach Signature Jacquard",
-    "Description": "Buckle Hobo — early/mid-2000s Leather Shoulder Bag",
-    "Sold Price": 132.99,
-    "Date Sold": "2025-12-22"
+    "Brand": "Puma Palermo Elevata",
+    "Description": "Platform  – Vivid Blue & Haute Coffee Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2026-02-06"
   },
   {
     "Brand": "Coach Silver Charm",
@@ -204,10 +192,154 @@
     "Date Sold": "2025-12-22"
   },
   {
+    "Brand": "Coach Vintage Small",
+    "Description": "Flap, Made in USA (September 1993), creed F8G-S930 Leather Crossbody Bag",
+    "Sold Price": 132.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Pelle Studio Wilson",
+    "Description": "Croc-Embossed Italian Leather Baguette Leather Clutch",
+    "Sold Price": 36.99,
+    "Date Sold": "2025-12-23"
+  },
+  {
+    "Brand": "Coach Hamptons Multicolor",
+    "Description": "Stripe Canvas – Style 10704\n Tote",
+    "Sold Price": 132.99,
+    "Date Sold": "2026-02-06"
+  },
+  {
     "Brand": "Coach Soho Buckle",
     "Description": "Flap Baby Blue 00s Y2K Leather Crossbody Bag",
     "Sold Price": 83.99,
     "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Badgley Mischka ",
+    "Description": "Textured Black Tweed Crossbody Messenger",
+    "Sold Price": 71.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Kate Spade New York",
+    "Description": "x Target Beaded Floral Bucket Bag",
+    "Sold Price": 83.99,
+    "Date Sold": "2026-01-10"
+  },
+  {
+    "Brand": "Coach",
+    "Description": "City Bag with Turnlock (Style 125) - Black  Leather Crossbody Bag",
+    "Sold Price": 132.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Coach Vintage Court",
+    "Description": "Bag 9870 (Made in USA, 1992) Leather Crossbody Bag",
+    "Sold Price": 132.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Coach Mini Skinny",
+    "Description": "ID Case – Signature Canvas (Light Khaki/Chalk) Card Holder",
+    "Sold Price": 36.99,
+    "Date Sold": "2026-02-06"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 48.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Samba LT",
+    "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
+    "Sold Price": 71.99,
+    "Date Sold": "2026-02-06"
+  },
+  {
+    "Brand": "Adidas Samba LT",
+    "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2026-02-06"
+  },
+  {
+    "Brand": "Cole Haan Alexa",
+    "Description": "Buckle  Leather Wristlet",
+    "Sold Price": 36.99,
+    "Date Sold": "2026-01-29"
+  },
+  {
+    "Brand": "Vera Bradley Fanfare",
+    "Description": "Framel | Rainbow Trim | Bold Boho Print + Turnlock Classic | VB Collector Favorite Satchel",
+    "Sold Price": 48.99,
+    "Date Sold": "2026-01-29"
+  },
+  {
+    "Brand": "Monsac Red Smooth",
+    "Description": "Leather Demi Baguette  Leather Shoulder Bag",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-23"
+  },
+  {
+    "Brand": "Hobo International Quilted",
+    "Description": "Lauren Convertible Clutch Leather Crossbody Bag",
+    "Sold Price": 71.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Brahmin Anywhere Wristlet",
+    "Description": "– Pecan Melbourne\nCroc-embossed  Leather Clutch",
+    "Sold Price": 59.99,
+    "Date Sold": "2026-02-06"
+  },
+  {
+    "Brand": "Juicy Couture ",
+    "Description": "Heart Shaped Zip Coin Purse – Pink Rhinestone Logo Wristlet",
+    "Sold Price": 28.99,
+    "Date Sold": "2026-02-06"
+  },
+  {
+    "Brand": "Adidas Gazelle Bold",
+    "Description": "J Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Adidas Gazelle Bold",
+    "Description": "J Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Coach Signature C",
+    "Description": "Jacquard Black – F15068 Shoulder Bag",
+    "Sold Price": 132.99,
+    "Date Sold": "2026-02-06"
+  },
+  {
+    "Brand": "Coach Crossbody Bag",
+    "Description": "",
+    "Sold Price": 83.99,
+    "Date Sold": "2026-01-26"
+  },
+  {
+    "Brand": "Adidas Gazelle Bold",
+    "Description": "J Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Disney Stitch x",
+    "Description": "Primark Crossbody Bag",
+    "Sold Price": 36.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
+    "Brand": "Marc Jacobs Clutch",
+    "Description": "",
+    "Sold Price": 28.99,
+    "Date Sold": "2025-12-23"
   },
   {
     "Brand": "Coach Soho East",
@@ -222,76 +354,10 @@
     "Date Sold": "2025-12-22"
   },
   {
-    "Brand": "Coach Vintage Court",
-    "Description": "Bag 9870 (Made in USA, 1992) Leather Crossbody Bag",
+    "Brand": "Coach Peyton Optic",
+    "Description": "Signature Carryall Leather Satchel",
     "Sold Price": 132.99,
     "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Coach Vintage Small",
-    "Description": "Flap, Made in USA (September 1993), creed F8G-S930 Leather Crossbody Bag",
-    "Sold Price": 132.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Cole Haan Alexa",
-    "Description": "Buckle  Leather Wristlet",
-    "Sold Price": 36.99,
-    "Date Sold": "2026-01-29"
-  },
-  {
-    "Brand": "Converse Chuck Taylor",
-    "Description": "All Star High “LOVE” Heart Tongue Edition Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2026-01-20"
-  },
-  {
-    "Brand": "Disney  x",
-    "Description": "Primark Mickey Mouse Quilted Black Crossbody Bag",
-    "Sold Price": 36.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Disney Stitch x",
-    "Description": "Primark Crossbody Bag",
-    "Sold Price": 36.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Disney x Primark",
-    "Description": "Mickey Mouse Logo Strap Crossbody Bag",
-    "Sold Price": 36.99,
-    "Date Sold": "2025-12-27"
-  },
-  {
-    "Brand": "Hello Kitty",
-    "Description": "Red ABC Apple Schoolhouse Mini Tote Clutch",
-    "Sold Price": 22.99,
-    "Date Sold": "2025-12-23"
-  },
-  {
-    "Brand": "Hobo International Quilted",
-    "Description": "Lauren Convertible Clutch Leather Crossbody Bag",
-    "Sold Price": 71.99,
-    "Date Sold": "2026-01-04"
-  },
-  {
-    "Brand": "Juicy Couture ",
-    "Description": "Heart Shaped Zip Coin Purse – Pink Rhinestone Logo Wristlet",
-    "Sold Price": 28.99,
-    "Date Sold": "2026-01-22"
-  },
-  {
-    "Brand": "Kate Spade New York",
-    "Description": "x Target Beaded Floral Bucket Bag",
-    "Sold Price": 83.99,
-    "Date Sold": "2026-01-10"
-  },
-  {
-    "Brand": "Marc Jacobs Clutch",
-    "Description": "",
-    "Sold Price": 28.99,
-    "Date Sold": "2025-12-23"
   },
   {
     "Brand": "Merrell Alpine Sneakers",
@@ -300,46 +366,16 @@
     "Date Sold": "2025-12-23"
   },
   {
-    "Brand": "Monsac 90s Minimalist",
-    "Description": "Italian  Leather Crossbody Bag",
-    "Sold Price": 71.99,
-    "Date Sold": "2026-01-04"
-  },
-  {
-    "Brand": "Monsac Red Smooth",
-    "Description": "Leather Demi Baguette  Leather Shoulder Bag",
-    "Sold Price": 59.99,
+    "Brand": "Timberland Stone Street",
+    "Description": "Platform Hiker Boots",
+    "Sold Price": 106.99,
     "Date Sold": "2025-12-23"
   },
   {
-    "Brand": "New Balance 550",
-    "Description": "Sneakers",
-    "Sold Price": 71.99,
-    "Date Sold": "2026-01-25"
-  },
-  {
-    "Brand": "Nike Air Force",
-    "Description": "1 LV8 Low GS – Red White Pink Sneakers",
-    "Sold Price": 95.99,
-    "Date Sold": "2026-02-02"
-  },
-  {
-    "Brand": "Nike Dunk Low",
-    "Description": "GS “Emerald Rise / White” Leather Sneakers",
-    "Sold Price": 83.99,
-    "Date Sold": "2026-02-05"
-  },
-  {
-    "Brand": "Nike Dunk Low",
-    "Description": "GS “Desert Khaki / Pink” Leather  Sneakers",
-    "Sold Price": 71.99,
-    "Date Sold": "2026-01-28"
-  },
-  {
-    "Brand": "Nike Pacific Pink",
-    "Description": "Retro Gum Sole Trainer Sneakers",
-    "Sold Price": 83.99,
-    "Date Sold": "2026-01-08"
+    "Brand": "Coach Legacy Harness",
+    "Description": "F11199 Leather Satchel",
+    "Sold Price": 132.99,
+    "Date Sold": "2025-12-22"
   },
   {
     "Brand": "Nike SB Alleyoop",
@@ -348,39 +384,9 @@
     "Date Sold": "2026-01-08"
   },
   {
-    "Brand": "Nike Sneakers",
-    "Description": "",
+    "Brand": "Adidas Gazelle Bold",
+    "Description": "J Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2025-12-23"
-  },
-  {
-    "Brand": "Pelle Studio Wilson",
-    "Description": "Croc-Embossed Italian Leather Baguette Leather Clutch",
-    "Sold Price": 36.99,
-    "Date Sold": "2025-12-23"
-  },
-  {
-    "Brand": "Puma Palermo Elevata",
-    "Description": "Platform  – Vivid Blue & Haute Coffee Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2026-01-08"
-  },
-  {
-    "Brand": "Timberland Stone Street",
-    "Description": "Platform Hiker Boots",
-    "Sold Price": 106.99,
-    "Date Sold": "2025-12-23"
-  },
-  {
-    "Brand": "Ugg W Scuffette",
-    "Description": "II Mule/Clog",
-    "Sold Price": 95.99,
-    "Date Sold": "2026-01-26"
-  },
-  {
-    "Brand": "Vera Bradley Fanfare",
-    "Description": "Framel | Rainbow Trim | Bold Boho Print + Turnlock Classic | VB Collector Favorite Satchel",
-    "Sold Price": 48.99,
-    "Date Sold": "2026-01-29"
+    "Date Sold": "2025-12-22"
   }
 ]
