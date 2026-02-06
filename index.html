@@ -603,7 +603,8 @@
         }
         
         function loadDataFromGitHub(forceReload) {
-            var cacheBust = forceReload ? '?t=' + new Date().getTime() : '';
+            // ALWAYS use cache busting to get fresh data from GitHub
+            var cacheBust = '?t=' + new Date().getTime();
             
             Promise.all([
                 fetch('data/sold.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null),
@@ -615,19 +616,27 @@
                 if (githubSold) {
                     soldItems = githubSold;
                     localStorage.setItem('threadup_sold', JSON.stringify(soldItems)); // Sync to localStorage
-                    console.log('Loaded sold items from GitHub:', soldItems.length);
+                    console.log('✅ Loaded sold items from GitHub:', soldItems.length);
                 }
                 if (githubAvailable) {
                     availableItems = githubAvailable;
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems)); // Sync to localStorage
-                    console.log('Loaded available items from GitHub:', availableItems.length);
+                    console.log('✅ Loaded available items from GitHub:', availableItems.length);
                 }
                 
+                // Fallback to localStorage only if GitHub has no data
                 if (soldItems.length === 0 && availableItems.length === 0) {
+                    console.log('⚠️ No data from GitHub, checking localStorage...');
                     var savedSold = localStorage.getItem('threadup_sold');
                     var savedAvailable = localStorage.getItem('threadup_available');
-                    if (savedSold) soldItems = JSON.parse(savedSold);
-                    if (savedAvailable) availableItems = JSON.parse(savedAvailable);
+                    if (savedSold) {
+                        soldItems = JSON.parse(savedSold);
+                        console.log('📦 Loaded', soldItems.length, 'sold items from localStorage');
+                    }
+                    if (savedAvailable) {
+                        availableItems = JSON.parse(savedAvailable);
+                        console.log('📦 Loaded', availableItems.length, 'available items from localStorage');
+                    }
                 }
                 
                 if (soldItems.length > 0 || availableItems.length > 0) {
@@ -655,31 +664,82 @@
         document.getElementById('soldFile').addEventListener('change', handleSoldFile);
         document.getElementById('availableFile').addEventListener('change', handleAvailableFile);
         
+        function normalizeText(text) {
+            if (!text) return '';
+            return text
+                .toLowerCase()
+                .trim()
+                .replace(/\s+/g, ' ')  // Normalize multiple spaces to single space
+                .replace(/[^\w\s-]/g, '')  // Remove special characters except spaces and hyphens
+                .trim();
+        }
+        
         function createItemKey(item) {
             // Create unique key for matching items across uploads
-            var brand = (item.Brand || 'unknown').toLowerCase().trim();
-            var desc = (item.Description || 'unknown').toLowerCase().trim();
+            var brand = normalizeText(item.Brand || 'unknown');
+            var desc = normalizeText(item.Description || 'unknown');
             var price = parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2);
-            return brand + '|' + desc + '|' + price;
+            return brand + '|||' + desc + '|||' + price;
         }
         
         function intelligentMergeSoldItems(newItems) {
             // Create map of existing items with their dates
             var existingMap = {};
+            var preservedCount = 0;
+            var newCount = 0;
+            
+            console.log('=== MERGE DEBUG: Starting intelligent merge ===');
+            console.log('Existing items count:', soldItems.length);
+            
             soldItems.forEach(function(item) {
                 var key = createItemKey(item);
-                existingMap[key] = item['Date Sold'];
+                existingMap[key] = {
+                    date: item['Date Sold'],
+                    brand: item.Brand,
+                    desc: item.Description
+                };
             });
+            
+            console.log('Existing items mapped:', Object.keys(existingMap).length);
+            console.log('New items to merge:', newItems.length);
             
             // Merge: preserve dates for matching items, add new items
             var mergedItems = newItems.map(function(newItem) {
                 var key = createItemKey(newItem);
+                
                 if (existingMap[key]) {
                     // Item exists - preserve the old date
-                    newItem['Date Sold'] = existingMap[key];
+                    console.log('✓ PRESERVED:', newItem.Brand, '-', newItem.Description.substring(0, 30), '- Date:', existingMap[key].date);
+                    newItem['Date Sold'] = existingMap[key].date;
+                    preservedCount++;
+                } else {
+                    // New item - will use whatever date is in the export
+                    console.log('✚ NEW ITEM:', newItem.Brand, '-', newItem.Description.substring(0, 30), '- Date:', newItem['Date Sold']);
+                    newCount++;
                 }
                 return newItem;
             });
+            
+            console.log('=== MERGE COMPLETE ===');
+            console.log('Preserved dates:', preservedCount);
+            console.log('New items:', newCount);
+            
+            // Show detailed report to user
+            var report = '✅ Smart Merge Complete!\n\n';
+            report += '📊 Results:\n';
+            report += '✓ Preserved dates: ' + preservedCount + ' items\n';
+            report += '✚ New items: ' + newCount + ' items\n';
+            report += '📦 Total: ' + mergedItems.length + ' items\n\n';
+            
+            if (newCount > 0) {
+                report += '🆕 ' + newCount + ' new sold items detected!\n';
+            }
+            
+            report += '\n💡 Check browser console (F12) for detailed merge log';
+            
+            setTimeout(function() {
+                alert(report);
+            }, 100);
             
             return mergedItems;
         }
@@ -706,7 +766,6 @@
                     updateDropZones();
                     updateDashboard();
                     document.getElementById('shareInstructions').style.display = 'block';
-                    alert('✅ Smart Merged ' + soldItems.length + ' sold items!\n\n📝 Your manual date edits have been preserved.\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales!');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
@@ -730,7 +789,7 @@
                     updateDropZones();
                     updateDashboard();
                     document.getElementById('shareInstructions').style.display = 'block';
-                    alert('✅ Loaded ' + availableItems.length + ' available items!\n\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales!');
+                    alert('✅ Loaded ' + availableItems.length + ' available items!');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
