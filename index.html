@@ -655,6 +655,41 @@
         document.getElementById('soldFile').addEventListener('change', handleSoldFile);
         document.getElementById('availableFile').addEventListener('change', handleAvailableFile);
         
+        function createItemKey(item) {
+            // Create unique key for matching items across uploads
+            var brand = (item.Brand || 'unknown').toLowerCase().trim();
+            var desc = (item.Description || 'unknown').toLowerCase().trim();
+            var price = parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2);
+            return brand + '|' + desc + '|' + price;
+        }
+        
+        function intelligentMergeSoldItems(newItems) {
+            // Create map of existing items with their dates
+            var existingMap = {};
+            soldItems.forEach(function(item) {
+                var key = createItemKey(item);
+                existingMap[key] = item['Date Sold'];
+            });
+            
+            // Merge: preserve dates for matching items, add new items
+            var mergedItems = newItems.map(function(newItem) {
+                var key = createItemKey(newItem);
+                if (existingMap[key]) {
+                    // Item exists - preserve the old date
+                    newItem['Date Sold'] = existingMap[key];
+                }
+                return newItem;
+            });
+            
+            return mergedItems;
+        }
+        
+        function intelligentMergeAvailableItems(newItems) {
+            // For available items, just use the new data
+            // But preserve any custom fields if we add them later
+            return newItems;
+        }
+        
         function handleSoldFile(e) {
             var file = e.target.files[0];
             if (!file) return;
@@ -662,12 +697,16 @@
             var reader = new FileReader();
             reader.onload = function(event) {
                 try {
-                    soldItems = JSON.parse(event.target.result);
+                    var newData = JSON.parse(event.target.result);
+                    
+                    // Intelligent merge: preserve manual date edits
+                    soldItems = intelligentMergeSoldItems(newData);
+                    
                     localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
                     updateDropZones();
                     updateDashboard();
                     document.getElementById('shareInstructions').style.display = 'block';
-                    alert('✅ Loaded ' + soldItems.length + ' sold items!\n\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales over time!');
+                    alert('✅ Smart Merged ' + soldItems.length + ' sold items!\n\n📝 Your manual date edits have been preserved.\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales!');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
@@ -682,12 +721,16 @@
             var reader = new FileReader();
             reader.onload = function(event) {
                 try {
-                    availableItems = JSON.parse(event.target.result);
+                    var newData = JSON.parse(event.target.result);
+                    
+                    // Use intelligent merge for available items too
+                    availableItems = intelligentMergeAvailableItems(newData);
+                    
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems));
                     updateDropZones();
                     updateDashboard();
                     document.getElementById('shareInstructions').style.display = 'block';
-                    alert('✅ Loaded ' + availableItems.length + ' available items!\n\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales over time!');
+                    alert('✅ Loaded ' + availableItems.length + ' available items!\n\n💡 Tip: Click "✓ Mark as Updated" to start tracking new sales!');
                 } catch (error) {
                     alert('Error: ' + error.message);
                 }
