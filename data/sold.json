@@ -67,27 +67,27 @@
   },
   {
     "Brand": "Adidas Originals Gazelle",
-    "Description": "J Black / White / Gold Metallic Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-22"
-  },
-  {
-    "Brand": "Adidas Originals Gazelle",
     "Description": "J Clear Pink / Court Green / Bliss Pink with Gum Bottoms\nProduct code: JP7133 Sneakers",
     "Sold Price": 59.99,
     "Date Sold": "2026-01-23"
   },
   {
+    "Brand": "Adidas Originals Gazelle",
+    "Description": "J Black / White / Gold Metallic Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-22"
+  },
+  {
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-02-06"
+    "Date Sold": "2026-01-04"
   },
   {
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-02-06"
+    "Date Sold": "2026-02-02"
   },
   {
     "Brand": "Adidas SAMBA MESSI",
@@ -121,15 +121,15 @@
   },
   {
     "Brand": "Adidas VL Court",
-    "Description": "3.0 Sneakers",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-23"
-  },
-  {
-    "Brand": "Adidas VL Court",
     "Description": "Bold J Black / White / Rhinestone  Sneakers",
     "Sold Price": 59.99,
     "Date Sold": "2026-02-03"
+  },
+  {
+    "Brand": "Adidas VL Court",
+    "Description": "3.0 Sneakers",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-23"
   },
   {
     "Brand": "Badgley Mischka ",
@@ -177,7 +177,7 @@
     "Brand": "Coach Mini Skinny",
     "Description": "ID Case – Signature Canvas (Light Khaki/Chalk) Card Holder",
     "Sold Price": 36.99,
-    "Date Sold": "2026-02-06"
+    "Date Sold": "2025-12-22"
   },
   {
     "Brand": "Coach Peyton Optic",
@@ -195,7 +195,7 @@
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Hobo — early/mid-2000s Leather Shoulder Bag",
     "Sold Price": 132.99,
-    "Date Sold": "2026-01-22"
+    "Date Sold": "2026-02-22"
   },
   {
     "Brand": "Coach Silver Charm",
@@ -279,7 +279,7 @@
     "Brand": "Juicy Couture ",
     "Description": "Heart Shaped Zip Coin Purse – Pink Rhinestone Logo Wristlet",
     "Sold Price": 28.99,
-    "Date Sold": "2026-01-22"
+    "Date Sold": "2025-12-22"
   },
   {
     "Brand": "Kate Spade New York",
@@ -327,7 +327,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "GS “Emerald Rise / White” Leather Sneakers",
     "Sold Price": 83.99,
-    "Date Sold": "2026-02-06"
+    "Date Sold": "2026-02-05"
   },
   {
     "Brand": "Nike Dunk Low",
