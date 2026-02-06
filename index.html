@@ -55,6 +55,28 @@
             text-align: center;
         }
         
+        .upload-section summary {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .upload-section summary:hover {
+            background: #f8f9ff;
+            border-radius: 6px;
+            padding: 8px;
+        }
+        
+        .upload-section summary::before {
+            content: '▶ ';
+            display: inline-block;
+            transition: transform 0.2s;
+            margin-right: 5px;
+        }
+        
+        .upload-section[open] summary::before {
+            transform: rotate(90deg);
+        }
+        
         .upload-zones {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -222,6 +244,9 @@
         details summary::before { content: '▶ '; display: inline-block; transition: transform 0.2s; }
         details[open] summary::before { transform: rotate(90deg); }
         details summary:hover { background: #e8ebff !important; }
+        
+        .upload-section summary::-webkit-details-marker { display: none; }
+        .upload-section summary::marker { display: none; }
         
         /* MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
@@ -411,55 +436,61 @@
             <img src="ABC-isfor-XYZ-collection-by-Tanya.png" alt="Shoe Collection" class="header-image">
         </header>
         
-        <div class="upload-section" id="uploadSection">
-            <h2 style="margin-bottom: 8px; color: #333; font-size: 18px;">📊 Manage Your Data</h2>
-            <p style="color: #666; margin-bottom: 10px; font-size: 13px;">Upload files or export for GitHub sharing</p>
+        <details class="upload-section" id="uploadSection">
+            <summary style="cursor: pointer; color: #333; font-weight: 600; padding: 0; user-select: none; list-style: none; display: block;">
+                <div style="text-align: center;">
+                    <h2 style="margin-bottom: 8px; color: #333; font-size: 18px; display: inline-block;">📊 Manage Your Data</h2>
+                    <p style="color: #666; margin-bottom: 10px; font-size: 13px;">Upload files or export for GitHub sharing</p>
+                </div>
+            </summary>
             
-            <div style="margin-bottom: 10px;">
-                <button class="export-btn" onclick="loadDataFromGitHub(true)" style="background: #667eea;">🔄 Reload from GitHub</button>
-                <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
-                <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
-                <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
-                <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
-            </div>
-            
-            <div class="info-box" id="shareInstructions" style="display: none;">
-                <h3>📤 How to Share & Track Sales</h3>
-                <ol>
-                    <li>Upload your data files (sold + available items)</li>
-                    <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
-                    <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code> and <code>available.json</code></li>
-                    <li>In your repo, go to <code>data/</code> folder on GitHub</li>
-                    <li>Click "Upload files" and add both JSON files</li>
-                    <li>Commit changes</li>
-                    <li><strong>Share:</strong> <code>https://architeketh.github.io/threadup-dashboard/</code></li>
-                    <li>Next time you upload, you'll see <strong>🔥 New Sales</strong> since last update!</li>
-                </ol>
-            </div>
-            
-            <details style="margin-top: 10px;">
-                <summary style="cursor: pointer; color: #667eea; font-weight: 500; padding: 8px; background: #f8f9ff; border-radius: 6px; user-select: none; font-size: 14px;">
-                    📤 Upload Files
-                </summary>
-                <div style="margin-top: 15px;">
-                    <div class="upload-zones">
-                        <div class="drop-zone" id="soldDropZone">
-                            <input type="file" id="soldFile" accept=".json">
-                            <div class="drop-zone-icon">📦</div>
-                            <div class="drop-zone-text">Sold Items</div>
-                            <div class="drop-zone-hint">Drop JSON or click</div>
-                        </div>
-                        
-                        <div class="drop-zone" id="availableDropZone">
-                            <input type="file" id="availableFile" accept=".json">
-                            <div class="drop-zone-icon">🏷️</div>
-                            <div class="drop-zone-text">Available Items</div>
-                            <div class="drop-zone-hint">Drop JSON or click</div>
+            <div style="margin-top: 15px;">
+                <div style="margin-bottom: 10px;">
+                    <button class="export-btn" onclick="loadDataFromGitHub(true)" style="background: #667eea;">🔄 Reload from GitHub</button>
+                    <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
+                    <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
+                    <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
+                    <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
+                </div>
+                
+                <div class="info-box" id="shareInstructions" style="display: none;">
+                    <h3>📤 How to Share & Track Sales</h3>
+                    <ol>
+                        <li>Upload your data files (sold + available items)</li>
+                        <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
+                        <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code> and <code>available.json</code></li>
+                        <li>In your repo, go to <code>data/</code> folder on GitHub</li>
+                        <li>Click "Upload files" and add both JSON files</li>
+                        <li>Commit changes</li>
+                        <li><strong>Share:</strong> <code>https://architeketh.github.io/threadup-dashboard/</code></li>
+                        <li>Next time you upload, you'll see <strong>🔥 New Sales</strong> since last update!</li>
+                    </ol>
+                </div>
+                
+                <details style="margin-top: 10px;">
+                    <summary style="cursor: pointer; color: #667eea; font-weight: 500; padding: 8px; background: #f8f9ff; border-radius: 6px; user-select: none; font-size: 14px;">
+                        📤 Upload Files
+                    </summary>
+                    <div style="margin-top: 15px;">
+                        <div class="upload-zones">
+                            <div class="drop-zone" id="soldDropZone">
+                                <input type="file" id="soldFile" accept=".json">
+                                <div class="drop-zone-icon">📦</div>
+                                <div class="drop-zone-text">Sold Items</div>
+                                <div class="drop-zone-hint">Drop JSON or click</div>
+                            </div>
+                            
+                            <div class="drop-zone" id="availableDropZone">
+                                <input type="file" id="availableFile" accept=".json">
+                                <div class="drop-zone-icon">🏷️</div>
+                                <div class="drop-zone-text">Available Items</div>
+                                <div class="drop-zone-hint">Drop JSON or click</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </details>
-        </div>
+                </details>
+            </div>
+        </details>
         
         <div class="tabs" id="tabs" style="display: none;">
             <button class="tab active" onclick="switchTab('overview', event)">📊 Overview</button>
