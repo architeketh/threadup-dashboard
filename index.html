@@ -31,14 +31,16 @@
         
         .header-image {
             flex-shrink: 0;
-            width: 200px;
+            width: 600px;
             height: auto;
             object-fit: contain;
             border-radius: 8px;
+            order: 2;
         }
         
         .header-text {
             flex: 1;
+            order: 1;
         }
         
         h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
@@ -234,7 +236,8 @@
             
             .header-image {
                 width: 100%;
-                max-width: 300px;
+                max-width: 500px;
+                order: 2;
             }
             
             h1 { font-size: 22px; }
@@ -401,11 +404,11 @@
 <body>
     <div class="container">
         <header>
-            <img src="ABC-isfor-XYZ-collection-by-Tanya.png" alt="Shoe Collection" class="header-image">
             <div class="header-text">
                 <h1>🛍️ ThredUp Sales Dashboard</h1>
                 <p class="subtitle">Track your sales performance and inventory</p>
             </div>
+            <img src="ABC-isfor-XYZ-collection-by-Tanya.png" alt="Shoe Collection" class="header-image">
         </header>
         
         <div class="upload-section" id="uploadSection">
