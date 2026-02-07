@@ -695,13 +695,21 @@
             return brand + '|||' + desc + '|||' + price;
         }
         
+        function createLooseItemKey(item) {
+            // LOOSE matching - brand + price ONLY (ignores description changes)
+            var brand = normalizeText(item.Brand || 'unknown');
+            var price = parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2);
+            
+            return brand + '|||' + price;
+        }
+        
         function intelligentMergeSoldItems(newItems) {
-            // Create BOTH maps - exact match and fuzzy match
+            // Create THREE levels of maps - exact, fuzzy, and loose
             var exactMap = {};
             var fuzzyMap = {};
+            var looseMap = {};
             var preservedCount = 0;
             var newCount = 0;
-            var unmatchedOld = [];
             
             console.log('=== MERGE DEBUG: Starting intelligent merge ===');
             console.log('Existing items count:', soldItems.length);
@@ -710,8 +718,9 @@
             soldItems.forEach(function(item, index) {
                 var exactKey = createExactItemKey(item);
                 var fuzzyKey = createItemKey(item);
+                var looseKey = createLooseItemKey(item);
                 
-                // Store with index to handle true duplicates
+                // Exact map
                 if (!exactMap[exactKey]) {
                     exactMap[exactKey] = [];
                 }
@@ -723,6 +732,7 @@
                     index: index
                 });
                 
+                // Fuzzy map
                 if (!fuzzyMap[fuzzyKey]) {
                     fuzzyMap[fuzzyKey] = [];
                 }
@@ -733,10 +743,23 @@
                     price: item['Sold Price'],
                     index: index
                 });
+                
+                // Loose map (brand + price only)
+                if (!looseMap[looseKey]) {
+                    looseMap[looseKey] = [];
+                }
+                looseMap[looseKey].push({
+                    date: item['Date Sold'],
+                    brand: item.Brand,
+                    desc: item.Description,
+                    price: item['Sold Price'],
+                    index: index
+                });
             });
             
             console.log('Exact matches mapped:', Object.keys(exactMap).length);
             console.log('Fuzzy matches mapped:', Object.keys(fuzzyMap).length);
+            console.log('Loose matches mapped:', Object.keys(looseMap).length);
             console.log('New items to merge:', newItems.length);
             
             // Track which old items we've used
@@ -746,20 +769,21 @@
             var mergedItems = newItems.map(function(newItem) {
                 var exactKey = createExactItemKey(newItem);
                 var fuzzyKey = createItemKey(newItem);
+                var looseKey = createLooseItemKey(newItem);
                 
                 var matched = false;
                 var matchedDate = null;
+                var matchType = '';
                 
                 // Try exact match first
                 if (exactMap[exactKey] && exactMap[exactKey].length > 0) {
-                    // Find first unused match
                     for (var i = 0; i < exactMap[exactKey].length; i++) {
                         var match = exactMap[exactKey][i];
                         if (!usedIndices.has(match.index)) {
                             matchedDate = match.date;
                             usedIndices.add(match.index);
                             matched = true;
-                            console.log('✓ EXACT MATCH:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- Date:', matchedDate);
+                            matchType = 'EXACT';
                             break;
                         }
                     }
@@ -773,17 +797,32 @@
                             matchedDate = match.date;
                             usedIndices.add(match.index);
                             matched = true;
-                            console.log('✓ FUZZY MATCH:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- Date:', matchedDate);
+                            matchType = 'FUZZY';
+                            break;
+                        }
+                    }
+                }
+                
+                // Try LOOSE match (brand + price only) if others didn't work
+                if (!matched && looseMap[looseKey] && looseMap[looseKey].length > 0) {
+                    for (var i = 0; i < looseMap[looseKey].length; i++) {
+                        var match = looseMap[looseKey][i];
+                        if (!usedIndices.has(match.index)) {
+                            matchedDate = match.date;
+                            usedIndices.add(match.index);
+                            matched = true;
+                            matchType = 'LOOSE';
                             break;
                         }
                     }
                 }
                 
                 if (matched) {
+                    console.log('✓', matchType, 'MATCH:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- Preserved Date:', matchedDate);
                     newItem['Date Sold'] = matchedDate;
                     preservedCount++;
                 } else {
-                    console.log('✚ NEW ITEM:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- Date:', newItem['Date Sold']);
+                    console.log('✚ NEW ITEM:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- New Date:', newItem['Date Sold']);
                     newCount++;
                 }
                 
