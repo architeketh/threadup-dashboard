@@ -675,54 +675,125 @@
         }
         
         function createItemKey(item) {
-            // Create unique key for matching items across uploads
+            // Create VERY specific key to handle duplicates
             var brand = normalizeText(item.Brand || 'unknown');
             var desc = normalizeText(item.Description || 'unknown');
             var price = parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2);
+            
+            // Use first 100 chars of description to make key unique enough
+            var descKey = desc.substring(0, 100);
+            
+            return brand + '|||' + descKey + '|||' + price;
+        }
+        
+        function createExactItemKey(item) {
+            // Even MORE specific - includes full description
+            var brand = normalizeText(item.Brand || 'unknown');
+            var desc = normalizeText(item.Description || 'unknown');
+            var price = parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2);
+            
             return brand + '|||' + desc + '|||' + price;
         }
         
         function intelligentMergeSoldItems(newItems) {
-            // Create map of existing items with their dates
-            var existingMap = {};
+            // Create BOTH maps - exact match and fuzzy match
+            var exactMap = {};
+            var fuzzyMap = {};
             var preservedCount = 0;
             var newCount = 0;
+            var unmatchedOld = [];
             
             console.log('=== MERGE DEBUG: Starting intelligent merge ===');
             console.log('Existing items count:', soldItems.length);
             
-            soldItems.forEach(function(item) {
-                var key = createItemKey(item);
-                existingMap[key] = {
+            // Build maps with ALL existing items
+            soldItems.forEach(function(item, index) {
+                var exactKey = createExactItemKey(item);
+                var fuzzyKey = createItemKey(item);
+                
+                // Store with index to handle true duplicates
+                if (!exactMap[exactKey]) {
+                    exactMap[exactKey] = [];
+                }
+                exactMap[exactKey].push({
                     date: item['Date Sold'],
                     brand: item.Brand,
-                    desc: item.Description
-                };
+                    desc: item.Description,
+                    price: item['Sold Price'],
+                    index: index
+                });
+                
+                if (!fuzzyMap[fuzzyKey]) {
+                    fuzzyMap[fuzzyKey] = [];
+                }
+                fuzzyMap[fuzzyKey].push({
+                    date: item['Date Sold'],
+                    brand: item.Brand,
+                    desc: item.Description,
+                    price: item['Sold Price'],
+                    index: index
+                });
             });
             
-            console.log('Existing items mapped:', Object.keys(existingMap).length);
+            console.log('Exact matches mapped:', Object.keys(exactMap).length);
+            console.log('Fuzzy matches mapped:', Object.keys(fuzzyMap).length);
             console.log('New items to merge:', newItems.length);
+            
+            // Track which old items we've used
+            var usedIndices = new Set();
             
             // Merge: preserve dates for matching items, add new items
             var mergedItems = newItems.map(function(newItem) {
-                var key = createItemKey(newItem);
+                var exactKey = createExactItemKey(newItem);
+                var fuzzyKey = createItemKey(newItem);
                 
-                if (existingMap[key]) {
-                    // Item exists - preserve the old date
-                    console.log('✓ PRESERVED:', newItem.Brand, '-', newItem.Description.substring(0, 30), '- Date:', existingMap[key].date);
-                    newItem['Date Sold'] = existingMap[key].date;
+                var matched = false;
+                var matchedDate = null;
+                
+                // Try exact match first
+                if (exactMap[exactKey] && exactMap[exactKey].length > 0) {
+                    // Find first unused match
+                    for (var i = 0; i < exactMap[exactKey].length; i++) {
+                        var match = exactMap[exactKey][i];
+                        if (!usedIndices.has(match.index)) {
+                            matchedDate = match.date;
+                            usedIndices.add(match.index);
+                            matched = true;
+                            console.log('✓ EXACT MATCH:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- Date:', matchedDate);
+                            break;
+                        }
+                    }
+                }
+                
+                // Try fuzzy match if exact didn't work
+                if (!matched && fuzzyMap[fuzzyKey] && fuzzyMap[fuzzyKey].length > 0) {
+                    for (var i = 0; i < fuzzyMap[fuzzyKey].length; i++) {
+                        var match = fuzzyMap[fuzzyKey][i];
+                        if (!usedIndices.has(match.index)) {
+                            matchedDate = match.date;
+                            usedIndices.add(match.index);
+                            matched = true;
+                            console.log('✓ FUZZY MATCH:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- Date:', matchedDate);
+                            break;
+                        }
+                    }
+                }
+                
+                if (matched) {
+                    newItem['Date Sold'] = matchedDate;
                     preservedCount++;
                 } else {
-                    // New item - will use whatever date is in the export
-                    console.log('✚ NEW ITEM:', newItem.Brand, '-', newItem.Description.substring(0, 30), '- Date:', newItem['Date Sold']);
+                    console.log('✚ NEW ITEM:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- Date:', newItem['Date Sold']);
                     newCount++;
                 }
+                
                 return newItem;
             });
             
             console.log('=== MERGE COMPLETE ===');
             console.log('Preserved dates:', preservedCount);
             console.log('New items:', newCount);
+            console.log('Used', usedIndices.size, 'out of', soldItems.length, 'old items');
             
             // Show detailed report to user
             var report = '✅ Smart Merge Complete!\n\n';
@@ -733,6 +804,12 @@
             
             if (newCount > 0) {
                 report += '🆕 ' + newCount + ' new sold items detected!\n';
+            }
+            
+            var unused = soldItems.length - usedIndices.size;
+            if (unused > 0) {
+                report += '\n⚠️ Warning: ' + unused + ' old items not matched\n';
+                report += '(These may have been removed from ThredUp)\n';
             }
             
             report += '\n💡 Check browser console (F12) for detailed merge log';
