@@ -604,6 +604,27 @@
             alert('✅ Tracking updated!\n\n📊 Baseline set: ' + previousSoldCount + ' sold items\n📅 Date: ' + lastUpdateDate.toLocaleDateString() + '\n\n💡 Next time you upload data, you\'ll see new sales since today!');
         }
         
+        function applyLockedDates(items) {
+            // Apply ALL locked dates to the items array
+            var locked = getLockedDates();
+            var appliedCount = 0;
+            
+            items.forEach(function(item) {
+                var lockedDate = getLockedDate(item.Brand, item['Sold Price']);
+                if (lockedDate && item['Date Sold'] !== lockedDate) {
+                    console.log('🔒 Applying locked date:', item.Brand, '$' + item['Sold Price'], '→', lockedDate, '(was:', item['Date Sold'] + ')');
+                    item['Date Sold'] = lockedDate;
+                    appliedCount++;
+                }
+            });
+            
+            if (appliedCount > 0) {
+                console.log('🔒 Applied', appliedCount, 'locked dates');
+            }
+            
+            return items;
+        }
+        
         function loadDataFromGitHub(forceReload) {
             // ALWAYS use cache busting to get fresh data from GitHub
             var cacheBust = '?t=' + new Date().getTime();
@@ -622,14 +643,15 @@
                 var githubAvailable = results[1];
                 
                 if (githubSold) {
-                    soldItems = githubSold;
-                    localStorage.setItem('threadup_sold', JSON.stringify(soldItems)); // Sync to localStorage
+                    // CRITICAL: Apply locked dates immediately after loading
+                    soldItems = applyLockedDates(githubSold);
+                    localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
                     githubDataLoaded = true;
-                    console.log('✅ Loaded', soldItems.length, 'sold items from GitHub');
+                    console.log('✅ Loaded', soldItems.length, 'sold items from GitHub (with locked dates applied)');
                 }
                 if (githubAvailable) {
                     availableItems = githubAvailable;
-                    localStorage.setItem('threadup_available', JSON.stringify(availableItems)); // Sync to localStorage
+                    localStorage.setItem('threadup_available', JSON.stringify(availableItems));
                     console.log('✅ Loaded', availableItems.length, 'available items from GitHub');
                 }
                 
@@ -639,7 +661,7 @@
                     var savedSold = localStorage.getItem('threadup_sold');
                     var savedAvailable = localStorage.getItem('threadup_available');
                     if (savedSold) {
-                        soldItems = JSON.parse(savedSold);
+                        soldItems = applyLockedDates(JSON.parse(savedSold));
                         console.log('📦 Loaded', soldItems.length, 'sold items from localStorage');
                     }
                     if (savedAvailable) {
@@ -654,7 +676,7 @@
                 }
                 
                 if (forceReload) {
-                    alert('✅ Reloaded from GitHub!\n\n' + soldItems.length + ' sold items\n' + availableItems.length + ' available items\n\nYou can now safely upload new files.');
+                    alert('✅ Reloaded from GitHub!\n\n' + soldItems.length + ' sold items\n' + availableItems.length + ' available items\n\n🔒 Locked dates applied automatically');
                 }
             });
         }
@@ -719,7 +741,8 @@
             
             if (soldItems.length === 0) {
                 console.warn('⚠️ First upload - no merge needed');
-                return newItems;
+                // Still apply locked dates for first upload
+                return applyLockedDates(newItems);
             }
             
             // Build map with existing items
@@ -739,7 +762,6 @@
             
             var usedIndices = new Set();
             var preservedCount = 0;
-            var lockedCount = 0;
             var newCount = 0;
             
             // Merge items
@@ -748,16 +770,7 @@
                 var brand = newItem.Brand;
                 var price = newItem['Sold Price'];
                 
-                // FIRST: Check if date is LOCKED
-                var lockedDate = getLockedDate(brand, price);
-                if (lockedDate) {
-                    console.log('🔒 LOCKED:', brand, '$' + price, '- Using locked date:', lockedDate, '(ignoring new date:', newItem['Date Sold'] + ')');
-                    newItem['Date Sold'] = lockedDate;
-                    lockedCount++;
-                    return newItem;
-                }
-                
-                // SECOND: Try to match with existing items
+                // Try to match with existing items
                 var matched = false;
                 var matchedDate = null;
                 
@@ -768,7 +781,7 @@
                             matchedDate = match.date;
                             usedIndices.add(match.index);
                             matched = true;
-                            console.log('✓ MATCHED:', brand, '$' + price, '- Preserved date:', matchedDate, '(not using:', newItem['Date Sold'] + ')');
+                            console.log('✓ MATCHED:', brand, '$' + price, '- Preserved date:', matchedDate);
                             break;
                         }
                     }
@@ -785,18 +798,23 @@
                 return newItem;
             });
             
+            // CRITICAL: Apply locked dates AFTER merge to override everything
+            mergedItems = applyLockedDates(mergedItems);
+            
+            var lockedCount = Object.keys(lockedDates).length;
+            
             console.log('=== MERGE COMPLETE ===');
-            console.log('🔒 Locked dates used:', lockedCount);
             console.log('✓ Preserved dates:', preservedCount);
             console.log('✚ New items:', newCount);
+            console.log('🔒 Locked dates enforced:', lockedCount);
             
             var report = '✅ Smart Merge Complete!\n\n';
             report += '📊 Results:\n';
-            if (lockedCount > 0) {
-                report += '🔒 Locked dates: ' + lockedCount + ' items\n';
-            }
             report += '✓ Preserved dates: ' + preservedCount + ' items\n';
             report += '✚ New items: ' + newCount + ' items\n';
+            if (lockedCount > 0) {
+                report += '🔒 Locked dates enforced: ' + lockedCount + ' items\n';
+            }
             report += '📦 Total: ' + mergedItems.length + ' items\n\n';
             
             if (newCount > 0) {
