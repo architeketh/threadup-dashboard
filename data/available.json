@@ -3,56 +3,49 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 65.99,
-    "Likes": 3,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 3,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 59.99,
-    "Likes": 7,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Nike Dunk Low",
-    "Description": "“Peach Cream” (GS) - Peach Cream / Light Grey / Orang Sneakers",
-    "Price": 95.99,
-    "Likes": 6,
+    "Likes": 9,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Next Nature - Pink Dark Pony / Light Soft Pink Sneakers",
     "Price": 71.99,
-    "Likes": 5,
+    "Likes": 8,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG “Multi-Color” (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 2,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AM1 Air",
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
-    "Likes": 1,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
     "Brand": "Cushion Aire Hip",
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 8,
+    "Likes": 14,
     "Availability": "Available"
   },
   {
@@ -73,21 +66,21 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Boots",
     "Price": 36.99,
-    "Likes": 4,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
     "Brand": "Cushion Aire Hip",
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 7,
+    "Likes": 8,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 29.99,
-    "Likes": 5,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
@@ -136,21 +129,21 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 83.99,
-    "Likes": 15,
+    "Likes": 17,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "GS “Pink Blast / White” Leather Sneakers",
     "Price": 71.99,
-    "Likes": 69,
+    "Likes": 70,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Price": 132.99,
-    "Likes": 25,
+    "Likes": 27,
     "Availability": "Available"
   },
   {
@@ -164,7 +157,7 @@
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Price": 59.99,
-    "Likes": 69,
+    "Likes": 70,
     "Availability": "Available"
   }
 ]
