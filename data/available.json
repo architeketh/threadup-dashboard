@@ -3,21 +3,21 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 65.99,
-    "Likes": 1,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 2,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 59.99,
-    "Likes": 2,
+    "Likes": 7,
     "Availability": "Available"
   },
   {
@@ -31,7 +31,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "Next Nature - Pink Dark Pony / Light Soft Pink Sneakers",
     "Price": 71.99,
-    "Likes": 2,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
@@ -52,14 +52,7 @@
     "Brand": "Cushion Aire Hip",
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 7,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Cushion Aire Hippy",
-    "Description": "Cozy Platform  Ankle Boots",
-    "Price": 36.99,
-    "Likes": 5,
+    "Likes": 8,
     "Availability": "Available"
   },
   {
@@ -73,7 +66,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 6,
+    "Likes": 8,
     "Availability": "Available"
   },
   {
@@ -87,21 +80,21 @@
     "Brand": "Cushion Aire Hip",
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 6,
+    "Likes": 7,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 29.99,
-    "Likes": 6,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 5,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
@@ -163,15 +156,15 @@
   {
     "Brand": "Nike Sneakers",
     "Description": "",
-    "Price": 71.99,
+    "Price": 83.99,
     "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
-    "Price": 71.99,
-    "Likes": 68,
+    "Price": 59.99,
+    "Likes": 69,
     "Availability": "Available"
   }
 ]
