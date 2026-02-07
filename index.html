@@ -544,6 +544,7 @@
         var lastUpdateDate = null;
         var previousSoldCount = 0;
         var salesSinceUpdate = 0;
+        var githubDataLoaded = false;
         
         window.addEventListener('load', function() {
             loadPreviousStats();
@@ -606,6 +607,12 @@
             // ALWAYS use cache busting to get fresh data from GitHub
             var cacheBust = '?t=' + new Date().getTime();
             
+            if (forceReload) {
+                console.log('🔄 Force reloading from GitHub...');
+            } else {
+                console.log('📥 Loading from GitHub on page load...');
+            }
+            
             Promise.all([
                 fetch('data/sold.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null),
                 fetch('data/available.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null)
@@ -616,12 +623,13 @@
                 if (githubSold) {
                     soldItems = githubSold;
                     localStorage.setItem('threadup_sold', JSON.stringify(soldItems)); // Sync to localStorage
-                    console.log('✅ Loaded sold items from GitHub:', soldItems.length);
+                    githubDataLoaded = true;
+                    console.log('✅ Loaded', soldItems.length, 'sold items from GitHub');
                 }
                 if (githubAvailable) {
                     availableItems = githubAvailable;
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems)); // Sync to localStorage
-                    console.log('✅ Loaded available items from GitHub:', availableItems.length);
+                    console.log('✅ Loaded', availableItems.length, 'available items from GitHub');
                 }
                 
                 // Fallback to localStorage only if GitHub has no data
@@ -645,7 +653,7 @@
                 }
                 
                 if (forceReload) {
-                    alert('✅ Reloaded from GitHub!\n\n' + soldItems.length + ' sold items\n' + availableItems.length + ' available items');
+                    alert('✅ Reloaded from GitHub!\n\n' + soldItems.length + ' sold items\n' + availableItems.length + ' available items\n\nYou can now safely upload new files.');
                 }
             });
         }
@@ -674,27 +682,6 @@
                 .trim();
         }
         
-        function createItemKey(item) {
-            // Create VERY specific key to handle duplicates
-            var brand = normalizeText(item.Brand || 'unknown');
-            var desc = normalizeText(item.Description || 'unknown');
-            var price = parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2);
-            
-            // Use first 100 chars of description to make key unique enough
-            var descKey = desc.substring(0, 100);
-            
-            return brand + '|||' + descKey + '|||' + price;
-        }
-        
-        function createExactItemKey(item) {
-            // Even MORE specific - includes full description
-            var brand = normalizeText(item.Brand || 'unknown');
-            var desc = normalizeText(item.Description || 'unknown');
-            var price = parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2);
-            
-            return brand + '|||' + desc + '|||' + price;
-        }
-        
         function createLooseItemKey(item) {
             // LOOSE matching - brand + price ONLY (ignores description changes)
             var brand = normalizeText(item.Brand || 'unknown');
@@ -704,47 +691,32 @@
         }
         
         function intelligentMergeSoldItems(newItems) {
-            // Create THREE levels of maps - exact, fuzzy, and loose
-            var exactMap = {};
-            var fuzzyMap = {};
+            console.log('=== MERGE DEBUG: Starting intelligent merge ===');
+            console.log('GitHub data loaded:', githubDataLoaded);
+            console.log('Existing items count:', soldItems.length);
+            console.log('New items to merge:', newItems.length);
+            
+            if (soldItems.length === 0) {
+                console.warn('⚠️ WARNING: No existing items to merge against! This is your first upload.');
+                return newItems;
+            }
+            
+            // Show first 3 existing items for debugging
+            console.log('--- SAMPLE EXISTING ITEMS ---');
+            for (var i = 0; i < Math.min(3, soldItems.length); i++) {
+                var item = soldItems[i];
+                console.log(i + ':', item.Brand, '-', (item.Description || '').substring(0, 40), '- Date:', item['Date Sold']);
+            }
+            
+            // Use LOOSE matching only - brand + price
             var looseMap = {};
             var preservedCount = 0;
             var newCount = 0;
             
-            console.log('=== MERGE DEBUG: Starting intelligent merge ===');
-            console.log('Existing items count:', soldItems.length);
-            
-            // Build maps with ALL existing items
+            // Build map with ALL existing items
             soldItems.forEach(function(item, index) {
-                var exactKey = createExactItemKey(item);
-                var fuzzyKey = createItemKey(item);
                 var looseKey = createLooseItemKey(item);
                 
-                // Exact map
-                if (!exactMap[exactKey]) {
-                    exactMap[exactKey] = [];
-                }
-                exactMap[exactKey].push({
-                    date: item['Date Sold'],
-                    brand: item.Brand,
-                    desc: item.Description,
-                    price: item['Sold Price'],
-                    index: index
-                });
-                
-                // Fuzzy map
-                if (!fuzzyMap[fuzzyKey]) {
-                    fuzzyMap[fuzzyKey] = [];
-                }
-                fuzzyMap[fuzzyKey].push({
-                    date: item['Date Sold'],
-                    brand: item.Brand,
-                    desc: item.Description,
-                    price: item['Sold Price'],
-                    index: index
-                });
-                
-                // Loose map (brand + price only)
                 if (!looseMap[looseKey]) {
                     looseMap[looseKey] = [];
                 }
@@ -757,72 +729,49 @@
                 });
             });
             
-            console.log('Exact matches mapped:', Object.keys(exactMap).length);
-            console.log('Fuzzy matches mapped:', Object.keys(fuzzyMap).length);
             console.log('Loose matches mapped:', Object.keys(looseMap).length);
-            console.log('New items to merge:', newItems.length);
             
             // Track which old items we've used
             var usedIndices = new Set();
             
-            // Merge: preserve dates for matching items, add new items
-            var mergedItems = newItems.map(function(newItem) {
-                var exactKey = createExactItemKey(newItem);
-                var fuzzyKey = createItemKey(newItem);
+            // Show first 3 new items for debugging
+            console.log('--- SAMPLE NEW ITEMS ---');
+            for (var i = 0; i < Math.min(3, newItems.length); i++) {
+                var item = newItems[i];
+                console.log(i + ':', item.Brand, '-', (item.Description || '').substring(0, 40), '- Date:', item['Date Sold']);
+            }
+            
+            // Merge: preserve dates for matching items
+            var mergedItems = newItems.map(function(newItem, itemIndex) {
                 var looseKey = createLooseItemKey(newItem);
                 
                 var matched = false;
                 var matchedDate = null;
-                var matchType = '';
                 
-                // Try exact match first
-                if (exactMap[exactKey] && exactMap[exactKey].length > 0) {
-                    for (var i = 0; i < exactMap[exactKey].length; i++) {
-                        var match = exactMap[exactKey][i];
-                        if (!usedIndices.has(match.index)) {
-                            matchedDate = match.date;
-                            usedIndices.add(match.index);
-                            matched = true;
-                            matchType = 'EXACT';
-                            break;
-                        }
-                    }
-                }
-                
-                // Try fuzzy match if exact didn't work
-                if (!matched && fuzzyMap[fuzzyKey] && fuzzyMap[fuzzyKey].length > 0) {
-                    for (var i = 0; i < fuzzyMap[fuzzyKey].length; i++) {
-                        var match = fuzzyMap[fuzzyKey][i];
-                        if (!usedIndices.has(match.index)) {
-                            matchedDate = match.date;
-                            usedIndices.add(match.index);
-                            matched = true;
-                            matchType = 'FUZZY';
-                            break;
-                        }
-                    }
-                }
-                
-                // Try LOOSE match (brand + price only) if others didn't work
-                if (!matched && looseMap[looseKey] && looseMap[looseKey].length > 0) {
+                // Try LOOSE match (brand + price only)
+                if (looseMap[looseKey] && looseMap[looseKey].length > 0) {
                     for (var i = 0; i < looseMap[looseKey].length; i++) {
                         var match = looseMap[looseKey][i];
                         if (!usedIndices.has(match.index)) {
                             matchedDate = match.date;
                             usedIndices.add(match.index);
                             matched = true;
-                            matchType = 'LOOSE';
+                            
+                            if (itemIndex < 5 || matchedDate !== newItem['Date Sold']) {
+                                console.log('✓ MATCHED:', newItem.Brand, '$' + newItem['Sold Price'], '- OLD DATE:', matchedDate, 'NEW DATE:', newItem['Date Sold']);
+                            }
                             break;
                         }
                     }
                 }
                 
                 if (matched) {
-                    console.log('✓', matchType, 'MATCH:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- Preserved Date:', matchedDate);
                     newItem['Date Sold'] = matchedDate;
                     preservedCount++;
                 } else {
-                    console.log('✚ NEW ITEM:', newItem.Brand, '-', (newItem.Description || '').substring(0, 40), '- New Date:', newItem['Date Sold']);
+                    if (itemIndex < 5) {
+                        console.log('✚ NEW ITEM:', newItem.Brand, '$' + newItem['Sold Price'], '- Date:', newItem['Date Sold']);
+                    }
                     newCount++;
                 }
                 
@@ -848,10 +797,10 @@
             var unused = soldItems.length - usedIndices.size;
             if (unused > 0) {
                 report += '\n⚠️ Warning: ' + unused + ' old items not matched\n';
-                report += '(These may have been removed from ThredUp)\n';
+                report += '(May have been removed from ThredUp)\n';
             }
             
-            report += '\n💡 Check browser console (F12) for detailed merge log';
+            report += '\n💡 Check browser console (F12) for detailed log';
             
             setTimeout(function() {
                 alert(report);
@@ -861,8 +810,6 @@
         }
         
         function intelligentMergeAvailableItems(newItems) {
-            // For available items, just use the new data
-            // But preserve any custom fields if we add them later
             return newItems;
         }
         
@@ -870,10 +817,33 @@
             var file = e.target.files[0];
             if (!file) return;
             
+            // Check if GitHub data is loaded
+            if (!githubDataLoaded && soldItems.length === 0) {
+                var shouldContinue = confirm(
+                    '⚠️ WARNING: No data loaded from GitHub!\n\n' +
+                    'Your edited dates may be lost.\n\n' +
+                    'RECOMMENDED WORKFLOW:\n' +
+                    '1. Click "🔄 Reload from GitHub" first\n' +
+                    '2. Wait for it to finish\n' +
+                    '3. Then upload new files\n\n' +
+                    'Continue anyway? (Not recommended)'
+                );
+                
+                if (!shouldContinue) {
+                    // Reset file input
+                    e.target.value = '';
+                    return;
+                }
+            }
+            
             var reader = new FileReader();
             reader.onload = function(event) {
                 try {
                     var newData = JSON.parse(event.target.result);
+                    
+                    console.log('=== FILE UPLOAD DEBUG ===');
+                    console.log('Current soldItems count:', soldItems.length);
+                    console.log('New file items count:', newData.length);
                     
                     // Intelligent merge: preserve manual date edits
                     soldItems = intelligentMergeSoldItems(newData);
@@ -898,7 +868,6 @@
                 try {
                     var newData = JSON.parse(event.target.result);
                     
-                    // Use intelligent merge for available items too
                     availableItems = intelligentMergeAvailableItems(newData);
                     
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems));
