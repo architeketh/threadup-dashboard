@@ -466,6 +466,7 @@
                     <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
                     <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
                     <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
+                    <button class="export-btn" onclick="viewLockedDates()" style="background: #9c27b0;">🔒 View Locked Dates</button>
                     <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
                 </div>
                 
@@ -672,83 +673,94 @@
         document.getElementById('soldFile').addEventListener('change', handleSoldFile);
         document.getElementById('availableFile').addEventListener('change', handleAvailableFile);
         
+        // Store locked dates permanently
+        function getLockedDates() {
+            var locked = localStorage.getItem('threadup_locked_dates');
+            return locked ? JSON.parse(locked) : {};
+        }
+        
+        function setLockedDate(brand, price, date) {
+            var locked = getLockedDates();
+            var key = normalizeText(brand) + '|||' + parseFloat(price).toFixed(2);
+            locked[key] = date;
+            localStorage.setItem('threadup_locked_dates', JSON.stringify(locked));
+            console.log('🔒 LOCKED DATE:', brand, '$' + price, '→', date);
+        }
+        
+        function getLockedDate(brand, price) {
+            var locked = getLockedDates();
+            var key = normalizeText(brand) + '|||' + parseFloat(price).toFixed(2);
+            return locked[key] || null;
+        }
+        
         function normalizeText(text) {
             if (!text) return '';
             return text
                 .toLowerCase()
                 .trim()
-                .replace(/\s+/g, ' ')  // Normalize multiple spaces to single space
-                .replace(/[^\w\s-]/g, '')  // Remove special characters except spaces and hyphens
+                .replace(/\s+/g, ' ')
+                .replace(/[^\w\s-]/g, '')
                 .trim();
         }
         
         function createLooseItemKey(item) {
-            // LOOSE matching - brand + price ONLY (ignores description changes)
             var brand = normalizeText(item.Brand || 'unknown');
             var price = parseFloat(item['Sold Price'] || item.Price || 0).toFixed(2);
-            
             return brand + '|||' + price;
         }
         
         function intelligentMergeSoldItems(newItems) {
             console.log('=== MERGE DEBUG: Starting intelligent merge ===');
-            console.log('GitHub data loaded:', githubDataLoaded);
             console.log('Existing items count:', soldItems.length);
             console.log('New items to merge:', newItems.length);
             
+            var lockedDates = getLockedDates();
+            console.log('Locked dates count:', Object.keys(lockedDates).length);
+            
             if (soldItems.length === 0) {
-                console.warn('⚠️ WARNING: No existing items to merge against! This is your first upload.');
+                console.warn('⚠️ First upload - no merge needed');
                 return newItems;
             }
             
-            // Show first 3 existing items for debugging
-            console.log('--- SAMPLE EXISTING ITEMS ---');
-            for (var i = 0; i < Math.min(3, soldItems.length); i++) {
-                var item = soldItems[i];
-                console.log(i + ':', item.Brand, '-', (item.Description || '').substring(0, 40), '- Date:', item['Date Sold']);
-            }
-            
-            // Use LOOSE matching only - brand + price
+            // Build map with existing items
             var looseMap = {};
-            var preservedCount = 0;
-            var newCount = 0;
-            
-            // Build map with ALL existing items
             soldItems.forEach(function(item, index) {
                 var looseKey = createLooseItemKey(item);
-                
                 if (!looseMap[looseKey]) {
                     looseMap[looseKey] = [];
                 }
                 looseMap[looseKey].push({
                     date: item['Date Sold'],
                     brand: item.Brand,
-                    desc: item.Description,
                     price: item['Sold Price'],
                     index: index
                 });
             });
             
-            console.log('Loose matches mapped:', Object.keys(looseMap).length);
-            
-            // Track which old items we've used
             var usedIndices = new Set();
+            var preservedCount = 0;
+            var lockedCount = 0;
+            var newCount = 0;
             
-            // Show first 3 new items for debugging
-            console.log('--- SAMPLE NEW ITEMS ---');
-            for (var i = 0; i < Math.min(3, newItems.length); i++) {
-                var item = newItems[i];
-                console.log(i + ':', item.Brand, '-', (item.Description || '').substring(0, 40), '- Date:', item['Date Sold']);
-            }
-            
-            // Merge: preserve dates for matching items
-            var mergedItems = newItems.map(function(newItem, itemIndex) {
+            // Merge items
+            var mergedItems = newItems.map(function(newItem) {
                 var looseKey = createLooseItemKey(newItem);
+                var brand = newItem.Brand;
+                var price = newItem['Sold Price'];
                 
+                // FIRST: Check if date is LOCKED
+                var lockedDate = getLockedDate(brand, price);
+                if (lockedDate) {
+                    console.log('🔒 LOCKED:', brand, '$' + price, '- Using locked date:', lockedDate, '(ignoring new date:', newItem['Date Sold'] + ')');
+                    newItem['Date Sold'] = lockedDate;
+                    lockedCount++;
+                    return newItem;
+                }
+                
+                // SECOND: Try to match with existing items
                 var matched = false;
                 var matchedDate = null;
                 
-                // Try LOOSE match (brand + price only)
                 if (looseMap[looseKey] && looseMap[looseKey].length > 0) {
                     for (var i = 0; i < looseMap[looseKey].length; i++) {
                         var match = looseMap[looseKey][i];
@@ -756,10 +768,7 @@
                             matchedDate = match.date;
                             usedIndices.add(match.index);
                             matched = true;
-                            
-                            if (itemIndex < 5 || matchedDate !== newItem['Date Sold']) {
-                                console.log('✓ MATCHED:', newItem.Brand, '$' + newItem['Sold Price'], '- OLD DATE:', matchedDate, 'NEW DATE:', newItem['Date Sold']);
-                            }
+                            console.log('✓ MATCHED:', brand, '$' + price, '- Preserved date:', matchedDate, '(not using:', newItem['Date Sold'] + ')');
                             break;
                         }
                     }
@@ -769,9 +778,7 @@
                     newItem['Date Sold'] = matchedDate;
                     preservedCount++;
                 } else {
-                    if (itemIndex < 5) {
-                        console.log('✚ NEW ITEM:', newItem.Brand, '$' + newItem['Sold Price'], '- Date:', newItem['Date Sold']);
-                    }
+                    console.log('✚ NEW:', brand, '$' + price, '- Date:', newItem['Date Sold']);
                     newCount++;
                 }
                 
@@ -779,28 +786,24 @@
             });
             
             console.log('=== MERGE COMPLETE ===');
-            console.log('Preserved dates:', preservedCount);
-            console.log('New items:', newCount);
-            console.log('Used', usedIndices.size, 'out of', soldItems.length, 'old items');
+            console.log('🔒 Locked dates used:', lockedCount);
+            console.log('✓ Preserved dates:', preservedCount);
+            console.log('✚ New items:', newCount);
             
-            // Show detailed report to user
             var report = '✅ Smart Merge Complete!\n\n';
             report += '📊 Results:\n';
+            if (lockedCount > 0) {
+                report += '🔒 Locked dates: ' + lockedCount + ' items\n';
+            }
             report += '✓ Preserved dates: ' + preservedCount + ' items\n';
             report += '✚ New items: ' + newCount + ' items\n';
             report += '📦 Total: ' + mergedItems.length + ' items\n\n';
             
             if (newCount > 0) {
-                report += '🆕 ' + newCount + ' new sold items detected!\n';
+                report += '🆕 ' + newCount + ' new sold items!\n';
             }
             
-            var unused = soldItems.length - usedIndices.size;
-            if (unused > 0) {
-                report += '\n⚠️ Warning: ' + unused + ' old items not matched\n';
-                report += '(May have been removed from ThredUp)\n';
-            }
-            
-            report += '\n💡 Check browser console (F12) for detailed log';
+            report += '\n💡 Press F12 to see detailed log';
             
             setTimeout(function() {
                 alert(report);
@@ -817,35 +820,15 @@
             var file = e.target.files[0];
             if (!file) return;
             
-            // Check if GitHub data is loaded
-            if (!githubDataLoaded && soldItems.length === 0) {
-                var shouldContinue = confirm(
-                    '⚠️ WARNING: No data loaded from GitHub!\n\n' +
-                    'Your edited dates may be lost.\n\n' +
-                    'RECOMMENDED WORKFLOW:\n' +
-                    '1. Click "🔄 Reload from GitHub" first\n' +
-                    '2. Wait for it to finish\n' +
-                    '3. Then upload new files\n\n' +
-                    'Continue anyway? (Not recommended)'
-                );
-                
-                if (!shouldContinue) {
-                    // Reset file input
-                    e.target.value = '';
-                    return;
-                }
-            }
-            
             var reader = new FileReader();
             reader.onload = function(event) {
                 try {
                     var newData = JSON.parse(event.target.result);
                     
-                    console.log('=== FILE UPLOAD DEBUG ===');
-                    console.log('Current soldItems count:', soldItems.length);
-                    console.log('New file items count:', newData.length);
+                    console.log('=== FILE UPLOAD ===');
+                    console.log('Current items:', soldItems.length);
+                    console.log('New items:', newData.length);
                     
-                    // Intelligent merge: preserve manual date edits
                     soldItems = intelligentMergeSoldItems(newData);
                     
                     localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
@@ -867,9 +850,7 @@
             reader.onload = function(event) {
                 try {
                     var newData = JSON.parse(event.target.result);
-                    
                     availableItems = intelligentMergeAvailableItems(newData);
-                    
                     localStorage.setItem('threadup_available', JSON.stringify(availableItems));
                     updateDropZones();
                     updateDashboard();
@@ -1564,8 +1545,13 @@
         function dateChanged(input) {
             var index = parseInt(input.getAttribute('data-index'));
             var newDate = input.value;
-            soldItems[index]['Date Sold'] = newDate;
+            var item = soldItems[index];
+            
+            item['Date Sold'] = newDate;
             input.classList.add('modified');
+            
+            // LOCK this date permanently
+            setLockedDate(item.Brand, item['Sold Price'], newDate);
             
             // Show save button
             document.getElementById('saveBtn').style.display = 'inline-block';
@@ -1575,6 +1561,39 @@
             
             // Update charts to reflect new date
             updateCharts();
+            
+            // Show confirmation
+            console.log('📝 Date edited and LOCKED:', item.Brand, '$' + item['Sold Price'], '→', newDate);
+        }
+        
+        function viewLockedDates() {
+            var locked = getLockedDates();
+            var keys = Object.keys(locked);
+            
+            if (keys.length === 0) {
+                alert('No locked dates yet!\n\nWhen you manually edit a date in the Sold Items table, it becomes permanently locked and can never be overwritten by merges.');
+                return;
+            }
+            
+            var message = '🔒 LOCKED DATES (' + keys.length + ' items)\n\n';
+            message += 'These dates are permanently locked and will NEVER change during merges:\n\n';
+            
+            keys.forEach(function(key) {
+                var parts = key.split('|||');
+                var brand = parts[0];
+                var price = parts[1];
+                var date = locked[key];
+                message += '• ' + brand + ' ($' + price + ') → ' + date + '\n';
+            });
+            
+            message += '\n💡 To unlock a date, you must clear all locked dates.';
+            
+            if (confirm(message + '\n\nClear ALL locked dates?')) {
+                if (confirm('⚠️ Are you sure?\n\nThis will remove ALL date locks. Next merge may overwrite your manual edits!')) {
+                    localStorage.removeItem('threadup_locked_dates');
+                    alert('✅ All locked dates cleared!');
+                }
+            }
         }
         
         function setupGitHubToken() {
