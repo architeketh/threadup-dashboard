@@ -124,32 +124,11 @@
         .drop-zone-hint { font-size: 12px; color: #666; }
         .file-loaded { background: #d4edda; border-color: #28a745; }
         
+        /* REMOVED: Top navigation tabs - now hidden */
         .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            background: white;
-            padding: 10px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow-x: auto;
+            display: none !important;
         }
         
-        .tab {
-            padding: 12px 24px;
-            background: #f8f9fa;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #666;
-            transition: all 0.3s;
-            white-space: nowrap;
-            font-size: 14px;
-        }
-        
-        .tab:hover { background: #e9ecef; }
-        .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
@@ -178,10 +157,81 @@
             margin-bottom: 20px;
         }
         
-        .stat-card { background: white; padding: 18px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .stat-card { 
+            background: white; 
+            padding: 18px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        /* Clickable card styles */
+        .stat-card.clickable {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .stat-card.clickable:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .stat-card.clickable::after {
+            content: '→';
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 20px;
+            color: #667eea;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card.clickable:hover::after {
+            opacity: 1;
+            transform: translateX(4px);
+        }
+        
         .stat-label { color: #666; font-size: 13px; margin-bottom: 6px; }
         .stat-value { color: #333; font-size: 26px; font-weight: bold; }
         .stat-subvalue { color: #888; font-size: 12px; margin-top: 4px; }
+        
+        /* "Click here to see totals" hint */
+        .stat-hint {
+            color: #667eea;
+            font-size: 11px;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .stat-card.clickable:hover .stat-hint {
+            opacity: 1;
+        }
+        
+        /* Back button for detail views */
+        .back-button {
+            background: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
         
         .charts-grid {
             display: grid;
@@ -307,17 +357,6 @@
                 white-space: nowrap;
             }
             
-            .tabs {
-                padding: 8px;
-                gap: 5px;
-                margin-bottom: 15px;
-            }
-            
-            .tab {
-                padding: 10px 16px;
-                font-size: 12px;
-            }
-            
             .summary-banner {
                 padding: 12px;
                 gap: 12px;
@@ -398,8 +437,6 @@
                 padding: 10px 12px;
                 font-size: 11px;
             }
-            
-            .tab { padding: 8px 12px; font-size: 11px; }
         }
         
         /* TABLE COLUMN WIDTHS FOR MOBILE */
@@ -509,7 +546,8 @@
             </div>
         </details>
         
-        <div class="tabs" id="tabs" style="display: none;">
+        <!-- REMOVED: Top tabs navigation is now hidden via CSS -->
+        <div class="tabs" id="tabs">
             <button class="tab active" onclick="switchTab('overview', event)">📊 Overview</button>
             <button class="tab" onclick="switchTab('sold', event)">📦 Sold Items</button>
             <button class="tab" onclick="switchTab('available', event)">🏷️ Available Items</button>
@@ -522,12 +560,14 @@
         </div>
         
         <div id="sold-content" class="tab-content">
+            <button class="back-button" onclick="switchTab('overview', event)">← Back to Overview</button>
             <div class="items-table" id="soldTable">
                 <div class="no-data"><h3>No sold items yet</h3><p>Upload sold items JSON</p></div>
             </div>
         </div>
         
         <div id="available-content" class="tab-content">
+            <button class="back-button" onclick="switchTab('overview', event)">← Back to Overview</button>
             <div class="items-table" id="availableTable">
                 <div class="no-data"><h3>No available items yet</h3><p>Upload available items JSON</p></div>
             </div>
@@ -882,17 +922,32 @@
         }
         
         function switchTab(tab, event) {
-            var tabs = document.querySelectorAll('.tab');
-            tabs.forEach(function(t) { t.classList.remove('active'); });
-            event.target.classList.add('active');
-            
+            // Hide all tab contents
             var contents = document.querySelectorAll('.tab-content');
             contents.forEach(function(c) { c.classList.remove('active'); });
+            
+            // Show selected tab content
             document.getElementById(tab + '-content').classList.add('active');
+            
+            // Update tab button styles (if tabs were visible)
+            if (event && event.target) {
+                var tabs = document.querySelectorAll('.tab');
+                tabs.forEach(function(t) { t.classList.remove('active'); });
+                event.target.classList.add('active');
+            }
+        }
+        
+        // Direct navigation functions for clickable cards
+        function showSoldItems() {
+            switchTab('sold', null);
+        }
+        
+        function showAvailableItems() {
+            switchTab('available', null);
         }
         
         function updateDashboard() {
-            document.getElementById('tabs').style.display = 'flex';
+            // Don't show tabs bar anymore - it's hidden
             updateStats();
             updateCharts();
             updateTables();
@@ -946,11 +1001,45 @@
             document.getElementById('summaryBanner').innerHTML = summaryHTML;
             document.getElementById('summaryBanner').style.display = 'grid';
             
-            var statsHTML = '<div class="stat-card"><div class="stat-label">Items Sold</div><div class="stat-value">' + totalSold + '</div><div class="stat-subvalue">items</div></div>';
-            statsHTML += '<div class="stat-card"><div class="stat-label">Revenue (Sold)</div><div class="stat-value">$' + totalRevenue.toFixed(2) + '</div><div class="stat-subvalue">total earned</div></div>';
-            statsHTML += '<div class="stat-card"><div class="stat-label">Items Available</div><div class="stat-value">' + totalAvailable + '</div><div class="stat-subvalue">items</div></div>';
-            statsHTML += '<div class="stat-card"><div class="stat-label">Inventory Value</div><div class="stat-value">$' + totalInventoryValue.toFixed(2) + '</div><div class="stat-subvalue">potential revenue</div></div>';
-            statsHTML += '<div class="stat-card"><div class="stat-label">Avg Sold Price</div><div class="stat-value">$' + avgPrice.toFixed(2) + '</div><div class="stat-subvalue">per item</div></div>';
+            // Update stats grid with clickable cards
+            var statsHTML = '';
+            
+            // CLICKABLE: Items Sold
+            statsHTML += '<div class="stat-card clickable" onclick="showSoldItems()">';
+            statsHTML += '<div class="stat-label">Items Sold</div>';
+            statsHTML += '<div class="stat-value">' + totalSold + '</div>';
+            statsHTML += '<div class="stat-subvalue">items</div>';
+            statsHTML += '<div class="stat-hint">Click here to see totals</div>';
+            statsHTML += '</div>';
+            
+            // NON-CLICKABLE: Revenue
+            statsHTML += '<div class="stat-card">';
+            statsHTML += '<div class="stat-label">Revenue (Sold)</div>';
+            statsHTML += '<div class="stat-value">$' + totalRevenue.toFixed(2) + '</div>';
+            statsHTML += '<div class="stat-subvalue">total earned</div>';
+            statsHTML += '</div>';
+            
+            // CLICKABLE: Items Available
+            statsHTML += '<div class="stat-card clickable" onclick="showAvailableItems()">';
+            statsHTML += '<div class="stat-label">Items Available</div>';
+            statsHTML += '<div class="stat-value">' + totalAvailable + '</div>';
+            statsHTML += '<div class="stat-subvalue">items</div>';
+            statsHTML += '<div class="stat-hint">Click here to see totals</div>';
+            statsHTML += '</div>';
+            
+            // NON-CLICKABLE: Inventory Value
+            statsHTML += '<div class="stat-card">';
+            statsHTML += '<div class="stat-label">Inventory Value</div>';
+            statsHTML += '<div class="stat-value">$' + totalInventoryValue.toFixed(2) + '</div>';
+            statsHTML += '<div class="stat-subvalue">potential revenue</div>';
+            statsHTML += '</div>';
+            
+            // NON-CLICKABLE: Avg Sold Price
+            statsHTML += '<div class="stat-card">';
+            statsHTML += '<div class="stat-label">Avg Sold Price</div>';
+            statsHTML += '<div class="stat-value">$' + avgPrice.toFixed(2) + '</div>';
+            statsHTML += '<div class="stat-subvalue">per item</div>';
+            statsHTML += '</div>';
             
             document.getElementById('statsGrid').innerHTML = statsHTML;
         }
