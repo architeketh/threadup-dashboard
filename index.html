@@ -211,6 +211,13 @@
             opacity: 1;
         }
         
+        /* Always show hint on mobile since there's no hover */
+        @media (max-width: 768px) {
+            .stat-hint {
+                opacity: 1;
+            }
+        }
+        
         /* Back button for detail views */
         .back-button {
             background: white;
