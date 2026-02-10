@@ -10,21 +10,21 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 83.99,
-    "Likes": 20,
+    "Likes": 21,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 13,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 59.99,
-    "Likes": 19,
+    "Likes": 20,
     "Availability": "Available"
   },
   {
@@ -59,7 +59,7 @@
     "Brand": "Cushion Aire Sasha",
     "Description": "Chelsea  Boots",
     "Price": 36.99,
-    "Likes": 5,
+    "Likes": 8,
     "Availability": "Available"
   },
   {
@@ -94,7 +94,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 7,
+    "Likes": 8,
     "Availability": "Available"
   },
   {
@@ -115,7 +115,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 (GS) Sneakers",
     "Price": 83.99,
-    "Likes": 12,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
@@ -143,7 +143,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "GS “Pink Blast / White” Leather Sneakers",
     "Price": 71.99,
-    "Likes": 76,
+    "Likes": 77,
     "Availability": "Available"
   },
   {
@@ -164,7 +164,7 @@
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Price": 59.99,
-    "Likes": 75,
+    "Likes": 76,
     "Availability": "Available"
   }
 ]
