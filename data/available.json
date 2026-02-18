@@ -3,7 +3,7 @@
     "Brand": "Nike Air Max",
     "Description": "Plus “Light Bone / Sail” Running  Sneakers",
     "Price": 95.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
@@ -17,7 +17,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 28,
+    "Likes": 29,
     "Availability": "Available"
   },
   {
@@ -39,13 +39,6 @@
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
     "Likes": 26,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Cushion Aire Sasha",
-    "Description": "Chelsea  Boots",
-    "Price": 36.99,
-    "Likes": 20,
     "Availability": "Available"
   },
   {
@@ -80,7 +73,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 14,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
