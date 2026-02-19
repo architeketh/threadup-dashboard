@@ -1,21 +1,9 @@
 [
   {
-    "Brand": "Badgley Mischka Messenger",
-    "Description": "",
-    "Sold Price": 71.99,
-    "Date Sold": "2025-12-23"
-  },
-  {
     "Brand": "Cushion Aire Sasha",
     "Description": "Chelsea  Boots",
     "Sold Price": 36.99,
     "Date Sold": "2026-02-18"
-  },
-  {
-    "Brand": "Monsac Leather Shoulder",
-    "Description": "Bag",
-    "Sold Price": 59.99,
-    "Date Sold": "2025-12-23"
   },
   {
     "Brand": "Adidas Sneakers",
@@ -33,7 +21,7 @@
     "Brand": "Coach Shoulder Bag",
     "Description": "",
     "Sold Price": 132.99,
-    "Date Sold": "2026-02-15"
+    "Date Sold": "2025-12-25"
   },
   {
     "Brand": "Nike Dunk Low",
@@ -268,6 +256,18 @@
     "Description": "Mickey Mouse Logo Strap Crossbody Bag",
     "Sold Price": 36.99,
     "Date Sold": "2025-12-27"
+  },
+  {
+    "Brand": "Badgley Mischka Messenger",
+    "Description": "",
+    "Sold Price": 71.99,
+    "Date Sold": "2025-12-23"
+  },
+  {
+    "Brand": "Monsac Leather Shoulder",
+    "Description": "Bag",
+    "Sold Price": 59.99,
+    "Date Sold": "2025-12-23"
   },
   {
     "Brand": "Adidas VL Court",
