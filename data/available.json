@@ -1,5 +1,12 @@
 [
   {
+    "Brand": "Coach Vintage Companion",
+    "Description": "British Tan Camera  – 1990 USA Leather Crossbody Bag",
+    "Price": 238.99,
+    "Likes": 2,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Rebecca Taylor Pot",
     "Description": "Paisley Trench Coat",
     "Price": 132.99,
@@ -17,14 +24,14 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 32,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 32,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
@@ -52,7 +59,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 19,
+    "Likes": 20,
     "Availability": "Available"
   },
   {
@@ -87,7 +94,7 @@
     "Brand": "Ugg Lowmel Suede",
     "Description": "Low-Top Sneaker – Tan Sneakers",
     "Price": 83.99,
-    "Likes": 20,
+    "Likes": 21,
     "Availability": "Available"
   },
   {
@@ -101,7 +108,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 (GS) Sneakers",
     "Price": 71.99,
-    "Likes": 33,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
@@ -136,7 +143,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 19,
+    "Likes": 20,
     "Availability": "Available"
   }
 ]
