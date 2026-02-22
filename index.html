@@ -512,8 +512,6 @@
                     <button class="export-btn" onclick="deduplicateNow()" style="background: #dc3545;">🗑️ Remove Duplicates</button>
                     <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
                     <button class="export-btn" onclick="viewLockedDates()" style="background: #9c27b0;">🔒 View Locked Dates</button>
-                    <button class="export-btn" onclick="exportLockedDates()" style="background: #795548;">💾 Backup Locked Dates</button>
-                    <button class="export-btn" onclick="importLockedDates()" style="background: #607d8b;">📥 Restore Locked Dates</button>
                     <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
                 </div>
                 
@@ -522,9 +520,9 @@
                     <ol>
                         <li>Upload your data files (sold + available items)</li>
                         <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
-                        <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code> and <code>available.json</code></li>
+                        <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code>, <code>available.json</code>, and <code>locked-dates.json</code></li>
                         <li>In your repo, go to <code>data/</code> folder on GitHub</li>
-                        <li>Click "Upload files" and add both JSON files</li>
+                        <li>Click "Upload files" and add ALL JSON files (including locked-dates.json)</li>
                         <li>Commit changes</li>
                         <li><strong>Share:</strong> <code>https://architeketh.github.io/threadup-dashboard/</code></li>
                         <li>Next time you upload, you'll see <strong>🔥 New Sales</strong> since last update!</li>
@@ -532,13 +530,17 @@
                     
                     <h3 style="margin-top: 15px;">🔒 Date Protection System</h3>
                     <p style="color: #555; margin-top: 8px; font-size: 13px;">
-                        <strong>Manual edits are PERMANENTLY PROTECTED:</strong><br>
+                        <strong>Manual edits are PERMANENTLY PROTECTED and synced via GitHub:</strong><br>
                         • When you edit a date in the Sold Items table, it's locked forever<br>
-                        • Locked dates NEVER change during merges - your edits are safe<br>
-                        • Click <strong>"💾 Backup Locked Dates"</strong> to save a backup file<br>
-                        • Locked dates are stored in your browser (localStorage)<br>
+                        • Click <strong>"💾 Save Changes to GitHub"</strong> to sync locked dates<br>
+                        • Locked dates automatically load from GitHub on any device<br>
+                        • Your edits work across ALL browsers and devices!<br>
                         <br>
-                        <strong>💡 Best Practice:</strong> Back up your locked dates regularly!
+                        <strong>💡 How it works:</strong><br>
+                        1. Edit a date → it's locked in browser + <code>locked-dates.json</code><br>
+                        2. Export or Save to GitHub → locked dates sync<br>
+                        3. Access from any device → locked dates auto-load<br>
+                        4. Future merges NEVER overwrite your locked dates
                     </p>
                 </div>
                 
@@ -698,10 +700,18 @@
             
             Promise.all([
                 fetch('data/sold.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch('data/available.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null)
+                fetch('data/available.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch('data/locked-dates.json' + cacheBust).then(r => r.ok ? r.json() : null).catch(() => null)
             ]).then(function(results) {
                 var githubSold = results[0];
                 var githubAvailable = results[1];
+                var githubLockedDates = results[2];
+                
+                // Load locked dates from GitHub
+                if (githubLockedDates && githubLockedDates.locked_dates) {
+                    localStorage.setItem('threadup_locked_dates', JSON.stringify(githubLockedDates.locked_dates));
+                    console.log('🔒 Loaded', Object.keys(githubLockedDates.locked_dates).length, 'locked dates from GitHub');
+                }
                 
                 if (githubSold) {
                     // CRITICAL: Apply locked dates immediately after loading
@@ -737,7 +747,8 @@
                 }
                 
                 if (forceReload) {
-                    alert('✅ Reloaded from GitHub!\n\n' + soldItems.length + ' sold items\n' + availableItems.length + ' available items\n\n🔒 Locked dates applied automatically');
+                    var lockedCount = githubLockedDates ? Object.keys(githubLockedDates.locked_dates || {}).length : 0;
+                    alert('✅ Reloaded from GitHub!\n\n' + soldItems.length + ' sold items\n' + availableItems.length + ' available items\n🔒 ' + lockedCount + ' locked dates\n\n🔒 Locked dates applied automatically');
                 }
             });
         }
@@ -1737,7 +1748,7 @@
             var locked = getLockedDates();
             if (Object.keys(locked).length === 1) {
                 setTimeout(function() {
-                    alert('🔒 Date Locked!\n\n' + item.Brand + ' - $' + item['Sold Price'] + '\n\nThis date is now PERMANENTLY PROTECTED:\n✅ Stored in browser localStorage\n✅ Will NEVER be overwritten by merges\n✅ Applied automatically on every upload\n\n💡 Click "💾 Backup Locked Dates" to save a backup!');
+                    alert('🔒 Date Locked!\n\n' + item.Brand + ' - $' + item['Sold Price'] + '\n\nThis date is now PERMANENTLY PROTECTED:\n✅ Stored in browser + GitHub\n✅ Will NEVER be overwritten by merges\n✅ Applied automatically on every upload\n✅ Synced across all devices\n\n💡 Click "💾 Save Changes to GitHub" to sync now!');
                 }, 100);
             }
         }
@@ -1747,14 +1758,15 @@
             var keys = Object.keys(locked);
             
             if (keys.length === 0) {
-                alert('No locked dates yet!\n\n🔒 HOW IT WORKS:\nWhen you manually edit a date in the Sold Items table, it becomes PERMANENTLY LOCKED.\n\n✅ Locked dates are:\n• Stored permanently in your browser\n• Protected from ALL future merges\n• Applied automatically on every upload\n• Backed up when you export\n\n💡 Your manual edits will NEVER be overwritten!');
+                alert('No locked dates yet!\n\n🔒 HOW IT WORKS:\nWhen you manually edit a date in the Sold Items table, it becomes PERMANENTLY LOCKED.\n\n✅ Locked dates are:\n• Stored in your browser AND GitHub\n• Protected from ALL future merges\n• Applied automatically on every upload\n• Synced across all your devices\n\n💡 Your manual edits will NEVER be overwritten!');
                 return;
             }
             
             var message = '🔒 LOCKED DATES (' + keys.length + ' items)\n\n';
             message += '✅ These dates are PERMANENTLY PROTECTED:\n';
-            message += '• Stored in browser localStorage\n';
+            message += '• Stored in browser + GitHub (locked-dates.json)\n';
             message += '• Applied on EVERY merge/upload\n';
+            message += '• Synced across all devices\n';
             message += '• Will NEVER be overwritten\n\n';
             message += 'Locked items:\n\n';
             
@@ -1766,15 +1778,15 @@
                 message += '• ' + brand + ' ($' + price + ') → ' + date + '\n';
             });
             
-            message += '\n💾 TIP: Click "Backup Locked Dates" to save a backup file';
+            message += '\n💾 TIP: Click "📤 Export for GitHub" or "💾 Save Changes" to sync';
             
             alert(message);
             
             // Separate confirmation for clearing
             if (confirm('Do you want to CLEAR ALL locked dates?\n\n⚠️ WARNING: This will remove all date protections!')) {
-                if (confirm('⚠️ ARE YOU ABSOLUTELY SURE?\n\nThis will:\n• Remove ALL ' + keys.length + ' locked dates\n• Allow future merges to overwrite your edits\n• This cannot be undone (unless you have a backup)\n\nClear all locked dates?')) {
+                if (confirm('⚠️ ARE YOU ABSOLUTELY SURE?\n\nThis will:\n• Remove ALL ' + keys.length + ' locked dates\n• Allow future merges to overwrite your edits\n• This cannot be undone\n\nClear all locked dates?')) {
                     localStorage.removeItem('threadup_locked_dates');
-                    alert('✅ All locked dates cleared!\n\n💡 Your manual edits may be overwritten on next merge.');
+                    alert('✅ All locked dates cleared!\n\n💡 Remember to save/export to GitHub to sync this change.');
                 }
             }
         }
@@ -1913,7 +1925,7 @@
                 return;
             }
             
-            if (!confirm('Save updated sold items to GitHub?\n\nThis will update your dashboard everywhere.')) {
+            if (!confirm('Save changes to GitHub?\n\nThis will update:\n• sold.json\n• locked-dates.json\n\nYour dashboard will update everywhere.')) {
                 return;
             }
             
@@ -1923,52 +1935,94 @@
             
             try {
                 var REPO = 'architeketh/threadup-dashboard';
-                var url = 'https://api.github.com/repos/' + REPO + '/contents/data/sold.json';
+                
+                // Save sold.json
+                var soldUrl = 'https://api.github.com/repos/' + REPO + '/contents/data/sold.json';
                 
                 // Get current file SHA
-                var getSHA = await fetch(url, {
+                var getSoldSHA = await fetch(soldUrl, {
                     headers: { 'Authorization': 'token ' + TOKEN }
                 });
                 
-                var sha = null;
-                if (getSHA.ok) {
-                    var data = await getSHA.json();
-                    sha = data.sha;
+                var soldSha = null;
+                if (getSoldSHA.ok) {
+                    var soldData = await getSoldSHA.json();
+                    soldSha = soldData.sha;
                 }
                 
-                // Upload updated file
-                var response = await fetch(url, {
+                // Upload sold.json
+                var soldResponse = await fetch(soldUrl, {
                     method: 'PUT',
                     headers: {
                         'Authorization': 'token ' + TOKEN,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: 'Update sold items dates',
+                        message: 'Update sold items',
                         content: btoa(unescape(encodeURIComponent(JSON.stringify(soldItems, null, 2)))),
-                        sha: sha
+                        sha: soldSha
                     })
                 });
                 
-                if (response.ok) {
-                    saveBtn.textContent = '✅ Saved!';
-                    saveBtn.style.background = '#28a745';
-                    
-                    // Remove modified class from inputs
-                    var inputs = document.querySelectorAll('.date-input.modified');
-                    inputs.forEach(function(inp) { inp.classList.remove('modified'); });
-                    
-                    setTimeout(function() {
-                        saveBtn.style.display = 'none';
-                        saveBtn.textContent = '💾 Save Changes to GitHub';
-                        saveBtn.style.background = '#ff9800';
-                        saveBtn.disabled = false;
-                    }, 3000);
-                    
-                    alert('✅ Saved to GitHub!\n\nYour dashboard will update everywhere in 1-2 minutes.');
-                } else {
-                    throw new Error('Upload failed');
+                if (!soldResponse.ok) {
+                    throw new Error('Failed to save sold.json');
                 }
+                
+                // Save locked-dates.json
+                var locked = getLockedDates();
+                if (Object.keys(locked).length > 0) {
+                    var lockedUrl = 'https://api.github.com/repos/' + REPO + '/contents/data/locked-dates.json';
+                    
+                    var getLockedSHA = await fetch(lockedUrl, {
+                        headers: { 'Authorization': 'token ' + TOKEN }
+                    });
+                    
+                    var lockedSha = null;
+                    if (getLockedSHA.ok) {
+                        var lockedData = await getLockedSHA.json();
+                        lockedSha = lockedData.sha;
+                    }
+                    
+                    var lockedDataObj = {
+                        exported: new Date().toISOString(),
+                        count: Object.keys(locked).length,
+                        locked_dates: locked
+                    };
+                    
+                    var lockedResponse = await fetch(lockedUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': 'token ' + TOKEN,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: 'Update locked dates',
+                            content: btoa(unescape(encodeURIComponent(JSON.stringify(lockedDataObj, null, 2)))),
+                            sha: lockedSha
+                        })
+                    });
+                    
+                    if (!lockedResponse.ok) {
+                        throw new Error('Failed to save locked-dates.json');
+                    }
+                }
+                
+                saveBtn.textContent = '✅ Saved!';
+                saveBtn.style.background = '#28a745';
+                
+                // Remove modified class from inputs
+                var inputs = document.querySelectorAll('.date-input.modified');
+                inputs.forEach(function(inp) { inp.classList.remove('modified'); });
+                
+                setTimeout(function() {
+                    saveBtn.style.display = 'none';
+                    saveBtn.textContent = '💾 Save Changes to GitHub';
+                    saveBtn.style.background = '#ff9800';
+                    saveBtn.disabled = false;
+                }, 3000);
+                
+                var lockedCount = Object.keys(locked).length;
+                alert('✅ Saved to GitHub!\n\n✓ sold.json\n🔒 locked-dates.json (' + lockedCount + ' locked dates)\n\nYour dashboard will update everywhere in 1-2 minutes.');
             } catch (error) {
                 alert('❌ Failed to save to GitHub\n\nError: ' + error.message);
                 saveBtn.textContent = '💾 Save Changes to GitHub';
@@ -1982,6 +2036,7 @@
                 return;
             }
             
+            // Export sold items
             if (soldItems.length > 0) {
                 var soldBlob = new Blob([JSON.stringify(soldItems, null, 2)], { type: 'application/json' });
                 var soldUrl = URL.createObjectURL(soldBlob);
@@ -1992,6 +2047,7 @@
                 URL.revokeObjectURL(soldUrl);
             }
             
+            // Export available items
             if (availableItems.length > 0) {
                 var availableBlob = new Blob([JSON.stringify(availableItems, null, 2)], { type: 'application/json' });
                 var availableUrl = URL.createObjectURL(availableBlob);
@@ -2002,8 +2058,30 @@
                 URL.revokeObjectURL(availableUrl);
             }
             
+            // Export locked dates
+            var locked = getLockedDates();
+            if (Object.keys(locked).length > 0) {
+                var lockedData = {
+                    exported: new Date().toISOString(),
+                    count: Object.keys(locked).length,
+                    locked_dates: locked
+                };
+                var lockedBlob = new Blob([JSON.stringify(lockedData, null, 2)], { type: 'application/json' });
+                var lockedUrl = URL.createObjectURL(lockedBlob);
+                var lockedLink = document.createElement('a');
+                lockedLink.href = lockedUrl;
+                lockedLink.download = 'locked-dates.json';
+                lockedLink.click();
+                URL.revokeObjectURL(lockedUrl);
+            }
+            
             setTimeout(function() {
-                alert('📤 Files downloaded!\n\n1. Go to your repo on GitHub\n2. Navigate to data/ folder\n3. Upload both JSON files\n4. Commit and share your URL!');
+                var message = '📤 Files downloaded!\n\n';
+                if (soldItems.length > 0) message += '✓ sold.json\n';
+                if (availableItems.length > 0) message += '✓ available.json\n';
+                if (Object.keys(locked).length > 0) message += '🔒 locked-dates.json (' + Object.keys(locked).length + ' locked dates)\n';
+                message += '\n1. Go to your repo on GitHub\n2. Navigate to data/ folder\n3. Upload ALL JSON files\n4. Commit and share your URL!';
+                alert(message);
             }, 500);
         }
         
