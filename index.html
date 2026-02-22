@@ -509,6 +509,7 @@
                     <button class="export-btn" onclick="loadDataFromGitHub(true)" style="background: #667eea;">🔄 Reload from GitHub</button>
                     <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
                     <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
+                    <button class="export-btn" onclick="deduplicateNow()" style="background: #dc3545;">🗑️ Remove Duplicates</button>
                     <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
                     <button class="export-btn" onclick="viewLockedDates()" style="background: #9c27b0;">🔒 View Locked Dates</button>
                     <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
@@ -778,6 +779,36 @@
             return brand + '|||' + price;
         }
         
+        function deduplicateSoldItems(items) {
+            var seen = new Set();
+            var deduplicated = [];
+            var duplicateCount = 0;
+            
+            items.forEach(function(item) {
+                // Create unique key from all fields
+                var key = [
+                    normalizeText(item.Brand || ''),
+                    normalizeText(item.Description || ''),
+                    parseFloat(item['Sold Price'] || 0).toFixed(2),
+                    item['Date Sold'] || ''
+                ].join('|||');
+                
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    deduplicated.push(item);
+                } else {
+                    duplicateCount++;
+                    console.log('🗑️ REMOVED DUPLICATE:', item.Brand, '$' + item['Sold Price'], item['Date Sold']);
+                }
+            });
+            
+            if (duplicateCount > 0) {
+                console.log('🗑️ Removed', duplicateCount, 'duplicate items');
+            }
+            
+            return deduplicated;
+        }
+        
         function intelligentMergeSoldItems(newItems) {
             console.log('=== MERGE DEBUG: Starting intelligent merge ===');
             console.log('Existing items count:', soldItems.length);
@@ -788,8 +819,8 @@
             
             if (soldItems.length === 0) {
                 console.warn('⚠️ First upload - no merge needed');
-                // Still apply locked dates for first upload
-                return applyLockedDates(newItems);
+                // Still apply locked dates and deduplicate for first upload
+                return applyLockedDates(deduplicateSoldItems(newItems));
             }
             
             // Build map with existing items
@@ -848,12 +879,19 @@
             // CRITICAL: Apply locked dates AFTER merge to override everything
             mergedItems = applyLockedDates(mergedItems);
             
+            var beforeDedup = mergedItems.length;
+            // CRITICAL: Remove any duplicates that may have been created
+            mergedItems = deduplicateSoldItems(mergedItems);
+            var afterDedup = mergedItems.length;
+            var duplicatesRemoved = beforeDedup - afterDedup;
+            
             var lockedCount = Object.keys(lockedDates).length;
             
             console.log('=== MERGE COMPLETE ===');
             console.log('✓ Preserved dates:', preservedCount);
             console.log('✚ New items:', newCount);
             console.log('🔒 Locked dates enforced:', lockedCount);
+            console.log('🗑️ Duplicates removed:', duplicatesRemoved);
             
             var report = '✅ Smart Merge Complete!\n\n';
             report += '📊 Results:\n';
@@ -861,6 +899,9 @@
             report += '✚ New items: ' + newCount + ' items\n';
             if (lockedCount > 0) {
                 report += '🔒 Locked dates enforced: ' + lockedCount + ' items\n';
+            }
+            if (duplicatesRemoved > 0) {
+                report += '🗑️ Duplicates removed: ' + duplicatesRemoved + ' items\n';
             }
             report += '📦 Total: ' + mergedItems.length + ' items\n\n';
             
@@ -1708,6 +1749,31 @@
                     alert('✅ All locked dates cleared!');
                 }
             }
+        }
+        
+        function deduplicateNow() {
+            if (soldItems.length === 0) {
+                alert('No sold items to deduplicate!');
+                return;
+            }
+            
+            var beforeCount = soldItems.length;
+            soldItems = deduplicateSoldItems(soldItems);
+            var afterCount = soldItems.length;
+            var removed = beforeCount - afterCount;
+            
+            if (removed === 0) {
+                alert('✅ No duplicates found!\n\nYour sold items are already clean.');
+                return;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
+            
+            // Update dashboard
+            updateDashboard();
+            
+            alert('🗑️ Removed ' + removed + ' duplicate items!\n\nBefore: ' + beforeCount + ' items\nAfter: ' + afterCount + ' items\n\n💡 Don\'t forget to export and save to GitHub!');
         }
         
         function setupGitHubToken() {
