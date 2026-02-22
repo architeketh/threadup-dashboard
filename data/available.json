@@ -1,16 +1,23 @@
 [
   {
+    "Brand": "Coach 7042 Glove-Tanned",
+    "Description": "Talon Jumbo Zip\n Leather Clutch",
+    "Price": 95.99,
+    "Likes": 2,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Coach Vintage Companion",
     "Description": "British Tan Camera  – 1990 USA Leather Crossbody Bag",
     "Price": 238.99,
-    "Likes": 8,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
     "Brand": "Rebecca Taylor Pot",
     "Description": "Paisley Trench Coat",
     "Price": 132.99,
-    "Likes": 4,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
@@ -80,7 +87,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 59.99,
-    "Likes": 14,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
@@ -94,7 +101,7 @@
     "Brand": "Ugg Lowmel Suede",
     "Description": "Low-Top Sneaker – Tan Sneakers",
     "Price": 83.99,
-    "Likes": 22,
+    "Likes": 23,
     "Availability": "Available"
   },
   {
@@ -115,21 +122,21 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 38,
+    "Likes": 39,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Air Force",
     "Description": "1 '07 Next Nature Women's \"Pale Ivory/Apricot Agate/White/Sail\" Sneakers",
     "Price": 71.99,
-    "Likes": 12,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 71.99,
-    "Likes": 24,
+    "Likes": 25,
     "Availability": "Available"
   },
   {
