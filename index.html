@@ -512,6 +512,8 @@
                     <button class="export-btn" onclick="deduplicateNow()" style="background: #dc3545;">🗑️ Remove Duplicates</button>
                     <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
                     <button class="export-btn" onclick="viewLockedDates()" style="background: #9c27b0;">🔒 View Locked Dates</button>
+                    <button class="export-btn" onclick="exportLockedDates()" style="background: #795548;">💾 Backup Locked Dates</button>
+                    <button class="export-btn" onclick="importLockedDates()" style="background: #607d8b;">📥 Restore Locked Dates</button>
                     <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
                 </div>
                 
@@ -527,6 +529,17 @@
                         <li><strong>Share:</strong> <code>https://architeketh.github.io/threadup-dashboard/</code></li>
                         <li>Next time you upload, you'll see <strong>🔥 New Sales</strong> since last update!</li>
                     </ol>
+                    
+                    <h3 style="margin-top: 15px;">🔒 Date Protection System</h3>
+                    <p style="color: #555; margin-top: 8px; font-size: 13px;">
+                        <strong>Manual edits are PERMANENTLY PROTECTED:</strong><br>
+                        • When you edit a date in the Sold Items table, it's locked forever<br>
+                        • Locked dates NEVER change during merges - your edits are safe<br>
+                        • Click <strong>"💾 Backup Locked Dates"</strong> to save a backup file<br>
+                        • Locked dates are stored in your browser (localStorage)<br>
+                        <br>
+                        <strong>💡 Best Practice:</strong> Back up your locked dates regularly!
+                    </p>
                 </div>
                 
                 <details style="margin-top: 10px;">
@@ -1718,7 +1731,15 @@
             updateCharts();
             
             // Show confirmation
-            console.log('📝 Date edited and LOCKED:', item.Brand, '$' + item['Sold Price'], '→', newDate);
+            console.log('🔒 Date LOCKED:', item.Brand, '$' + item['Sold Price'], '→', newDate);
+            
+            // Show tooltip/feedback (first edit only)
+            var locked = getLockedDates();
+            if (Object.keys(locked).length === 1) {
+                setTimeout(function() {
+                    alert('🔒 Date Locked!\n\n' + item.Brand + ' - $' + item['Sold Price'] + '\n\nThis date is now PERMANENTLY PROTECTED:\n✅ Stored in browser localStorage\n✅ Will NEVER be overwritten by merges\n✅ Applied automatically on every upload\n\n💡 Click "💾 Backup Locked Dates" to save a backup!');
+                }, 100);
+            }
         }
         
         function viewLockedDates() {
@@ -1726,12 +1747,16 @@
             var keys = Object.keys(locked);
             
             if (keys.length === 0) {
-                alert('No locked dates yet!\n\nWhen you manually edit a date in the Sold Items table, it becomes permanently locked and can never be overwritten by merges.');
+                alert('No locked dates yet!\n\n🔒 HOW IT WORKS:\nWhen you manually edit a date in the Sold Items table, it becomes PERMANENTLY LOCKED.\n\n✅ Locked dates are:\n• Stored permanently in your browser\n• Protected from ALL future merges\n• Applied automatically on every upload\n• Backed up when you export\n\n💡 Your manual edits will NEVER be overwritten!');
                 return;
             }
             
             var message = '🔒 LOCKED DATES (' + keys.length + ' items)\n\n';
-            message += 'These dates are permanently locked and will NEVER change during merges:\n\n';
+            message += '✅ These dates are PERMANENTLY PROTECTED:\n';
+            message += '• Stored in browser localStorage\n';
+            message += '• Applied on EVERY merge/upload\n';
+            message += '• Will NEVER be overwritten\n\n';
+            message += 'Locked items:\n\n';
             
             keys.forEach(function(key) {
                 var parts = key.split('|||');
@@ -1741,14 +1766,85 @@
                 message += '• ' + brand + ' ($' + price + ') → ' + date + '\n';
             });
             
-            message += '\n💡 To unlock a date, you must clear all locked dates.';
+            message += '\n💾 TIP: Click "Backup Locked Dates" to save a backup file';
             
-            if (confirm(message + '\n\nClear ALL locked dates?')) {
-                if (confirm('⚠️ Are you sure?\n\nThis will remove ALL date locks. Next merge may overwrite your manual edits!')) {
+            alert(message);
+            
+            // Separate confirmation for clearing
+            if (confirm('Do you want to CLEAR ALL locked dates?\n\n⚠️ WARNING: This will remove all date protections!')) {
+                if (confirm('⚠️ ARE YOU ABSOLUTELY SURE?\n\nThis will:\n• Remove ALL ' + keys.length + ' locked dates\n• Allow future merges to overwrite your edits\n• This cannot be undone (unless you have a backup)\n\nClear all locked dates?')) {
                     localStorage.removeItem('threadup_locked_dates');
-                    alert('✅ All locked dates cleared!');
+                    alert('✅ All locked dates cleared!\n\n💡 Your manual edits may be overwritten on next merge.');
                 }
             }
+        }
+        
+        function exportLockedDates() {
+            var locked = getLockedDates();
+            var keys = Object.keys(locked);
+            
+            if (keys.length === 0) {
+                alert('No locked dates to backup!\n\nEdit some dates in the Sold Items table first.');
+                return;
+            }
+            
+            // Create backup file
+            var backup = {
+                exported: new Date().toISOString(),
+                count: keys.length,
+                locked_dates: locked
+            };
+            
+            var blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = 'locked-dates-backup.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            alert('💾 Locked dates backup saved!\n\n' + keys.length + ' locked dates exported\n\nKeep this file safe - you can restore it later if needed.');
+        }
+        
+        function importLockedDates() {
+            if (!confirm('Import locked dates from backup file?\n\n⚠️ This will MERGE with your current locked dates.')) {
+                return;
+            }
+            
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        var backup = JSON.parse(event.target.result);
+                        
+                        if (!backup.locked_dates) {
+                            alert('❌ Invalid backup file format!');
+                            return;
+                        }
+                        
+                        // Merge with existing locked dates
+                        var existing = getLockedDates();
+                        var merged = Object.assign({}, existing, backup.locked_dates);
+                        
+                        localStorage.setItem('threadup_locked_dates', JSON.stringify(merged));
+                        
+                        var newCount = Object.keys(backup.locked_dates).length;
+                        var totalCount = Object.keys(merged).length;
+                        
+                        alert('✅ Locked dates restored!\n\n' + newCount + ' dates from backup\n' + totalCount + ' total locked dates now\n\nYour date protections are active!');
+                    } catch (error) {
+                        alert('❌ Error reading backup file:\n' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
         }
         
         function deduplicateNow() {
