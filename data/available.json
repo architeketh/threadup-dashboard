@@ -1,5 +1,33 @@
 [
   {
+    "Brand": "Coach F13034 Leather",
+    "Description": "Satchel",
+    "Price": 94.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Dunk Low",
+    "Description": "Indigo Haze Sneakers",
+    "Price": 71.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Court Borough",
+    "Description": "Low Sneakers",
+    "Price": 48.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Nike Tech Windrunner",
+    "Description": "Fleece Jacket Jacket",
+    "Price": 71.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
@@ -17,7 +45,7 @@
     "Brand": "Coach 7042 Glove-Tanned",
     "Description": "Talon Jumbo Zip\n Leather Clutch",
     "Price": 95.99,
-    "Likes": 17,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
@@ -52,7 +80,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 44,
+    "Likes": 43,
     "Availability": "Available"
   },
   {
