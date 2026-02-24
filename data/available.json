@@ -3,21 +3,21 @@
     "Brand": "Coach F13034 Leather",
     "Description": "Satchel",
     "Price": 94.99,
-    "Likes": 1,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 1,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
@@ -38,21 +38,21 @@
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 119.99,
-    "Likes": 7,
+    "Likes": 12,
     "Availability": "Available"
   },
   {
     "Brand": "Coach 7042 Glove-Tanned",
     "Description": "Talon Jumbo Zip\n Leather Clutch",
     "Price": 95.99,
-    "Likes": 18,
+    "Likes": 22,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Vintage Companion",
     "Description": "British Tan Camera  – 1990 USA Leather Crossbody Bag",
     "Price": 238.99,
-    "Likes": 46,
+    "Likes": 49,
     "Availability": "Available"
   },
   {
@@ -80,7 +80,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 43,
+    "Likes": 44,
     "Availability": "Available"
   },
   {
@@ -122,7 +122,7 @@
     "Brand": "Cushion Aire Hip",
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 13,
+    "Likes": 14,
     "Availability": "Available"
   },
   {
@@ -143,7 +143,7 @@
     "Brand": "Ugg Lowmel Suede",
     "Description": "Low-Top Sneaker – Tan Sneakers",
     "Price": 83.99,
-    "Likes": 26,
+    "Likes": 27,
     "Availability": "Available"
   },
   {
@@ -164,7 +164,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 45,
+    "Likes": 47,
     "Availability": "Available"
   },
   {
@@ -178,14 +178,14 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 71.99,
-    "Likes": 25,
+    "Likes": 26,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Price": 106.99,
-    "Likes": 32,
+    "Likes": 33,
     "Availability": "Available"
   }
 ]
