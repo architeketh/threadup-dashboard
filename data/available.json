@@ -1,5 +1,12 @@
 [
   {
+    "Brand": "Ugg K Lo",
+    "Description": "Lowmel Ankle Boots",
+    "Price": 71.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Coach F13034 Leather",
     "Description": "Satchel",
     "Price": 94.99,
@@ -24,14 +31,14 @@
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 1,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
@@ -52,7 +59,7 @@
     "Brand": "Coach Vintage Companion",
     "Description": "British Tan Camera  – 1990 USA Leather Crossbody Bag",
     "Price": 238.99,
-    "Likes": 50,
+    "Likes": 52,
     "Availability": "Available"
   },
   {
@@ -87,7 +94,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 33,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
@@ -108,7 +115,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 23,
+    "Likes": 24,
     "Availability": "Available"
   },
   {
@@ -147,17 +154,10 @@
     "Availability": "Available"
   },
   {
-    "Brand": "Nike AF1 Air",
-    "Description": "Force 1 (GS) Sneakers",
-    "Price": 71.99,
-    "Likes": 0,
-    "Availability": "Available"
-  },
-  {
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 48,
+    "Likes": 50,
     "Availability": "Available"
   },
   {
