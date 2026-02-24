@@ -507,12 +507,12 @@
             <div style="margin-top: 15px;">
                 <div style="margin-bottom: 10px;">
                     <button class="export-btn" onclick="loadDataFromGitHub(true)" style="background: #667eea;">🔄 Reload from GitHub</button>
-                    <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export for GitHub</button>
+                    <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export to GitHub</button>
+                    <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800;">💾 Save to GitHub</button>
                     <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
                     <button class="export-btn" onclick="deduplicateNow()" style="background: #dc3545;">🗑️ Remove Duplicates</button>
                     <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
                     <button class="export-btn" onclick="viewLockedDates()" style="background: #9c27b0;">🔒 View Locked Dates</button>
-                    <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800; display: none;" id="saveBtn">💾 Save Changes to GitHub</button>
                 </div>
                 
                 <div class="info-box" id="shareInstructions" style="display: none;">
@@ -520,7 +520,7 @@
                     <ol>
                         <li>Upload your data files (sold + available items)</li>
                         <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
-                        <li>Click <strong>"📤 Export for GitHub"</strong> - downloads <code>sold.json</code>, <code>available.json</code>, and <code>locked-dates.json</code></li>
+                        <li>Click <strong>"📤 Export to GitHub"</strong> - downloads <code>sold.json</code>, <code>available.json</code>, and <code>locked-dates.json</code></li>
                         <li>In your repo, go to <code>data/</code> folder on GitHub</li>
                         <li>Click "Upload files" and add ALL JSON files (including locked-dates.json)</li>
                         <li>Commit changes</li>
@@ -532,7 +532,7 @@
                     <p style="color: #555; margin-top: 8px; font-size: 13px;">
                         <strong>Manual edits are PERMANENTLY PROTECTED and synced via GitHub:</strong><br>
                         • When you edit a date in the Sold Items table, it's locked forever<br>
-                        • Click <strong>"💾 Save Changes to GitHub"</strong> to sync locked dates<br>
+                        • Click <strong>"💾 Save to GitHub"</strong> to sync locked dates<br>
                         • Locked dates automatically load from GitHub on any device<br>
                         • Your edits work across ALL browsers and devices!<br>
                         <br>
@@ -1732,9 +1732,6 @@
             // LOCK this date permanently
             setLockedDate(item.Brand, item['Sold Price'], newDate);
             
-            // Show save button
-            document.getElementById('saveBtn').style.display = 'inline-block';
-            
             // Update localStorage
             localStorage.setItem('threadup_sold', JSON.stringify(soldItems));
             
@@ -1748,7 +1745,7 @@
             var locked = getLockedDates();
             if (Object.keys(locked).length === 1) {
                 setTimeout(function() {
-                    alert('🔒 Date Locked!\n\n' + item.Brand + ' - $' + item['Sold Price'] + '\n\nThis date is now PERMANENTLY PROTECTED:\n✅ Stored in browser + GitHub\n✅ Will NEVER be overwritten by merges\n✅ Applied automatically on every upload\n✅ Synced across all devices\n\n💡 Click "💾 Save Changes to GitHub" to sync now!');
+                    alert('🔒 Date Locked!\n\n' + item.Brand + ' - $' + item['Sold Price'] + '\n\nThis date is now PERMANENTLY PROTECTED:\n✅ Stored in browser + GitHub\n✅ Will NEVER be overwritten by merges\n✅ Applied automatically on every upload\n✅ Synced across all devices\n\n💡 Click "💾 Save to GitHub" to sync now!');
                 }, 100);
             }
         }
@@ -1778,7 +1775,7 @@
                 message += '• ' + brand + ' ($' + price + ') → ' + date + '\n';
             });
             
-            message += '\n💾 TIP: Click "📤 Export for GitHub" or "💾 Save Changes" to sync';
+            message += '\n💾 TIP: Click "📤 Export to GitHub" or "💾 Save to GitHub" to sync';
             
             alert(message);
             
@@ -1929,7 +1926,8 @@
                 return;
             }
             
-            var saveBtn = document.getElementById('saveBtn');
+            var saveBtn = document.querySelector('button[onclick="saveChangesToGitHub()"]');
+            var originalText = saveBtn.textContent;
             saveBtn.textContent = '⏳ Saving...';
             saveBtn.disabled = true;
             
@@ -2015,8 +2013,7 @@
                 inputs.forEach(function(inp) { inp.classList.remove('modified'); });
                 
                 setTimeout(function() {
-                    saveBtn.style.display = 'none';
-                    saveBtn.textContent = '💾 Save Changes to GitHub';
+                    saveBtn.textContent = originalText;
                     saveBtn.style.background = '#ff9800';
                     saveBtn.disabled = false;
                 }, 3000);
@@ -2025,7 +2022,7 @@
                 alert('✅ Saved to GitHub!\n\n✓ sold.json\n🔒 locked-dates.json (' + lockedCount + ' locked dates)\n\nYour dashboard will update everywhere in 1-2 minutes.');
             } catch (error) {
                 alert('❌ Failed to save to GitHub\n\nError: ' + error.message);
-                saveBtn.textContent = '💾 Save Changes to GitHub';
+                saveBtn.textContent = originalText;
                 saveBtn.disabled = false;
             }
         }
