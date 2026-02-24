@@ -17,7 +17,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 3,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
@@ -45,7 +45,7 @@
     "Brand": "Coach 7042 Glove-Tanned",
     "Description": "Talon Jumbo Zip\n Leather Clutch",
     "Price": 95.99,
-    "Likes": 22,
+    "Likes": 23,
     "Availability": "Available"
   },
   {
@@ -73,7 +73,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 35,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
@@ -129,7 +129,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 59.99,
-    "Likes": 16,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
@@ -137,13 +137,6 @@
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
     "Likes": 17,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Ugg Lowmel Suede",
-    "Description": "Low-Top Sneaker – Tan Sneakers",
-    "Price": 83.99,
-    "Likes": 27,
     "Availability": "Available"
   },
   {
@@ -157,7 +150,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 (GS) Sneakers",
     "Price": 71.99,
-    "Likes": 43,
+    "Likes": 44,
     "Availability": "Available"
   },
   {
@@ -185,7 +178,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Price": 106.99,
-    "Likes": 33,
+    "Likes": 34,
     "Availability": "Available"
   }
 ]
