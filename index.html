@@ -507,9 +507,8 @@
             <div style="margin-top: 15px;">
                 <div style="margin-bottom: 10px;">
                     <button class="export-btn" onclick="loadDataFromGitHub(true)" style="background: #667eea;">🔄 Reload from GitHub</button>
-                    <button class="export-btn" onclick="exportForGitHub()" style="background: #17a2b8;">📤 Export to GitHub</button>
-                    <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #ff9800;">💾 Save to GitHub</button>
-                    <button class="export-btn" onclick="resetTrackingStats()" style="background: #28a745;">✓ Mark as Updated</button>
+                    <button class="export-btn" onclick="saveChangesToGitHub()" style="background: #28a745;">💾 Save to GitHub</button>
+                    <button class="export-btn" onclick="resetTrackingStats()" style="background: #ffc107;">✓ Mark as Updated</button>
                     <button class="export-btn" onclick="deduplicateNow()" style="background: #dc3545;">🗑️ Remove Duplicates</button>
                     <button class="export-btn" onclick="setupGitHubToken()" style="background: #6c757d;">🔑 Setup GitHub Token</button>
                     <button class="export-btn" onclick="viewLockedDates()" style="background: #9c27b0;">🔒 View Locked Dates</button>
@@ -519,27 +518,25 @@
                     <h3>📤 How to Share & Track Sales</h3>
                     <ol>
                         <li>Upload your data files (sold + available items)</li>
-                        <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
-                        <li>Click <strong>"📤 Export to GitHub"</strong> - downloads <code>sold.json</code>, <code>available.json</code>, and <code>locked-dates.json</code></li>
-                        <li>In your repo, go to <code>data/</code> folder on GitHub</li>
-                        <li>Click "Upload files" and add ALL JSON files (including locked-dates.json)</li>
-                        <li>Commit changes</li>
+                        <li>Click <strong>"🔑 Setup GitHub Token"</strong> (one-time setup)</li>
+                        <li>Click <strong>"💾 Save to GitHub"</strong> - automatically uploads all files</li>
                         <li><strong>Share:</strong> <code>https://architeketh.github.io/threadup-dashboard/</code></li>
+                        <li>Click <strong>"✓ Mark as Updated"</strong> to start tracking new sales</li>
                         <li>Next time you upload, you'll see <strong>🔥 New Sales</strong> since last update!</li>
                     </ol>
                     
                     <h3 style="margin-top: 15px;">🔒 Date Protection System</h3>
                     <p style="color: #555; margin-top: 8px; font-size: 13px;">
                         <strong>Manual edits are PERMANENTLY PROTECTED and synced via GitHub:</strong><br>
-                        • When you edit a date in the Sold Items table, it's locked forever<br>
-                        • Click <strong>"💾 Save to GitHub"</strong> to sync locked dates<br>
+                        • Edit any date in the Sold Items table → it's locked forever<br>
+                        • Click <strong>"💾 Save to GitHub"</strong> to sync everything<br>
                         • Locked dates automatically load from GitHub on any device<br>
                         • Your edits work across ALL browsers and devices!<br>
                         <br>
                         <strong>💡 How it works:</strong><br>
-                        1. Edit a date → it's locked in browser + <code>locked-dates.json</code><br>
-                        2. Export or Save to GitHub → locked dates sync<br>
-                        3. Access from any device → locked dates auto-load<br>
+                        1. Edit a date → locked in browser + <code>locked-dates.json</code><br>
+                        2. Save to GitHub → all data synced (sold, available, locked dates)<br>
+                        3. Access from any device → everything auto-loads<br>
                         4. Future merges NEVER overwrite your locked dates
                     </p>
                 </div>
@@ -1775,7 +1772,7 @@
                 message += '• ' + brand + ' ($' + price + ') → ' + date + '\n';
             });
             
-            message += '\n💾 TIP: Click "📤 Export to GitHub" or "💾 Save to GitHub" to sync';
+            message += '\n💾 TIP: Click "💾 Save to GitHub" to sync all changes';
             
             alert(message);
             
@@ -1783,7 +1780,7 @@
             if (confirm('Do you want to CLEAR ALL locked dates?\n\n⚠️ WARNING: This will remove all date protections!')) {
                 if (confirm('⚠️ ARE YOU ABSOLUTELY SURE?\n\nThis will:\n• Remove ALL ' + keys.length + ' locked dates\n• Allow future merges to overwrite your edits\n• This cannot be undone\n\nClear all locked dates?')) {
                     localStorage.removeItem('threadup_locked_dates');
-                    alert('✅ All locked dates cleared!\n\n💡 Remember to save/export to GitHub to sync this change.');
+                    alert('✅ All locked dates cleared!\n\n💡 Remember to click "💾 Save to GitHub" to sync this change.');
                 }
             }
         }
@@ -1878,7 +1875,7 @@
             // Update dashboard
             updateDashboard();
             
-            alert('🗑️ Removed ' + removed + ' duplicate items!\n\nBefore: ' + beforeCount + ' items\nAfter: ' + afterCount + ' items\n\n💡 Don\'t forget to export and save to GitHub!');
+            alert('🗑️ Removed ' + removed + ' duplicate items!\n\nBefore: ' + beforeCount + ' items\nAfter: ' + afterCount + ' items\n\n💡 Don\'t forget to click "💾 Save to GitHub"!');
         }
         
         function setupGitHubToken() {
@@ -1922,7 +1919,7 @@
                 return;
             }
             
-            if (!confirm('Save changes to GitHub?\n\nThis will update:\n• sold.json\n• locked-dates.json\n\nYour dashboard will update everywhere.')) {
+            if (!confirm('Save all data to GitHub?\n\nThis will update:\n• sold.json\n• available.json\n• locked-dates.json\n\nYour dashboard will update everywhere.')) {
                 return;
             }
             
@@ -1935,35 +1932,65 @@
                 var REPO = 'architeketh/threadup-dashboard';
                 
                 // Save sold.json
-                var soldUrl = 'https://api.github.com/repos/' + REPO + '/contents/data/sold.json';
-                
-                // Get current file SHA
-                var getSoldSHA = await fetch(soldUrl, {
-                    headers: { 'Authorization': 'token ' + TOKEN }
-                });
-                
-                var soldSha = null;
-                if (getSoldSHA.ok) {
-                    var soldData = await getSoldSHA.json();
-                    soldSha = soldData.sha;
+                if (soldItems.length > 0) {
+                    var soldUrl = 'https://api.github.com/repos/' + REPO + '/contents/data/sold.json';
+                    var getSoldSHA = await fetch(soldUrl, {
+                        headers: { 'Authorization': 'token ' + TOKEN }
+                    });
+                    
+                    var soldSha = null;
+                    if (getSoldSHA.ok) {
+                        var soldData = await getSoldSHA.json();
+                        soldSha = soldData.sha;
+                    }
+                    
+                    var soldResponse = await fetch(soldUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': 'token ' + TOKEN,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: 'Update sold items',
+                            content: btoa(unescape(encodeURIComponent(JSON.stringify(soldItems, null, 2)))),
+                            sha: soldSha
+                        })
+                    });
+                    
+                    if (!soldResponse.ok) {
+                        throw new Error('Failed to save sold.json');
+                    }
                 }
                 
-                // Upload sold.json
-                var soldResponse = await fetch(soldUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'token ' + TOKEN,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: 'Update sold items',
-                        content: btoa(unescape(encodeURIComponent(JSON.stringify(soldItems, null, 2)))),
-                        sha: soldSha
-                    })
-                });
-                
-                if (!soldResponse.ok) {
-                    throw new Error('Failed to save sold.json');
+                // Save available.json
+                if (availableItems.length > 0) {
+                    var availableUrl = 'https://api.github.com/repos/' + REPO + '/contents/data/available.json';
+                    var getAvailableSHA = await fetch(availableUrl, {
+                        headers: { 'Authorization': 'token ' + TOKEN }
+                    });
+                    
+                    var availableSha = null;
+                    if (getAvailableSHA.ok) {
+                        var availableData = await getAvailableSHA.json();
+                        availableSha = availableData.sha;
+                    }
+                    
+                    var availableResponse = await fetch(availableUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': 'token ' + TOKEN,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: 'Update available items',
+                            content: btoa(unescape(encodeURIComponent(JSON.stringify(availableItems, null, 2)))),
+                            sha: availableSha
+                        })
+                    });
+                    
+                    if (!availableResponse.ok) {
+                        throw new Error('Failed to save available.json');
+                    }
                 }
                 
                 // Save locked-dates.json
@@ -2014,15 +2041,21 @@
                 
                 setTimeout(function() {
                     saveBtn.textContent = originalText;
-                    saveBtn.style.background = '#ff9800';
+                    saveBtn.style.background = '#28a745';
                     saveBtn.disabled = false;
                 }, 3000);
                 
                 var lockedCount = Object.keys(locked).length;
-                alert('✅ Saved to GitHub!\n\n✓ sold.json\n🔒 locked-dates.json (' + lockedCount + ' locked dates)\n\nYour dashboard will update everywhere in 1-2 minutes.');
+                var message = '✅ Saved to GitHub!\n\n';
+                if (soldItems.length > 0) message += '✓ sold.json (' + soldItems.length + ' items)\n';
+                if (availableItems.length > 0) message += '✓ available.json (' + availableItems.length + ' items)\n';
+                if (lockedCount > 0) message += '🔒 locked-dates.json (' + lockedCount + ' locked dates)\n';
+                message += '\nYour dashboard will update everywhere in 1-2 minutes.';
+                alert(message);
             } catch (error) {
                 alert('❌ Failed to save to GitHub\n\nError: ' + error.message);
                 saveBtn.textContent = originalText;
+                saveBtn.style.background = '#28a745';
                 saveBtn.disabled = false;
             }
         }
