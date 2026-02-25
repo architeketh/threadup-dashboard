@@ -10,7 +10,7 @@
     "Brand": "Coach F13034 Leather",
     "Description": "Satchel",
     "Price": 94.99,
-    "Likes": 3,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
@@ -24,14 +24,14 @@
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 5,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 3,
+    "Likes": 7,
     "Availability": "Available"
   },
   {
@@ -45,7 +45,7 @@
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 119.99,
-    "Likes": 12,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
@@ -59,7 +59,7 @@
     "Brand": "Coach Vintage Companion",
     "Description": "British Tan Camera  – 1990 USA Leather Crossbody Bag",
     "Price": 238.99,
-    "Likes": 52,
+    "Likes": 56,
     "Availability": "Available"
   },
   {
@@ -87,7 +87,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 44,
+    "Likes": 45,
     "Availability": "Available"
   },
   {
@@ -102,13 +102,6 @@
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
     "Likes": 8,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Cushion Aire Hip",
-    "Description": "Cozy Ankle Boots",
-    "Price": 36.99,
-    "Likes": 29,
     "Availability": "Available"
   },
   {
@@ -136,7 +129,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 59.99,
-    "Likes": 15,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
@@ -157,7 +150,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 50,
+    "Likes": 49,
     "Availability": "Available"
   },
   {
