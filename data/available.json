@@ -10,21 +10,21 @@
     "Brand": "Coach F13034 Leather",
     "Description": "Satchel",
     "Price": 94.99,
-    "Likes": 16,
+    "Likes": 20,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 3,
+    "Likes": 4,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 12,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
@@ -45,7 +45,7 @@
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 119.99,
-    "Likes": 17,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
@@ -59,7 +59,7 @@
     "Brand": "Coach Vintage Companion",
     "Description": "British Tan Camera  – 1990 USA Leather Crossbody Bag",
     "Price": 238.99,
-    "Likes": 56,
+    "Likes": 60,
     "Availability": "Available"
   },
   {
@@ -80,7 +80,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 35,
+    "Likes": 36,
     "Availability": "Available"
   },
   {
@@ -94,14 +94,14 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 33,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AM1 Air",
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
-    "Likes": 8,
+    "Likes": 9,
     "Availability": "Available"
   },
   {
@@ -115,7 +115,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Boots",
     "Price": 36.99,
-    "Likes": 7,
+    "Likes": 8,
     "Availability": "Available"
   },
   {
