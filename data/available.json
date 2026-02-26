@@ -1,9 +1,30 @@
 [
   {
+    "Brand": "Sanrio Wallet",
+    "Description": "",
+    "Price": 11.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Hello Kitty Wallet",
+    "Description": "",
+    "Price": 24.99,
+    "Likes": 3,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Lululemon Lab Everywhere",
+    "Description": "Belt Bag Belt Bag",
+    "Price": 48.99,
+    "Likes": 2,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
     "Price": 59.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
@@ -87,7 +108,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 36,
+    "Likes": 35,
     "Availability": "Available"
   },
   {
