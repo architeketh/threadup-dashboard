@@ -1,9 +1,23 @@
 [
   {
+    "Brand": "Coach Signature Jacquard",
+    "Description": "Buckle Flap Wallet",
+    "Price": 59.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Coach Leather Coin",
+    "Description": "Purse",
+    "Price": 24.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Ugg K Lo",
     "Description": "Lowmel Ankle Boots",
     "Price": 71.99,
-    "Likes": 6,
+    "Likes": 9,
     "Availability": "Available"
   },
   {
@@ -17,14 +31,14 @@
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 15,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 9,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
@@ -52,7 +66,7 @@
     "Brand": "Coach Vintage Companion",
     "Description": "British Tan Camera  – 1990 USA Leather Crossbody Bag",
     "Price": 238.99,
-    "Likes": 60,
+    "Likes": 63,
     "Availability": "Available"
   },
   {
@@ -87,7 +101,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 34,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
@@ -101,7 +115,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 25,
+    "Likes": 26,
     "Availability": "Available"
   },
   {
@@ -122,7 +136,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 59.99,
-    "Likes": 16,
+    "Likes": 17,
     "Availability": "Available"
   },
   {
@@ -143,7 +157,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 50,
+    "Likes": 51,
     "Availability": "Available"
   },
   {
