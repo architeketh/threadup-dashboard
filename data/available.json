@@ -3,21 +3,14 @@
     "Brand": "Ugg K Lo",
     "Description": "Lowmel Ankle Boots",
     "Price": 71.99,
-    "Likes": 3,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Coach F13034 Leather",
-    "Description": "Satchel",
-    "Price": 94.99,
-    "Likes": 20,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 4,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
@@ -108,7 +101,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 24,
+    "Likes": 25,
     "Availability": "Available"
   },
   {
