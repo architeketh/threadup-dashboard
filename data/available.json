@@ -3,49 +3,42 @@
     "Brand": "Sanrio Wallet",
     "Description": "",
     "Price": 11.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
     "Brand": "Hello Kitty Wallet",
     "Description": "",
     "Price": 24.99,
-    "Likes": 3,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Lab Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 2,
+    "Likes": 4,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
     "Price": 59.99,
-    "Likes": 2,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Coach Leather Coin",
-    "Description": "Purse",
-    "Price": 24.99,
-    "Likes": 1,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
     "Brand": "Ugg K Lo",
     "Description": "Lowmel Ankle Boots",
     "Price": 71.99,
-    "Likes": 9,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 5,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
@@ -77,24 +70,10 @@
     "Availability": "Available"
   },
   {
-    "Brand": "Coach 7042 Glove-Tanned",
-    "Description": "Talon Jumbo Zip\n Leather Clutch",
-    "Price": 95.99,
-    "Likes": 24,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Coach Vintage Companion",
-    "Description": "British Tan Camera  – 1990 USA Leather Crossbody Bag",
-    "Price": 238.99,
-    "Likes": 63,
-    "Availability": "Available"
-  },
-  {
     "Brand": "Rebecca Taylor Pot",
     "Description": "Paisley Trench Coat",
     "Price": 132.99,
-    "Likes": 8,
+    "Likes": 9,
     "Availability": "Available"
   },
   {
@@ -115,21 +94,21 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 47,
+    "Likes": 46,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 33,
+    "Likes": 32,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AM1 Air",
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
-    "Likes": 9,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
@@ -192,7 +171,7 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 71.99,
-    "Likes": 27,
+    "Likes": 28,
     "Availability": "Available"
   },
   {
