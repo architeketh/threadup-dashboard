@@ -3,49 +3,49 @@
     "Brand": "Sanrio Wallet",
     "Description": "",
     "Price": 11.99,
-    "Likes": 2,
+    "Likes": 14,
     "Availability": "Available"
   },
   {
     "Brand": "Hello Kitty Wallet",
     "Description": "",
     "Price": 24.99,
-    "Likes": 5,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Lab Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 4,
+    "Likes": 7,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
     "Price": 59.99,
-    "Likes": 3,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Ugg K Lo",
     "Description": "Lowmel Ankle Boots",
     "Price": 71.99,
-    "Likes": 10,
+    "Likes": 14,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 6,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 16,
+    "Likes": 22,
     "Availability": "Available"
   },
   {
@@ -59,63 +59,63 @@
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
-    "Likes": 4,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 119.99,
-    "Likes": 18,
+    "Likes": 19,
     "Availability": "Available"
   },
   {
     "Brand": "Rebecca Taylor Pot",
     "Description": "Paisley Trench Coat",
     "Price": 132.99,
-    "Likes": 9,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Air Max",
     "Description": "Plus “Light Bone / Sail” Running  Sneakers",
     "Price": 95.99,
-    "Likes": 3,
+    "Likes": 4,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 35,
+    "Likes": 37,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 46,
+    "Likes": 47,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 32,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AM1 Air",
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
-    "Likes": 10,
+    "Likes": 11,
     "Availability": "Available"
   },
   {
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 26,
+    "Likes": 27,
     "Availability": "Available"
   },
   {
@@ -136,42 +136,35 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 59.99,
-    "Likes": 17,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 17,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Adidas Tyshawn Low",
-    "Description": "Suede Skate Sneaker – Maroon\n Sneakers",
-    "Price": 71.99,
-    "Likes": 7,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 51,
+    "Likes": 52,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Air Force",
     "Description": "1 '07 Next Nature Women's \"Pale Ivory/Apricot Agate/White/Sail\" Sneakers",
     "Price": 71.99,
-    "Likes": 14,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 71.99,
-    "Likes": 28,
+    "Likes": 29,
     "Availability": "Available"
   },
   {
