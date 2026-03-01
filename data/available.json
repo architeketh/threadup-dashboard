@@ -1,23 +1,30 @@
 [
   {
+    "Brand": "Juicy Couture Shoulder",
+    "Description": "Bag",
+    "Price": 48.99,
+    "Likes": 2,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Sanrio Wallet",
     "Description": "",
     "Price": 11.99,
-    "Likes": 14,
+    "Likes": 17,
     "Availability": "Available"
   },
   {
     "Brand": "Hello Kitty Wallet",
     "Description": "",
     "Price": 24.99,
-    "Likes": 16,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Lab Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 7,
+    "Likes": 9,
     "Availability": "Available"
   },
   {
@@ -38,7 +45,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 10,
+    "Likes": 11,
     "Availability": "Available"
   },
   {
@@ -66,7 +73,7 @@
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 119.99,
-    "Likes": 19,
+    "Likes": 21,
     "Availability": "Available"
   },
   {
@@ -87,7 +94,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 37,
+    "Likes": 38,
     "Availability": "Available"
   },
   {
@@ -115,7 +122,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 27,
+    "Likes": 28,
     "Availability": "Available"
   },
   {
@@ -129,7 +136,7 @@
     "Brand": "Cushion Aire Hip",
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 14,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
@@ -150,7 +157,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 52,
+    "Likes": 51,
     "Availability": "Available"
   },
   {
