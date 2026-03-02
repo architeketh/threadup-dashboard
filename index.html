@@ -1150,9 +1150,17 @@
             
             // Sort by date
             var sortedDates = Object.keys(salesByDate).sort();
-            var labels = sortedDates.map(function(date) {
-                var d = new Date(date);
-                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            var labels = sortedDates.map(function(dateStr) {
+                // Parse date directly from YYYY-MM-DD to avoid timezone issues
+                var parts = dateStr.split('-');
+                if (parts.length === 3) {
+                    var year = parseInt(parts[0], 10);
+                    var month = parseInt(parts[1], 10) - 1;
+                    var day = parseInt(parts[2], 10);
+                    var d = new Date(year, month, day);
+                    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                }
+                return dateStr;
             });
             var counts = sortedDates.map(function(date) { return salesByDate[date].count; });
             var revenues = sortedDates.map(function(date) { return salesByDate[date].revenue; });
@@ -1374,23 +1382,24 @@
                 if (!dateStr || dateStr === 'Unknown' || dateStr === 'Unknown Date') return;
                 
                 try {
-                    var date = new Date(dateStr);
-                    // Validate that the date is valid
-                    if (isNaN(date.getTime())) {
-                        console.warn('Invalid date:', dateStr, 'for item:', item.Brand);
-                        return;
+                    // Parse date directly from YYYY-MM-DD format to avoid timezone issues
+                    var parts = dateStr.split('-');
+                    if (parts.length === 3) {
+                        var year = parts[0];
+                        var month = parts[1];  // Already zero-padded (01, 02, etc.)
+                        var monthKey = year + '-' + month;
+                        var revenue = parseFloat(item['Sold Price']) || 0;
+                        
+                        if (!revenueByMonth[monthKey]) {
+                            revenueByMonth[monthKey] = { revenue: 0, count: 0 };
+                        }
+                        revenueByMonth[monthKey].revenue += revenue;
+                        revenueByMonth[monthKey].count++;
+                        
+                        console.log('Added to chart:', item.Brand, '$' + revenue, 'Date:', dateStr, 'Month:', monthKey);
+                    } else {
+                        console.warn('Invalid date format:', dateStr, 'for item:', item.Brand);
                     }
-                    
-                    var monthKey = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
-                    var revenue = parseFloat(item['Sold Price']) || 0;
-                    
-                    if (!revenueByMonth[monthKey]) {
-                        revenueByMonth[monthKey] = { revenue: 0, count: 0 };
-                    }
-                    revenueByMonth[monthKey].revenue += revenue;
-                    revenueByMonth[monthKey].count++;
-                    
-                    console.log('Added to chart:', item.Brand, '$' + revenue, 'Date:', dateStr, 'Month:', monthKey);
                 } catch(e) {
                     console.error('Error parsing date:', dateStr, e);
                 }
@@ -1401,10 +1410,12 @@
             var sortedMonths = Object.keys(revenueByMonth).sort();
             var labels = sortedMonths.map(function(monthKey) {
                 var parts = monthKey.split('-');
-                var date = new Date(parts[0], parts[1] - 1, 1);
-                var month = date.toLocaleDateString('en-US', { month: 'short' });
-                var year = date.getFullYear().toString().slice(-2);
-                return month + " '" + year;
+                var year = parts[0];
+                var month = parseInt(parts[1], 10);
+                var date = new Date(year, month - 1, 1);
+                var monthName = date.toLocaleDateString('en-US', { month: 'short' });
+                var yearShort = year.toString().slice(-2);
+                return monthName + " '" + yearShort;
             });
             var revenues = sortedMonths.map(function(monthKey) {
                 return revenueByMonth[monthKey].revenue;
