@@ -3,21 +3,14 @@
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 34,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Hello Kitty Wallet",
-    "Description": "",
-    "Price": 24.99,
-    "Likes": 29,
+    "Likes": 40,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Lab Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 10,
+    "Likes": 11,
     "Availability": "Available"
   },
   {
@@ -45,14 +38,14 @@
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 27,
+    "Likes": 28,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 12,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
@@ -143,14 +136,14 @@
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 16,
+    "Likes": 17,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 59,
+    "Likes": 60,
     "Availability": "Available"
   },
   {
@@ -164,14 +157,14 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 71.99,
-    "Likes": 32,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Price": 106.99,
-    "Likes": 35,
+    "Likes": 36,
     "Availability": "Available"
   }
 ]
