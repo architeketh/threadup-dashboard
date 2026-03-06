@@ -3,14 +3,14 @@
     "Brand": "Adidas Samba OG",
     "Description": "Sneakers",
     "Price": 95.99,
-    "Likes": 2,
+    "Likes": 7,
     "Availability": "Available"
   },
   {
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 46,
+    "Likes": 51,
     "Availability": "Available"
   },
   {
@@ -24,7 +24,7 @@
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
     "Price": 59.99,
-    "Likes": 9,
+    "Likes": 11,
     "Availability": "Available"
   },
   {
@@ -45,14 +45,14 @@
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 31,
+    "Likes": 32,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 14,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
@@ -101,7 +101,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 36,
+    "Likes": 35,
     "Availability": "Available"
   },
   {
@@ -122,7 +122,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Boots",
     "Price": 36.99,
-    "Likes": 8,
+    "Likes": 7,
     "Availability": "Available"
   },
   {
@@ -150,21 +150,21 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 61,
+    "Likes": 60,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Air Force",
     "Description": "1 '07 Next Nature Women's \"Pale Ivory/Apricot Agate/White/Sail\" Sneakers",
     "Price": 71.99,
-    "Likes": 15,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 71.99,
-    "Likes": 37,
+    "Likes": 38,
     "Availability": "Available"
   },
   {
