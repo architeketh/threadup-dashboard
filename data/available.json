@@ -1,37 +1,44 @@
 [
   {
+    "Brand": "Adidas Samba OG",
+    "Description": "Sneakers",
+    "Price": 95.99,
+    "Likes": 2,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 42,
+    "Likes": 46,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Lab Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 11,
+    "Likes": 12,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
     "Price": 59.99,
-    "Likes": 8,
+    "Likes": 9,
     "Availability": "Available"
   },
   {
     "Brand": "Ugg K Lo",
     "Description": "Lowmel Ankle Boots",
     "Price": 71.99,
-    "Likes": 16,
+    "Likes": 17,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 13,
+    "Likes": 14,
     "Availability": "Available"
   },
   {
@@ -66,7 +73,7 @@
     "Brand": "Rebecca Taylor Pot",
     "Description": "Paisley Trench Coat",
     "Price": 131.99,
-    "Likes": 14,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
@@ -80,7 +87,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 39,
+    "Likes": 40,
     "Availability": "Available"
   },
   {
@@ -108,7 +115,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 27,
+    "Likes": 28,
     "Availability": "Available"
   },
   {
@@ -143,7 +150,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 60,
+    "Likes": 61,
     "Availability": "Available"
   },
   {
@@ -164,7 +171,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Price": 106.99,
-    "Likes": 36,
+    "Likes": 37,
     "Availability": "Available"
   }
 ]
