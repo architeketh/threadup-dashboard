@@ -3,28 +3,28 @@
     "Brand": "Adidas Samba OG",
     "Description": "Sneakers",
     "Price": 95.99,
-    "Likes": 7,
+    "Likes": 19,
     "Availability": "Available"
   },
   {
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 51,
+    "Likes": 52,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Lab Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 12,
+    "Likes": 11,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
-    "Price": 59.99,
-    "Likes": 11,
+    "Price": 48.99,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
@@ -38,14 +38,14 @@
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 14,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 32,
+    "Likes": 35,
     "Availability": "Available"
   },
   {
@@ -65,7 +65,7 @@
   {
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
-    "Price": 119.99,
+    "Price": 106.99,
     "Likes": 27,
     "Availability": "Available"
   },
@@ -87,21 +87,21 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 40,
+    "Likes": 42,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 50,
+    "Likes": 53,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 35,
+    "Likes": 38,
     "Availability": "Available"
   },
   {
@@ -129,28 +129,28 @@
     "Brand": "Cushion Aire Hip",
     "Description": "Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 17,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 59.99,
-    "Likes": 19,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 18,
+    "Likes": 19,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 60,
+    "Likes": 63,
     "Availability": "Available"
   },
   {
@@ -171,7 +171,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Price": 106.99,
-    "Likes": 37,
+    "Likes": 36,
     "Availability": "Available"
   }
 ]
