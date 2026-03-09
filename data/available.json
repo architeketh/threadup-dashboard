@@ -3,14 +3,14 @@
     "Brand": "Adidas Samba OG",
     "Description": "Sneakers",
     "Price": 95.99,
-    "Likes": 27,
+    "Likes": 29,
     "Availability": "Available"
   },
   {
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 61,
+    "Likes": 62,
     "Availability": "Available"
   },
   {
@@ -24,28 +24,28 @@
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
     "Price": 48.99,
-    "Likes": 15,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
     "Brand": "Ugg K Lo",
     "Description": "Lowmel Ankle Boots",
     "Price": 71.99,
-    "Likes": 17,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 17,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 43,
+    "Likes": 45,
     "Availability": "Available"
   },
   {
@@ -66,14 +66,14 @@
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 106.99,
-    "Likes": 28,
+    "Likes": 29,
     "Availability": "Available"
   },
   {
     "Brand": "Rebecca Taylor Pot",
     "Description": "Paisley Trench Coat",
     "Price": 131.99,
-    "Likes": 17,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
@@ -87,14 +87,14 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 61.99,
-    "Likes": 43,
+    "Likes": 42,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 56,
+    "Likes": 55,
     "Availability": "Available"
   },
   {
@@ -136,7 +136,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 59.99,
-    "Likes": 19,
+    "Likes": 20,
     "Availability": "Available"
   },
   {
@@ -150,7 +150,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 66,
+    "Likes": 0,
     "Availability": "Available"
   },
   {
@@ -171,7 +171,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Price": 106.99,
-    "Likes": 36,
+    "Likes": 35,
     "Availability": "Available"
   }
 ]
