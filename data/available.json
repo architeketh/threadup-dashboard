@@ -3,14 +3,14 @@
     "Brand": "Adidas Samba OG",
     "Description": "Sneakers",
     "Price": 95.99,
-    "Likes": 33,
+    "Likes": 32,
     "Availability": "Available"
   },
   {
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 70,
+    "Likes": 71,
     "Availability": "Available"
   },
   {
@@ -38,7 +38,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 20,
+    "Likes": 21,
     "Availability": "Available"
   },
   {
@@ -66,7 +66,7 @@
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 106.99,
-    "Likes": 29,
+    "Likes": 30,
     "Availability": "Available"
   },
   {
@@ -94,7 +94,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 57,
+    "Likes": 58,
     "Availability": "Available"
   },
   {
@@ -115,7 +115,7 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 30,
+    "Likes": 31,
     "Availability": "Available"
   },
   {
@@ -143,14 +143,14 @@
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 19,
+    "Likes": 20,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 67,
+    "Likes": 68,
     "Availability": "Available"
   },
   {
@@ -164,14 +164,14 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 71.99,
-    "Likes": 40,
+    "Likes": 41,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Price": 106.99,
-    "Likes": 35,
+    "Likes": 36,
     "Availability": "Available"
   }
 ]
