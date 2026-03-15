@@ -3,28 +3,28 @@
     "Brand": "Adidas Samba OG",
     "Description": "Sneakers",
     "Price": 95.99,
-    "Likes": 39,
+    "Likes": 44,
     "Availability": "Available"
   },
   {
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 77,
+    "Likes": 80,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Lab Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 14,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
     "Price": 48.99,
-    "Likes": 22,
+    "Likes": 23,
     "Availability": "Available"
   },
   {
@@ -52,35 +52,35 @@
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 16,
+    "Likes": 17,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
-    "Likes": 8,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 106.99,
-    "Likes": 31,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
     "Brand": "Rebecca Taylor Pot",
     "Description": "Paisley Trench Coat",
     "Price": 131.99,
-    "Likes": 16,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Air Max",
     "Description": "Plus “Light Bone / Sail” Running  Sneakers",
     "Price": 95.99,
-    "Likes": 9,
+    "Likes": 10,
     "Availability": "Available"
   },
   {
@@ -101,21 +101,21 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 47,
+    "Likes": 49,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AM1 Air",
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
-    "Likes": 13,
+    "Likes": 14,
     "Availability": "Available"
   },
   {
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 36.99,
-    "Likes": 33,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
@@ -126,31 +126,24 @@
     "Availability": "Available"
   },
   {
-    "Brand": "Cushion Aire Hip",
-    "Description": "Cozy Ankle Boots",
-    "Price": 36.99,
-    "Likes": 22,
-    "Availability": "Available"
-  },
-  {
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Price": 59.99,
-    "Likes": 22,
+    "Likes": 23,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 23,
+    "Likes": 24,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 72,
+    "Likes": 75,
     "Availability": "Available"
   },
   {
@@ -164,14 +157,7 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 71.99,
-    "Likes": 46,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Nike Dunk Low",
-    "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
-    "Price": 106.99,
-    "Likes": 38,
+    "Likes": 48,
     "Availability": "Available"
   }
 ]
