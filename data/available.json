@@ -1,12 +1,5 @@
 [
   {
-    "Brand": "Adidas Samba OG",
-    "Description": "Sneakers",
-    "Price": 95.99,
-    "Likes": 50,
-    "Availability": "Available"
-  },
-  {
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
@@ -24,35 +17,35 @@
     "Brand": "Coach Signature Jacquard",
     "Description": "Buckle Flap Wallet",
     "Price": 48.99,
-    "Likes": 24,
+    "Likes": 25,
     "Availability": "Available"
   },
   {
     "Brand": "Ugg K Lo",
     "Description": "Lowmel Ankle Boots",
     "Price": 71.99,
-    "Likes": 30,
+    "Likes": 31,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 30,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 49,
+    "Likes": 50,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 17,
+    "Likes": 19,
     "Availability": "Available"
   },
   {
@@ -101,7 +94,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 71.99,
-    "Likes": 54,
+    "Likes": 55,
     "Availability": "Available"
   },
   {
@@ -143,7 +136,7 @@
     "Brand": "Nike Sneakers",
     "Description": "",
     "Price": 71.99,
-    "Likes": 77,
+    "Likes": 76,
     "Availability": "Available"
   },
   {
