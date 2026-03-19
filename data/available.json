@@ -1,16 +1,23 @@
 [
   {
+    "Brand": "Adidas Samba OG",
+    "Description": "Sneakers",
+    "Price": 71.99,
+    "Likes": 3,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Adidas",
     "Description": "Samba OG blue pink gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 2,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas VL Court",
     "Description": "Bold J Platform Black with Rhinestone Stripe Sneakers",
     "Price": 59.99,
-    "Likes": 1,
+    "Likes": 3,
     "Availability": "Available"
   },
   {
@@ -24,7 +31,7 @@
     "Brand": "Lululemon Athletica Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 17,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
