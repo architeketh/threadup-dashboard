@@ -1,8 +1,15 @@
 [
   {
+    "Brand": "Adidas",
+    "Description": "Samba OG white green gum sole Sneakers",
+    "Price": 95.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Adidas Samba OG",
     "Description": "Sneakers",
-    "Price": 71.99,
+    "Price": 95.99,
     "Likes": 3,
     "Availability": "Available"
   },
@@ -10,7 +17,7 @@
     "Brand": "Adidas",
     "Description": "Samba OG blue pink gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 3,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
