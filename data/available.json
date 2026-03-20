@@ -3,21 +3,21 @@
     "Brand": "Adidas",
     "Description": "Samba OG white green gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas Samba OG",
     "Description": "Sneakers",
     "Price": 95.99,
-    "Likes": 3,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas",
     "Description": "Samba OG blue pink gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 5,
+    "Likes": 9,
     "Availability": "Available"
   },
   {
@@ -38,7 +38,7 @@
     "Brand": "Lululemon Athletica Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 18,
+    "Likes": 20,
     "Availability": "Available"
   },
   {
@@ -73,7 +73,7 @@
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 19,
+    "Likes": 18,
     "Availability": "Available"
   },
   {
@@ -87,7 +87,7 @@
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 130.99,
-    "Likes": 36,
+    "Likes": 37,
     "Availability": "Available"
   },
   {
@@ -122,7 +122,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 60.99,
-    "Likes": 56,
+    "Likes": 60,
     "Availability": "Available"
   },
   {
