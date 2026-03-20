@@ -10,42 +10,42 @@
     "Brand": "Adidas Samba OG",
     "Description": "Sneakers",
     "Price": 95.99,
-    "Likes": 5,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas",
     "Description": "Samba OG blue pink gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 9,
+    "Likes": 14,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas VL Court",
     "Description": "Bold J Platform Black with Rhinestone Stripe Sneakers",
     "Price": 59.99,
-    "Likes": 3,
+    "Likes": 4,
     "Availability": "Available"
   },
   {
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 89,
+    "Likes": 91,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Athletica Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 20,
+    "Likes": 23,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Black/Grey Signature",
     "Description": "C Jacquard Buckle Flap  Wallet",
     "Price": 71.99,
-    "Likes": 26,
+    "Likes": 27,
     "Availability": "Available"
   },
   {
@@ -66,28 +66,28 @@
     "Brand": "Nike Court Borough",
     "Description": "Low Sneakers",
     "Price": 48.99,
-    "Likes": 50,
+    "Likes": 49,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 18,
+    "Likes": 20,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
-    "Likes": 11,
+    "Likes": 14,
     "Availability": "Available"
   },
   {
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 130.99,
-    "Likes": 37,
+    "Likes": 38,
     "Availability": "Available"
   },
   {
@@ -108,7 +108,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 59.99,
-    "Likes": 44,
+    "Likes": 45,
     "Availability": "Available"
   },
   {
@@ -122,7 +122,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 60.99,
-    "Likes": 60,
+    "Likes": 58,
     "Availability": "Available"
   },
   {
@@ -157,14 +157,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 24,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Nike Sneakers",
-    "Description": "",
-    "Price": 71.99,
-    "Likes": 76,
+    "Likes": 26,
     "Availability": "Available"
   },
   {
@@ -178,7 +171,7 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 82.99,
-    "Likes": 48,
+    "Likes": 47,
     "Availability": "Available"
   }
 ]
