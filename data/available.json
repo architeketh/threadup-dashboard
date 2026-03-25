@@ -3,14 +3,14 @@
     "Brand": "Adidas",
     "Description": "Samba OG white green gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 12,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas",
     "Description": "Samba OG blue pink gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 48,
+    "Likes": 49,
     "Availability": "Available"
   },
   {
@@ -24,14 +24,14 @@
     "Brand": "Juicy Couture Shoulder",
     "Description": "Bag",
     "Price": 48.99,
-    "Likes": 100,
+    "Likes": 102,
     "Availability": "Available"
   },
   {
     "Brand": "Lululemon Athletica Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 29,
+    "Likes": 30,
     "Availability": "Available"
   },
   {
@@ -53,13 +53,6 @@
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
     "Likes": 38,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Nike Court Borough",
-    "Description": "Low Sneakers",
-    "Price": 48.99,
-    "Likes": 58,
     "Availability": "Available"
   },
   {
@@ -108,7 +101,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 73,
+    "Likes": 72,
     "Availability": "Available"
   },
   {
@@ -157,7 +150,7 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 82.99,
-    "Likes": 49,
+    "Likes": 50,
     "Availability": "Available"
   }
 ]
