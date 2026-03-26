@@ -18,6 +18,12 @@
     "Date Sold": "2026-03-18"
   },
   {
+    "Brand": "Juicy Couture Shoulder",
+    "Description": "Bag",
+    "Sold Price": 48.99,
+    "Date Sold": "2026-03-26"
+  },
+  {
     "Brand": "Sanrio Wallet",
     "Description": "",
     "Sold Price": 11.99,
@@ -45,7 +51,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "“Peach Cream” (GS) - Peach Cream / Light Grey / Orang Sneakers",
     "Sold Price": 95.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Nike Dunk Low",
@@ -81,7 +87,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Nike AF1 Air",
@@ -93,19 +99,19 @@
     "Brand": "Ugg Lowmel Suede",
     "Description": "Low-Top Sneaker – Tan Sneakers",
     "Sold Price": 83.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Nike Air Force",
     "Description": "1 LV8 Low GS – Red White Pink Sneakers",
     "Sold Price": 95.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Adidas Tyshawn Low",
     "Description": "Suede Skate Sneaker – Maroon\n Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Nike AF1 Air",
@@ -123,19 +129,19 @@
     "Brand": "Nike Dunk Low",
     "Description": "GS “Desert Khaki / Pink” Leather  Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "GS “Pink Blast / White” Leather Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "GS “Emerald Rise / White” Leather Sneakers",
     "Sold Price": 83.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Ugg W Scuffette",
@@ -147,13 +153,13 @@
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Sold Price": 106.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Converse Chuck Taylor",
     "Description": "All Star High “LOVE” Heart Tongue Edition Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Adidas Gazelle Bold",
@@ -303,7 +309,7 @@
     "Brand": "Puma Palermo Elevata",
     "Description": "Platform  – Vivid Blue & Haute Coffee Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Coach Belt",
@@ -327,7 +333,7 @@
     "Brand": "Coach Hamptons Multicolor",
     "Description": "Stripe Canvas – Style 10704\n Tote",
     "Sold Price": 132.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Coach Soho Buckle",
@@ -369,7 +375,7 @@
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Adidas Sneakers",
@@ -381,13 +387,13 @@
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Cole Haan Alexa",
@@ -441,7 +447,7 @@
     "Brand": "Coach Signature C",
     "Description": "Jacquard Black – F15068 Shoulder Bag",
     "Sold Price": 132.99,
-    "Date Sold": "2026-03-25"
+    "Date Sold": "2026-03-26"
   },
   {
     "Brand": "Coach Crossbody Bag",
