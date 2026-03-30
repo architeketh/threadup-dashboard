@@ -3,14 +3,14 @@
     "Brand": "Adidas",
     "Description": "Samba OG white green gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 16,
+    "Likes": 17,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas",
     "Description": "Samba OG blue pink gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 69,
+    "Likes": 72,
     "Availability": "Available"
   },
   {
@@ -18,13 +18,6 @@
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
     "Likes": 32,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Coach Black/Grey Signature",
-    "Description": "C Jacquard Buckle Flap  Wallet",
-    "Price": 71.99,
-    "Likes": 35,
     "Availability": "Available"
   },
   {
@@ -52,7 +45,7 @@
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
-    "Likes": 24,
+    "Likes": 25,
     "Availability": "Available"
   },
   {
@@ -87,7 +80,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 88,
+    "Likes": 89,
     "Availability": "Available"
   },
   {
@@ -115,14 +108,14 @@
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Boots",
     "Price": 36.99,
-    "Likes": 14,
+    "Likes": 15,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 34,
+    "Likes": 0,
     "Availability": "Available"
   },
   {
@@ -136,7 +129,7 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 82.99,
-    "Likes": 49,
+    "Likes": 50,
     "Availability": "Available"
   }
 ]
