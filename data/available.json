@@ -1,5 +1,19 @@
 [
   {
+    "Brand": "Nike Air Force",
+    "Description": "1 LE Sneakers",
+    "Price": 71.99,
+    "Likes": 1,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Coach Belt",
+    "Description": "",
+    "Price": 48.99,
+    "Likes": 2,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Adidas",
     "Description": "Samba OG white green gum sole Sneakers",
     "Price": 95.99,
@@ -10,14 +24,14 @@
     "Brand": "Lululemon Athletica Everywhere",
     "Description": "Belt Bag Belt Bag",
     "Price": 48.99,
-    "Likes": 33,
+    "Likes": 36,
     "Availability": "Available"
   },
   {
     "Brand": "Ugg K Lo",
     "Description": "Lowmel Ankle Boots",
     "Price": 71.99,
-    "Likes": 32,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
@@ -38,7 +52,7 @@
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
-    "Likes": 26,
+    "Likes": 27,
     "Availability": "Available"
   },
   {
@@ -59,21 +73,21 @@
     "Brand": "Nike Air Max",
     "Description": "Plus “Light Bone / Sail” Running  Sneakers",
     "Price": 95.99,
-    "Likes": 20,
+    "Likes": 19,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 59.99,
-    "Likes": 59,
+    "Likes": 60,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 96,
+    "Likes": 99,
     "Availability": "Available"
   },
   {
@@ -87,21 +101,21 @@
     "Brand": "Nike AM1 Air",
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
-    "Likes": 13,
+    "Likes": 12,
     "Availability": "Available"
   },
   {
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
-    "Price": 36.99,
-    "Likes": 32,
+    "Price": 23.99,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Boots",
     "Price": 36.99,
-    "Likes": 15,
+    "Likes": 16,
     "Availability": "Available"
   },
   {
@@ -115,7 +129,7 @@
     "Brand": "Nike Air Force",
     "Description": "1 '07 Next Nature Women's \"Pale Ivory/Apricot Agate/White/Sail\" Sneakers",
     "Price": 71.99,
-    "Likes": 22,
+    "Likes": 23,
     "Availability": "Available"
   },
   {
