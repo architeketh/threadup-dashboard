@@ -1,5 +1,19 @@
 [
   {
+    "Brand": "Adidas Gazelle Bold",
+    "Description": "J Sneakers",
+    "Price": 71.99,
+    "Likes": 7,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Adidas VL Court",
+    "Description": "Bold Platform Sneakers",
+    "Price": 71.99,
+    "Likes": 5,
+    "Availability": "Available"
+  },
+  {
     "Brand": "London Fog Jacket",
     "Description": "",
     "Price": 59.99,
@@ -10,14 +24,14 @@
     "Brand": "Nike Air Force",
     "Description": "1 LE Sneakers",
     "Price": 71.99,
-    "Likes": 1,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas",
     "Description": "Samba OG white green gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 21,
+    "Likes": 22,
     "Availability": "Available"
   },
   {
@@ -38,28 +52,28 @@
     "Brand": "Nike Dunk Low",
     "Description": "Indigo Haze Sneakers",
     "Price": 71.99,
-    "Likes": 45,
+    "Likes": 46,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Tech Windrunner",
     "Description": "Fleece Jacket Jacket",
     "Price": 71.99,
-    "Likes": 22,
+    "Likes": 21,
     "Availability": "Available"
   },
   {
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
-    "Likes": 27,
+    "Likes": 30,
     "Availability": "Available"
   },
   {
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 130.99,
-    "Likes": 45,
+    "Likes": 46,
     "Availability": "Available"
   },
   {
@@ -80,35 +94,35 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
     "Price": 59.99,
-    "Likes": 60,
+    "Likes": 62,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 101,
+    "Likes": 102,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Court Borough",
     "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
     "Price": 60.99,
-    "Likes": 70,
+    "Likes": 72,
     "Availability": "Available"
   },
   {
     "Brand": "Nike AM1 Air",
     "Description": "Max 1 Premium Suede Sneakers",
     "Price": 95.99,
-    "Likes": 12,
+    "Likes": 13,
     "Availability": "Available"
   },
   {
     "Brand": "Cushion Aire Hope",
     "Description": "Slip-on Cozy Ankle Boots",
     "Price": 23.99,
-    "Likes": 33,
+    "Likes": 35,
     "Availability": "Available"
   },
   {
@@ -122,14 +136,14 @@
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 32,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Air Force",
     "Description": "1 '07 Next Nature Women's \"Pale Ivory/Apricot Agate/White/Sail\" Sneakers",
     "Price": 71.99,
-    "Likes": 23,
+    "Likes": 22,
     "Availability": "Available"
   },
   {
