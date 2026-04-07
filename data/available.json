@@ -1,5 +1,19 @@
 [
   {
+    "Brand": "Adidas Gazelle Bold",
+    "Description": "J Pink Suede Platform  Sneakers",
+    "Price": 83.99,
+    "Likes": 5,
+    "Availability": "Available"
+  },
+  {
+    "Brand": "Adidas Gazelle Bold",
+    "Description": "J Pink Suede Platform  Sneakers",
+    "Price": 83.99,
+    "Likes": 5,
+    "Availability": "Available"
+  },
+  {
     "Brand": "Adidas Gazelle Indoor",
     "Description": "Red Velvet & Suede Sneakers",
     "Price": 95.99,
@@ -10,49 +24,49 @@
     "Brand": "Adidas Gazelle Indoor",
     "Description": "Pink Suede Sneakers",
     "Price": 95.99,
-    "Likes": 1,
+    "Likes": 5,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Air Force",
     "Description": "1 ‘07 PRM Pink Floral 3D Sneakers",
     "Price": 132.99,
-    "Likes": 1,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas Gazelle Bold",
     "Description": "Platform Sneakers",
     "Price": 95.99,
-    "Likes": 1,
+    "Likes": 4,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas  VL",
     "Description": "Court Bold Platform Sneakers",
     "Price": 83.99,
-    "Likes": 1,
+    "Likes": 2,
     "Availability": "Available"
   },
   {
     "Brand": "Fossil Straw Woven",
     "Description": "Handled Tote",
     "Price": 59.99,
-    "Likes": 8,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas Gazelle Bold",
     "Description": "J Sneakers",
     "Price": 71.99,
-    "Likes": 29,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas VL Court",
     "Description": "Bold Platform Sneakers",
     "Price": 71.99,
-    "Likes": 39,
+    "Likes": 43,
     "Availability": "Available"
   },
   {
@@ -66,14 +80,14 @@
     "Brand": "Nike Air Force",
     "Description": "1 LE Sneakers",
     "Price": 71.99,
-    "Likes": 5,
+    "Likes": 6,
     "Availability": "Available"
   },
   {
     "Brand": "Adidas",
     "Description": "Samba OG white green gum sole Sneakers",
     "Price": 95.99,
-    "Likes": 25,
+    "Likes": 27,
     "Availability": "Available"
   },
   {
@@ -108,28 +122,28 @@
     "Brand": "Coach Black with",
     "Description": "Chain Detail – F19722 Leather Crossbody Bag",
     "Price": 132.99,
-    "Likes": 31,
+    "Likes": 33,
     "Availability": "Available"
   },
   {
     "Brand": "Coach F16751 Metallic",
     "Description": "Bronze Leather Tote",
     "Price": 130.99,
-    "Likes": 46,
+    "Likes": 47,
     "Availability": "Available"
   },
   {
     "Brand": "Rebecca Taylor Pot",
     "Description": "Paisley Trench Coat",
     "Price": 243.99,
-    "Likes": 24,
+    "Likes": 23,
     "Availability": "Available"
   },
   {
     "Brand": "Nike Air Max",
     "Description": "Plus “Light Bone / Sail” Running  Sneakers",
     "Price": 95.99,
-    "Likes": 19,
+    "Likes": 20,
     "Availability": "Available"
   },
   {
@@ -143,14 +157,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "(GS) “Pink Foam” Sneakers",
     "Price": 71.99,
-    "Likes": 102,
-    "Availability": "Available"
-  },
-  {
-    "Brand": "Nike Court Borough",
-    "Description": "Low RC BG (Nike Refurbished)\n Sneakers",
-    "Price": 60.99,
-    "Likes": 76,
+    "Likes": 106,
     "Availability": "Available"
   },
   {
@@ -178,7 +185,7 @@
     "Brand": "Nike Court Borough",
     "Description": "Mid 2 GS Leather Panda Sneakers",
     "Price": 59.99,
-    "Likes": 32,
+    "Likes": 34,
     "Availability": "Available"
   },
   {
@@ -192,7 +199,7 @@
     "Brand": "Converse X Missoni",
     "Description": "Chuck Taylor All Star High-Top Knit Sneakers",
     "Price": 82.99,
-    "Likes": 50,
+    "Likes": 49,
     "Availability": "Available"
   }
 ]
