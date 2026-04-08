@@ -48,6 +48,12 @@
     "Date Sold": "2026-03-04"
   },
   {
+    "Brand": "Lululemon Athletica Everywhere",
+    "Description": "Belt Bag Belt Bag",
+    "Sold Price": 48.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
     "Brand": "Coach Black/Grey Signature",
     "Description": "C Jacquard Buckle Flap  Wallet",
     "Sold Price": 71.99,
@@ -75,7 +81,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "“Peach Cream” (GS) - Peach Cream / Light Grey / Orang Sneakers",
     "Sold Price": 95.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Nike Dunk Low",
@@ -111,7 +117,7 @@
     "Brand": "Nike AF1 Air",
     "Description": "Force 1 Mid ’07 GS White Leather Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Nike AF1 Air",
@@ -123,19 +129,19 @@
     "Brand": "Ugg Lowmel Suede",
     "Description": "Low-Top Sneaker – Tan Sneakers",
     "Sold Price": 83.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
-    "Brand": "Nike Air Force",
-    "Description": "1 LV8 Low GS – Red White Pink Sneakers",
+    "Brand": "Nike Sneakers",
+    "Description": "",
     "Sold Price": 95.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2025-12-23"
   },
   {
     "Brand": "Adidas Tyshawn Low",
     "Description": "Suede Skate Sneaker – Maroon\n Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Nike AF1 Air",
@@ -153,19 +159,19 @@
     "Brand": "Nike Dunk Low",
     "Description": "GS “Desert Khaki / Pink” Leather  Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "GS “Pink Blast / White” Leather Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Nike Dunk Low",
     "Description": "GS “Emerald Rise / White” Leather Sneakers",
     "Sold Price": 83.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Ugg W Scuffette",
@@ -177,7 +183,7 @@
     "Brand": "Nike Dunk Low",
     "Description": "Retro PRM “Pink Rise/Black” Translucent  Sneakers",
     "Sold Price": 106.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Converse Sneakers",
@@ -228,10 +234,10 @@
     "Date Sold": "2026-01-04"
   },
   {
-    "Brand": "Adidas Break Start",
-    "Description": "Low W Court-Style | Beige Neutral\n Sneakers",
+    "Brand": "Adidas Sneakers",
+    "Description": "",
     "Sold Price": 59.99,
-    "Date Sold": "2026-02-03"
+    "Date Sold": "2026-01-04"
   },
   {
     "Brand": "Adidas Sneakers",
@@ -357,7 +363,7 @@
     "Brand": "Coach Hamptons Multicolor",
     "Description": "Stripe Canvas – Style 10704\n Tote",
     "Sold Price": 132.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Coach Soho Buckle",
@@ -399,7 +405,7 @@
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Adidas Sneakers",
@@ -411,13 +417,13 @@
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Sold Price": 71.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Adidas Samba LT",
     "Description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
     "Sold Price": 59.99,
-    "Date Sold": "2026-04-07"
+    "Date Sold": "2026-04-08"
   },
   {
     "Brand": "Cole Haan Alexa",
@@ -468,9 +474,309 @@
     "Date Sold": "2025-12-22"
   },
   {
-    "Brand": "Coach Signature C",
-    "Description": "Jacquard Black – F15068 Shoulder Bag",
-    "Sold Price": 132.99,
-    "Date Sold": "2026-04-07"
+    "Brand": "Adidas Sneaker Kids",
+    "Description": "Adidas Samba OG Cloud White APC011001 Multicolor Casual 11",
+    "Sold Price": 64.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneaker Kids",
+    "Description": "Adidas Samba OG Cloud White APC011001 Multicolor Casual 11",
+    "Sold Price": 64.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Samba OG",
+    "Description": "Sneakers",
+    "Sold Price": 49.99,
+    "Date Sold": "2026-03-18"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 56.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 54.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Samba Sneakers",
+    "Description": "",
+    "Sold Price": 97.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 49.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Samba OG",
+    "Description": "Sneakers",
+    "Sold Price": 80.99,
+    "Date Sold": "2026-03-18"
+  },
+  {
+    "Brand": "Adidas Gazelle Sneakers",
+    "Description": "",
+    "Sold Price": 70.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 52.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 23.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 56.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 102.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 45.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 52.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 42.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 72.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas samba Sneakers",
+    "Description": "",
+    "Sold Price": 108.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "adidas Originals Adidas",
+    "Description": "Country Sneakers in White Leather",
+    "Sold Price": 135.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 44.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Unbranded Sneakers",
+    "Description": "",
+    "Sold Price": 32.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 23.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 44.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 23.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 45.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Levi's Sneakers",
+    "Description": "",
+    "Sold Price": 37.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 49.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 42.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 70.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 50.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 60.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 23.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 44.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 42.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "adidas Originals Adidas",
+    "Description": "Samba OG Sneakers in White Leather",
+    "Sold Price": 184.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 35.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Assorted Brands Sneakers",
+    "Description": "",
+    "Sold Price": 20.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 49.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "ALOHAS Sneakers",
+    "Description": "",
+    "Sold Price": 108.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 44.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 44.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 23.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 59.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 42.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 22.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Hello Kitty Sneakers",
+    "Description": "",
+    "Sold Price": 25.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Unbranded Sneakers",
+    "Description": "",
+    "Sold Price": 22.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 26.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Adidas Sneakers",
+    "Description": "",
+    "Sold Price": 49.99,
+    "Date Sold": "2026-01-04"
+  },
+  {
+    "Brand": "Zara Sneakers",
+    "Description": "",
+    "Sold Price": 29.99,
+    "Date Sold": "2026-04-08"
+  },
+  {
+    "Brand": "Nike Sneakers",
+    "Description": "",
+    "Sold Price": 44.99,
+    "Date Sold": "2025-12-23"
   }
 ]
